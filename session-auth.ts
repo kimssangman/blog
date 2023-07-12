@@ -51,6 +51,8 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials) {
                 await dbConnect();
 
+                console.log('dddddddddddddddddd', credentials)
+
                 if (!credentials?.id || !credentials.pw) {
                     return null;
                 }
@@ -108,7 +110,7 @@ export const authOptions: NextAuthOptions = {
         },
     },
 
-    secret: process.env.JWT_SECRET,
+    secret: 'process.env.JWT_SECRET',
 };
 
 export default NextAuth(authOptions);
