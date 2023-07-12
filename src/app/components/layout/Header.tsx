@@ -70,7 +70,7 @@ export default function Header(props: any) {
     };
 
     return (
-        <nav className='flex items-center flex-wrap bg-white sm:p-3 lg:px-[15%]'>
+        <nav className='flex items-center flex-wrap bg-white sm:p-3 lg:px-[20%] drop-shadow-sm'>
             <Link href='/main' className='inline-flex items-center p-2 mr-4 '>
                 <Image src="/images/home.png" width={50} height={50} alt="logo" className="pr-[10px]" />
                 <span className='text-xl font-bold uppercase tracking-wide '>

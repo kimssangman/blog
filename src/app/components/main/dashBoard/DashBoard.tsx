@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Loading from "../../util/Loading";
+import Time from "../../util/Time";
 
 
 
@@ -28,7 +29,14 @@ export default function DashBoard() {
 
 
     return (
-        <main>
-        </main>
+        <section className="m-auto pt-[25px]">
+            <div className="w-[60%] h-60 bg-white m-auto rounded-[20px] drop-shadow-xl flex items-center justify-center sm:text-[2rem] lg:text-[2rem]">
+                <Time />
+            </div>
+
+            <div>
+
+            </div>
+        </section>
     )
 }
