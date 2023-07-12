@@ -33,9 +33,9 @@ export default function RootLayout({
                 {/* provider를 사용하여 전역변수 사용하기 */}
                 <Provider>
                     <Header />
-                    <MainBanner />
+                    {/* <MainBanner /> */}
                     <main className='grow bg-gray-50'>{children}</main>
-                    <Footer />
+                    {/* <Footer /> */}
                 </Provider>
             </body>
         </html>

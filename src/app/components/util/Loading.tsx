@@ -1,14 +1,18 @@
 import React from 'react'
-import { ProgressBar } from 'react-loader-spinner';
+import { Oval, ProgressBar } from 'react-loader-spinner';
 
 export default function Loading() {
-    return <ProgressBar
-        height="80"
-        width="80"
-        ariaLabel="progress-bar-loading"
+    return <Oval
+        height={40}
+        width={40}
+        color="#43a4ee"
         wrapperStyle={{}}
-        wrapperClass="progress-bar-wrapper"
-        borderColor='#F4442E'
-        barColor='#51E5FF'
+        wrapperClass=""
+        visible={true}
+        ariaLabel='oval-loading'
+        secondaryColor="#43a4ee"
+        strokeWidth={2}
+        strokeWidthSecondary={2}
+
     />
 }
