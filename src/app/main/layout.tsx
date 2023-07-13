@@ -13,8 +13,8 @@ const sans = Open_Sans({ subsets: ['latin'] });
 
 export const metadata = {
     title: {
-        default: '김상민',
-        template: '김상민 | %s'
+        default: '반가워요!',
+        template: '김상민 블로그'
     },
     description: '풀스택 개발자 김상민',
     icons: {
@@ -35,7 +35,7 @@ export default function RootLayout({
                     <Header />
                     {/* <MainBanner /> */}
                     <main className='grow bg-gray-50'>{children}</main>
-                    {/* <Footer /> */}
+                    <Footer />
                 </Provider>
             </body>
         </html>

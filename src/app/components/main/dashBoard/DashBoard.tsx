@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Loading from "../../util/Loading";
 import Time from "../../util/Time";
+import Image from "next/image";
 
 
 
@@ -30,34 +31,34 @@ export default function DashBoard() {
 
     return (
         <section className="m-auto pt-[25px]">
-            <div className="w-[60%] h-60 bg-white m-auto rounded-[20px] drop-shadow-xl flex items-center justify-center sm:text-[2rem] lg:text-[2rem]">
+            <div className="w-[60%] h-[130px] bg-white m-auto rounded-[20px] drop-shadow-xl flex items-center justify-center sm:text-[2rem] lg:text-[2rem]">
                 <Time />
             </div>
 
             <div className="m-auto w-[60%] mt-[25px]">
-                <div className="flex justify-between text-center">
-                    <div className="w-[23%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center">
-                        <button>
-                            <span>이미지</span>
-                            <span>정보</span>
+                <div className="lg:flex sm:flex lg:justify-between text-center lg:flex-row sm:flex-col">
+                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400">
+                        <button className="flex justify-between items-center">
+                            <Image src="/images/code.png" width={100} height={100} alt="logo" className='m-auto sm:w-[30px] lg:w-[100px] ' />
+                            <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">정보</span>
                         </button>
                     </div>
-                    <div className="w-[23%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center">
-                        <button>
-                            <span>이미지</span>
-                            <span>정보</span>
+                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400">
+                        <button className="flex justify-between items-center">
+                            <Image src="/images/notice.png" width={100} height={100} alt="logo" className='m-auto sm:w-[30px] lg:w-[100px] ' />
+                            <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">알림</span>
                         </button>
                     </div>
-                    <div className="w-[23%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center">
-                        <button>
-                            <span>이미지</span>
-                            <span>정보</span>
+                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400">
+                        <button className="flex justify-between items-center">
+                            <Image src="/images/code.png" width={100} height={100} alt="logo" className='m-auto sm:w-[30px] lg:w-[100px] ' />
+                            <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">정보</span>
                         </button>
                     </div>
-                    <div className="w-[23%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center">
-                        <button>
-                            <span>이미지</span>
-                            <span>정보</span>
+                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400">
+                        <button className="flex justify-between items-center">
+                            <Image src="/images/code.png" width={100} height={100} alt="logo" className='m-auto sm:w-[30px] lg:w-[100px] ' />
+                            <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">정보</span>
                         </button>
                     </div>
                 </div>

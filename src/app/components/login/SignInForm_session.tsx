@@ -1,5 +1,5 @@
 /**
- * 아이콘 사이트
+ * 아이콘 이미지 사이트
     https://www.flaticon.com/kr/search?word=%EB%A1%9C%EA%B7%B8%EC%9D%B8&type=animated-icon
 
     nextAuth
