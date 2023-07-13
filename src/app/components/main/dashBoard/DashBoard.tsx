@@ -34,8 +34,33 @@ export default function DashBoard() {
                 <Time />
             </div>
 
-            <div>
-
+            <div className="m-auto w-[60%] mt-[25px]">
+                <div className="flex justify-between text-center">
+                    <div className="w-[23%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center">
+                        <button>
+                            <span>이미지</span>
+                            <span>정보</span>
+                        </button>
+                    </div>
+                    <div className="w-[23%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center">
+                        <button>
+                            <span>이미지</span>
+                            <span>정보</span>
+                        </button>
+                    </div>
+                    <div className="w-[23%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center">
+                        <button>
+                            <span>이미지</span>
+                            <span>정보</span>
+                        </button>
+                    </div>
+                    <div className="w-[23%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center">
+                        <button>
+                            <span>이미지</span>
+                            <span>정보</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </section>
     )
