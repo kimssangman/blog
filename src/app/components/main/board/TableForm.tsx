@@ -21,7 +21,7 @@ export default function TableForm({ searchValue }: any) {
     const [post, setPost] = useState([]);
     const [filteredPost, setFilteredPost] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage, setItemsPerPage] = useState(5);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
 
     useEffect(() => {
         getPostList();
@@ -62,7 +62,7 @@ export default function TableForm({ searchValue }: any) {
 
     // 게시글 상세보기
     const goPage = (item: any) => {
-        router.replace(`/main/board/${item._id}`);
+        router.push(`/main/board/${item._id}`);
     };
 
     // 페이지 변경 시 실행되는 함수
@@ -85,28 +85,28 @@ export default function TableForm({ searchValue }: any) {
 
     return <section>
         <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <Table sx={{ minWidth: 500 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell align="center">번호</TableCell>
-                        <TableCell align="center">제목</TableCell>
-                        <TableCell align="right">등록일</TableCell>
-                        <TableCell align="center">조회수</TableCell>
+                        <TableCell align="center" className='w-[15%] border-r'>번호</TableCell>
+                        <TableCell align="center" className='w-[55%] border-r'>제목</TableCell>
+                        <TableCell align="center" className='w-[30%]'>등록일</TableCell>
+                        {/* <TableCell align="center">조회수</TableCell> */}
                     </TableRow>
                 </TableHead>
-                <TableBody>
+                <TableBody >
                     {getCurrentPageItems().map((row: any, index) => (
                         <TableRow
                             onClick={() => goPage(row)}
                             key={index}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            <TableCell component="th" scope="row" align="center">
+                            <TableCell component="th" scope="row" align="center" className='py-[10px]'>
                                 {row.index}
                             </TableCell>
-                            <TableCell align="left">{row.title}</TableCell>
-                            <TableCell align="right">{moment(row.createdAt).format('YYYY-MM-DD HH:mm:ss')}</TableCell>
-                            <TableCell align="center">{row.title}</TableCell>
+                            <TableCell align="left" className='py-[10px] pl-[30px]'>{row.title}</TableCell>
+                            <TableCell align="center" className='py-[10px]'>{moment(row.createdAt).format('YYYY-MM-DD')}</TableCell>
+                            {/* <TableCell align="center">{row.title}</TableCell> */}
                         </TableRow>
                     ))}
                 </TableBody>
