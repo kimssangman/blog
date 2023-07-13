@@ -19,7 +19,7 @@ export default function Board() {
     const { status } = useSession({
         required: true,
         onUnauthenticated() {
-            redirect("/signIn");
+            redirect("/");
         },
     });
 

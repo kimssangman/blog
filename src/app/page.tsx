@@ -5,6 +5,13 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import { ip } from '@/services/ip/ip';
+
+
+type Form = {
+    message: string,
+}
+
 
 
 export default function Home() {
@@ -19,6 +26,13 @@ export default function Home() {
      ----------------------------*/
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get("callbackUrl") || "/main";
+
+
+
+    const [form, setForm] = useState<Form>({
+        message: '게스트 ip',
+    })
+
 
     const onHandlerGuest = async () => {
         /**-------------------------
@@ -35,6 +49,12 @@ export default function Home() {
 
         if (res?.error == null) {
             router.push(callbackUrl);
+
+            ip(form).then((res: any) => {
+
+            }).catch(() => {
+
+            })
         }
     }
 
