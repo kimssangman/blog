@@ -71,7 +71,10 @@ export const authOptions: NextAuthOptions = {
                     console.log("비번틀림");
                     return null;
                 }
-                return user;
+                return {
+                    ...user.toObject(),
+                    admin: user.admin, // admin 속성을 토큰에 추가
+                };
             },
         }),
     ],
@@ -81,12 +84,14 @@ export const authOptions: NextAuthOptions = {
         /**-----------------------------------
          * 유저 세션이 조회될 때 마다 실행되는 코드
          -----------------------------------*/
-        session: ({ session, token }) => {
+        session: async ({ session, token }) => {
+            const admin = await User.findOne({ id: token.id });
             return {
                 ...session,
                 user: {
                     ...session.user,
                     id: token.id,
+                    admin: admin.admin,
                     randomKey: token.randomKey,
                 },
             };
@@ -101,6 +106,7 @@ export const authOptions: NextAuthOptions = {
                 return {
                     ...token,
                     id: u.id,
+                    admin: u.admin,
                     randomKey: u.randomKey,
                 };
             }

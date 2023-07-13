@@ -6,9 +6,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import Time from '../util/Time';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { Snackbar, SnackbarOrigin } from '@mui/material';
 
-import { useRecoilState } from 'recoil';
-import { textState } from '@/recoil/atoms/states';
+
+
+
+interface State extends SnackbarOrigin {
+    open: boolean;
+}
+
+
 
 export default function Header(props: any) {
 
@@ -41,6 +48,21 @@ export default function Header(props: any) {
     }, []);
 
 
+    /**----------------------------
+     * snack bar
+     ----------------------------*/
+    const [state, setState] = React.useState<State>({
+        open: false,
+        vertical: 'top',
+        horizontal: 'center',
+    });
+    const { vertical, horizontal, open } = state;
+
+    const handleClose = () => {
+        setState({ ...state, open: false });
+    };
+
+
     /**--------------------------------------------------------------------
      * 상민
      * useRef를 사용하여 dropdown의 DOM 요소에 대한 참조를 생성하고 
@@ -66,11 +88,32 @@ export default function Header(props: any) {
 
     const handleSignOut = () => {
         signOut();
-        router.push("/signIn");
+        router.replace("/");
     };
+
+
+    const onHandlerWriteCode = () => {
+        // 어드민일 경우 글쓰기 페이지로 이동
+        if (session.data.user.admin) {
+            router.push("/main/board/write");
+        } else {
+            setState({ ...state, open: true });
+        }
+    }
+
 
     return (
         <nav className='flex items-center flex-wrap bg-white sm:p-3 lg:px-[20%] drop-shadow-sm fixed top-0 w-[100%] z-50'>
+
+            <Snackbar
+                anchorOrigin={{ vertical, horizontal }}
+                open={open}
+                onClose={handleClose}
+                message="글쓰기 권한이 없습니다."
+                key={vertical + horizontal}
+                autoHideDuration={1000}
+            />
+
             <Link href='/main' className='inline-flex items-center p-2 mr-4 '>
                 <Image src="/images/home.png" width={50} height={50} alt="logo" className="pr-[10px]" />
                 <span className='text-xl font-bold uppercase tracking-wide '>
@@ -103,9 +146,9 @@ export default function Header(props: any) {
             >
                 <div className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start  flex flex-col lg:h-auto'>
 
-                    <Link href='/main/board/write' className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center text-white bg-yellow-400 hover:bg-yellow-400 hover:text-white mr-10'>
+                    <button onClick={onHandlerWriteCode} className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center text-white bg-yellow-400 hover:bg-yellow-400 hover:text-white mr-10'>
                         CODE
-                    </Link>
+                    </button>
                     {/* <Link href='/' className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center hover:bg-yellow-400 hover:text-white mr-20'>
                         Contact us
                     </Link> */}

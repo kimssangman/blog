@@ -17,7 +17,7 @@ import Link from 'next/link';
 import { signIn, useSession } from "next-auth/react";
 import Loading from '../util/Loading';
 import Image from 'next/image';
-
+import { Snackbar, SnackbarOrigin } from '@mui/material';
 
 
 type Form = {
@@ -25,6 +25,9 @@ type Form = {
     pw: string
 }
 
+interface State extends SnackbarOrigin {
+    open: boolean;
+}
 
 export default function SignInForm() {
 
@@ -51,19 +54,33 @@ export default function SignInForm() {
         pw: '',
     })
 
-    /**----------------------------
-     * 배너
-     ----------------------------*/
-    const [banner, setBanner] = useState<BannerData | null>(null);
-
-
-    const [error, setError] = useState("");
 
     /**----------------------------
      * callback route
      ----------------------------*/
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get("callbackUrl") || "/main";
+
+
+    /**----------------------------
+     * snack bar
+     ----------------------------*/
+    const [state, setState] = React.useState<State>({
+        open: false,
+        vertical: 'top',
+        horizontal: 'center',
+    });
+    const { vertical, horizontal, open } = state;
+
+    const handleClick = (newState: SnackbarOrigin) => () => {
+        setState({ ...newState, open: true });
+    };
+
+    const handleClose = () => {
+        setState({ ...state, open: false });
+    };
+
+
 
 
 
@@ -116,15 +133,10 @@ export default function SignInForm() {
             if (res?.error == null) {
                 router.push(callbackUrl);
             } else {
-                setBanner({ message: '아이디 또는 패스워드 오류', state: 'error' });
-                setError("invalid email or password");
-                setTimeout(() => {
-                    setBanner(null);
-                }, 1000)
+                setState({ ...state, open: true });
             }
         } catch (error: any) {
             setLoading(false);
-            setError(error);
         }
     }
 
@@ -138,7 +150,14 @@ export default function SignInForm() {
 
     return (
         <div className='flex justify-center items-center w-screen h-screen'>
-            {banner && <Banner banner={banner} />}
+            <Snackbar
+                anchorOrigin={{ vertical, horizontal }}
+                open={open}
+                onClose={handleClose}
+                message="아이디 또는 비밀번호가 올바르지 않습니다."
+                key={vertical + horizontal}
+                autoHideDuration={1000}
+            />
 
             {session.status === "authenticated" ? (
                 <div className='flex justify-center items-center w-screen h-screen'>

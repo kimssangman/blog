@@ -53,25 +53,25 @@ export default function DashBoard() {
 
             <div className="m-auto w-[60%] mt-[25px]">
                 <div className="lg:flex sm:flex lg:justify-between text-center lg:flex-row sm:flex-col">
-                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400" onClick={handleRoute}>
+                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400 cursor-pointer" onClick={handleRoute}>
                         <button className="flex justify-between items-center">
                             <Image src="/images/code.png" width={100} height={100} alt="logo" className='m-auto sm:w-[30px] lg:w-[100px] ' />
                             <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">코드</span>
                         </button>
                     </div>
-                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400">
+                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400 cursor-pointer">
                         <button className="flex justify-between items-center">
                             <Image src="/images/notice.png" width={100} height={100} alt="logo" className='m-auto sm:w-[30px] lg:w-[100px] ' />
                             <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">알림</span>
                         </button>
                     </div>
-                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400">
+                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400 cursor-pointer">
                         <button className="flex justify-between items-center">
                             <Image src="/images/code.png" width={100} height={100} alt="logo" className='m-auto sm:w-[30px] lg:w-[100px] ' />
                             <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">정보</span>
                         </button>
                     </div>
-                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400">
+                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400 cursor-pointer">
                         <button className="flex justify-between items-center">
                             <Image src="/images/code.png" width={100} height={100} alt="logo" className='m-auto sm:w-[30px] lg:w-[100px] ' />
                             <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">정보</span>
