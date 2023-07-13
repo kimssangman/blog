@@ -103,7 +103,7 @@ export default function Header(props: any) {
             >
                 <div className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start  flex flex-col lg:h-auto'>
 
-                    <Link href='/' className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center text-white bg-yellow-400 hover:bg-yellow-400 hover:text-white mr-10'>
+                    <Link href='/main/board/write' className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center text-white bg-yellow-400 hover:bg-yellow-400 hover:text-white mr-10'>
                         CODE
                     </Link>
                     {/* <Link href='/' className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center hover:bg-yellow-400 hover:text-white mr-20'>
@@ -111,10 +111,10 @@ export default function Header(props: any) {
                     </Link> */}
 
 
-                    <span className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center hover:bg-yellow-400 hover:text-white'>
+                    <span className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center hover:bg-yellow-400 hover:text-white' onClick={toggleDropdown}>
                         <div ref={dropdownRef} className="relative inline-block text-left">
                             {session?.data?.user.name && (
-                                <div onClick={toggleDropdown} className="cursor-pointer">
+                                <div className="cursor-pointer">
                                     <Image src="/images/profile.png" width={30} height={30} alt="user" className="inline-block" />
                                     <span className="ml-[20px]">{session?.data?.user.name} 님</span>
                                 </div>

@@ -137,34 +137,32 @@ export default function SignInForm() {
 
 
     return (
-        <section className='flex justify-center items-center w-screen h-screen'>
-            <div>
-                {banner && <Banner banner={banner} />}
+        <div className='flex justify-center items-center w-screen h-screen'>
+            {banner && <Banner banner={banner} />}
 
-                {session.status === "authenticated" ? (
-                    <div className='flex justify-center items-center w-screen h-screen'>
-                        <Loading />
+            {session.status === "authenticated" ? (
+                <div className='flex justify-center items-center w-screen h-screen'>
+                    <Loading />
+                </div>
+
+            ) : (
+                <section className='flex justify-center items-center w-screen h-screen'>
+                    <div>
+                        <form onSubmit={onSubmit} className='flex flex-col border p-[50px] bg-white rounded-[40px] drop-shadow-xl'>
+                            <Image src="/images/login_ani.gif" width={200} height={200} alt="logo" className='m-auto' />
+                            {/* id */}
+                            <label htmlFor="id" className='font-semibold'>ID</label>
+                            <input className='bg-gray-200 shadow-inner rounded-l p-2 flex-1' type="text" id='id' name="id" required autoFocus value={form.id} onChange={onChange} />
+                            {/* pw */}
+                            <label htmlFor="pw" className='font-semibold'>PW</label>
+                            <input className='bg-gray-200 shadow-inner rounded-l p-2 flex-1' type="password" id='pw' name="pw" required value={form.pw} onChange={onChange} />
+                            <button className='border hover:bg-yellow-400 rounded-xl py-1 px-4 mt-8 drop-shadow-xl border-yellow-300 bg-yellow-400'>로그인</button>
+                            <Link href='/' className='border hover:bg-gray-200 rounded-xl py-1 px-4 mt-3 drop-shadow-xl text-center'>돌아가기</Link>
+                        </form>
                     </div>
-
-                ) : (
-                    <section className='flex justify-center items-center w-screen h-screen'>
-                        <div>
-                            <form onSubmit={onSubmit} className='flex flex-col border p-[50px] bg-white rounded-[40px] drop-shadow-xl'>
-                                <Image src="/images/login_ani.gif" width={200} height={200} alt="logo" className='m-auto' />
-                                {/* id */}
-                                <label htmlFor="id" className='font-semibold'>ID</label>
-                                <input className='bg-gray-200 shadow-inner rounded-l p-2 flex-1' type="text" id='id' name="id" required autoFocus value={form.id} onChange={onChange} />
-                                {/* pw */}
-                                <label htmlFor="pw" className='font-semibold'>PW</label>
-                                <input className='bg-gray-200 shadow-inner rounded-l p-2 flex-1' type="password" id='pw' name="pw" required autoFocus value={form.pw} onChange={onChange} />
-                                <button className='border hover:bg-yellow-400 rounded-xl py-1 px-4 mt-8 drop-shadow-xl border-yellow-300 bg-yellow-400'>로그인</button>
-                                <Link href='/' className='border hover:bg-gray-200 rounded-xl py-1 px-4 mt-3 drop-shadow-xl text-center'>돌아가기</Link>
-                            </form>
-                        </div>
-                    </section>
-                )}
-            </div>
-        </section>
+                </section>
+            )}
+        </div>
 
     )
 

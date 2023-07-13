@@ -29,7 +29,7 @@ export default function RootLayout({
 }) {
 
     return (
-        <html lang="en">
+        <html lang="en" className={notoSansKr.className}>
             <body>
                 {/* 만든 Provider로 자식 컴포넌트 감싸 모든 컴포넌트 guard를 담당합니다.*/}
                 <NextAuthProvider>

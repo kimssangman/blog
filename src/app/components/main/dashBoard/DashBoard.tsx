@@ -5,12 +5,16 @@ import { useSession } from "next-auth/react";
 import Loading from "../../util/Loading";
 import Time from "../../util/Time";
 import Image from "next/image";
-
+import { useRouter } from 'next/navigation';
 
 
 export default function DashBoard() {
 
+    const router = useRouter();
+
     /**---------------------------------
+     * user token session 확인
+     * 
      * onUnauthenticated() 함수가 session을 가지고 있는지 파악하여
      * 없으면 redirect 해줍니다.
      ---------------------------------*/
@@ -21,12 +25,24 @@ export default function DashBoard() {
         },
     });
 
+
+    /**---------------------------------
+     * user session status 확인하여 로딩
+     ---------------------------------*/
     if (status === "loading") {
         return <div className="flex justify-center items-center h-screen">
             <Loading />
         </div>
 
     }
+
+    /**---------------------------------
+     * code 게시판으로 라우팅
+     ---------------------------------*/
+    const handleRoute = () => {
+        router.push("/main/board");
+    };
+
 
 
     return (
@@ -37,10 +53,10 @@ export default function DashBoard() {
 
             <div className="m-auto w-[60%] mt-[25px]">
                 <div className="lg:flex sm:flex lg:justify-between text-center lg:flex-row sm:flex-col">
-                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400">
+                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400" onClick={handleRoute}>
                         <button className="flex justify-between items-center">
                             <Image src="/images/code.png" width={100} height={100} alt="logo" className='m-auto sm:w-[30px] lg:w-[100px] ' />
-                            <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">정보</span>
+                            <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">코드</span>
                         </button>
                     </div>
                     <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400">

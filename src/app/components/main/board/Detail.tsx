@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { CodeBlock, dracula } from "react-code-blocks";
 
 import { detailPost } from '@/services/board/detail';
-
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 
 interface Post {
@@ -24,7 +25,12 @@ export default function Detail(props: any) {
     const [post, setPost] = useState<Post | null>(null);
     const response = post;
 
-
+    const { status } = useSession({
+        required: true,
+        onUnauthenticated() {
+            redirect("/signIn");
+        },
+    });
 
     useEffect(() => {
         getPostList();

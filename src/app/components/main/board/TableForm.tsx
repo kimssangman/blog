@@ -11,6 +11,8 @@ import { useRouter } from 'next/navigation';
 import { postList } from '@/services/board/postList';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 
 
@@ -25,6 +27,13 @@ export default function TableForm({ searchValue }: any) {
         getPostList();
     }, []);
 
+
+    const { status } = useSession({
+        required: true,
+        onUnauthenticated() {
+            redirect("/signIn");
+        },
+    });
 
 
     useEffect(() => {
@@ -111,7 +120,7 @@ export default function TableForm({ searchValue }: any) {
                     onClick={() => handlePageChange(pageNumber)}
                     disabled={pageNumber === currentPage}
                     className={`mr-2 px-4 py-2 rounded ${pageNumber === currentPage
-                        ? 'bg-blue-500 text-white'
+                        ? 'bg-[#41a5ee] text-white'
                         : 'bg-gray-300 text-gray-700'
                         }`}
                 >

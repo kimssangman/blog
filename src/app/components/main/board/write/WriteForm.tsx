@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import Link from 'next/link';
 import { writePost } from '@/services/board/writePost';
-
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 type Form = {
     title: string,
@@ -20,6 +21,13 @@ export default function WriteForm() {
 
     // 라우팅
     const router = useRouter();
+
+    const { status } = useSession({
+        required: true,
+        onUnauthenticated() {
+            redirect("/signIn");
+        },
+    });
 
 
 
