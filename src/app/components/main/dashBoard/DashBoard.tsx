@@ -30,7 +30,7 @@ export default function DashBoard() {
 
 
     return (
-        <section className="m-auto pt-[25px]">
+        <section className="m-auto pt-20 sm:pt-40 lg:pt-24">
             <div className="w-[60%] h-[130px] bg-white m-auto rounded-[20px] drop-shadow-xl flex items-center justify-center sm:text-[2rem] lg:text-[2rem]">
                 <Time />
             </div>
