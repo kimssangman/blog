@@ -60,7 +60,7 @@ export default function Detail(props: any) {
         <section>
             {response && (
                 <>
-                    <div>
+                    <div className='lg:m-auto lg:w-[60%] lg:mt-[120px] mx-[20px] mt-[80px] mb-[20px]'>
                         <div>{response.title}</div>
                         <div>{response.contents1}</div>
 

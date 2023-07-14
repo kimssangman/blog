@@ -78,10 +78,10 @@ export default function WriteForm() {
                 <input className='bg-gray-200 shadow-inner rounded-l p-2 flex-1' type="text" id='title' name="title" required autoFocus value={form.title} onChange={onChange} />
                 {/* contents1 */}
                 <label htmlFor="contents1" className='font-semibold'>항목</label>
-                <input className='bg-gray-200 shadow-inner rounded-l p-2 flex-1' type="text" id='contents1' name="contents1" required autoFocus value={form.contents1} onChange={onChange} />
+                <input className='bg-gray-200 shadow-inner rounded-l p-2 flex-1' type="text" id='contents1' name="contents1" required value={form.contents1} onChange={onChange} />
                 {/* contents2 */}
                 <label htmlFor="contents2" className='font-semibold'>내용</label>
-                <textarea className='bg-gray-200 shadow-inner rounded-l p-2 flex-1' id='contents2' name='contents2' required autoFocus value={form.contents2} onChange={onChange} />
+                <textarea className='bg-gray-200 shadow-inner rounded-l p-2 flex-1' id='contents2' name='contents2' required value={form.contents2} onChange={onChange} />
                 <button className='border hover:bg-yellow-400 rounded-xl py-1 px-4 mt-8 drop-shadow-xl border-yellow-300 bg-yellow-400'>작성</button>
                 <Link href='/main/board' className='border hover:bg-gray-200 rounded-xl py-1 px-4 mt-3 drop-shadow-xl text-center'>돌아가기</Link>
             </form>

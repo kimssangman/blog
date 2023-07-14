@@ -32,7 +32,7 @@ export default function Board() {
 
     return (
         <section>
-            <div style={{ maxWidth: 1200, marginInline: 'auto', padding: '98px 35px 20px 35px' }}>
+            <div className='lg:m-auto lg:w-[60%] lg:mt-[120px] mx-[20px] mt-[100px] mb-[20px]'>
                 <div className="lg:flex sm:flex justify-between sm:flex-row-reverse flex-col">
                     <WriteButton />
                     <Search onSearch={handleSearch} />
