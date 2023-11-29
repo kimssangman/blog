@@ -4,13 +4,13 @@ node 20.4.1
 react 18.2.0
 </br>
 nextjs 13.4.9
-</br></br>
+</br>
 
 # npm
 ```
 npm i
 ```
-</br></br>
+</br>
 
 # pm2 
 ```
@@ -19,7 +19,7 @@ sudo npm i pm2 -g
 ```
 pm2 start npm --name "kimsangminServer" -- run "start"
 ```
-</br></br>
+</br>
 
 # buld
 npm run build
