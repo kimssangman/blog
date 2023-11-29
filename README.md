@@ -1,8 +1,8 @@
 # npm
-sudo npm i -g 
+sudo npm i 
 
 # pm2 
-sudo pm2 -g 
+sudo pm2 i -g 
 
 ### pm2 start npm --name "kimsangminServer" -- run "start" 
 
