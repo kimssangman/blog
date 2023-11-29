@@ -66,7 +66,7 @@ export default function Detail(props: any) {
                         <div
                             className="card-content bg-white p-4 rounded-md"
                             dangerouslySetInnerHTML={{
-                                __html: response.output.replace(/\n/g, "<br>"),
+                                __html: response.title.replace(/\n/g, "<br>"),
                             }}
                         >
                             {/* {response.title} */}
@@ -80,7 +80,7 @@ export default function Detail(props: any) {
                         <div
                             className="card-content bg-white p-4 rounded-md"
                             dangerouslySetInnerHTML={{
-                                __html: response.output.replace(/\n/g, "<br>"),
+                                __html: response.idea.replace(/\n/g, "<br>"),
                             }}
                         >
                             {/* {response.idea} */}
@@ -94,7 +94,7 @@ export default function Detail(props: any) {
                         <div
                             className="card-content bg-white p-4 rounded-md"
                             dangerouslySetInnerHTML={{
-                                __html: response.output.replace(/\n/g, "<br>"),
+                                __html: response.input.replace(/\n/g, "<br>"),
                             }}
                         >
                             {/* {response.input} */}

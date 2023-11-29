@@ -109,7 +109,6 @@ export default function WriteForm() {
                         className="bg-gray-200 shadow-inner rounded-l p-2 flex-1"
                         id="input"
                         name="input"
-                        required
                         value={form.input}
                         onChange={onChange}
                     />
@@ -122,7 +121,6 @@ export default function WriteForm() {
                         className="bg-gray-200 shadow-inner rounded-l p-2 flex-1"
                         id="output"
                         name="output"
-                        required
                         value={form.output}
                         onChange={onChange}
                     />
