@@ -16,6 +16,10 @@ sudo npm i pm2 -g
 ```
 ```
 pm2 start npm --name "kimsangminServer" -- run "start"
+
+pm2 list
+pm2 kill
+pm2 delete 0
 ```
 
 # buld
