@@ -1,3 +1,9 @@
+# version
+node 20.4.1
+react 18.2.0
+nextjs 13.4.9
+
+
 # npm
 ```
 npm i
@@ -25,6 +31,18 @@ npm run start
 https://velog.io/@gene028/NextJS-%EC%A7%80%EB%8F%84-%EA%B0%9C%EB%B0%9C-2-SWR%EB%A1%9C-%EC%A0%84%EC%97%AD-%EC%83%81%ED%83%9C-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+
+## ec2 인스턴스 npm i 시 먹통일 때
+스왑 파일 생성하여 메모리 늘리기
+```
+fallocate -l 4G /swapfile
+chmod 600 /swapfile
+mkswap  /swapfile
+swapon /swapfile
+swapon  --show
+free -h
+```
 
 ## Getting Started
 
