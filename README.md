@@ -1,7 +1,10 @@
-# pm2 
-sudo npm i -g pm2
+# npm
+sudo npm i -g 
 
-## pm2 start npm --name "kimsangminServer" -- run "start" 
+# pm2 
+sudo pm2 -g 
+
+### pm2 start npm --name "kimsangminServer" -- run "start" 
 
 # buld
 npm run build
