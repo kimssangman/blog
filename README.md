@@ -1,13 +1,17 @@
 # version
 node 20.4.1
+</br>
 react 18.2.0
+</br>
 nextjs 13.4.9
+</br></br>
 
 
 # npm
 ```
 npm i
 ```
+</br></br>
 
 # pm2 
 ```
@@ -16,22 +20,26 @@ sudo npm i pm2 -g
 ```
 pm2 start npm --name "kimsangminServer" -- run "start"
 ```
+</br></br>
 
 # buld
 npm run build
+</br></br>
 
 # start 
 npm run dev
+</br></br>
 
 # build start
 npm run start
+</br></br>
 
 # SWR 참고
 
 https://velog.io/@gene028/NextJS-%EC%A7%80%EB%8F%84-%EA%B0%9C%EB%B0%9C-2-SWR%EB%A1%9C-%EC%A0%84%EC%97%AD-%EC%83%81%ED%83%9C-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
+</br></br>
 
 ## ec2 인스턴스 npm i 시 먹통일 때
 스왑 파일 생성하여 메모리 늘리기
@@ -43,6 +51,8 @@ swapon /swapfile
 swapon  --show
 free -h
 ```
+</br></br>
+
 
 ## Getting Started
 
