@@ -10,11 +10,19 @@ export const BoardSchema = new Schema(
             type: String,
             required: true,
         },
-        contents1: {
+        idea: {
             type: String,
-            required: true,
+            required: false,
         },
-        contents2: {
+        input: {
+            type: String,
+            required: false,
+        },
+        output: {
+            type: String,
+            required: false,
+        },
+        contents: {
             type: String,
             required: true,
         },
@@ -23,7 +31,6 @@ export const BoardSchema = new Schema(
         timestamps: true,
     }
 );
-
 
 const Board = mongoose.models.Board || mongoose.model("Board", BoardSchema);
 

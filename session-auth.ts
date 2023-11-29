@@ -1,9 +1,8 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
-import dbConnect from '@/lib/db/dbConnect';
-import User from '@/lib/db/user/user.model';
-
+import dbConnect from "@/lib/db/dbConnect";
+import User from "@/lib/db/user/user.model";
 
 export const authOptions: NextAuthOptions = {
     /**-----------------------------------
@@ -51,7 +50,7 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials) {
                 await dbConnect();
 
-                console.log('dddddddddddddddddd', credentials)
+                console.log("[ credentials ]", credentials);
 
                 if (!credentials?.id || !credentials.pw) {
                     return null;
@@ -66,8 +65,11 @@ export const authOptions: NextAuthOptions = {
                 /**-----------------------------------
                  * password hash compare
                  -----------------------------------*/
-                const bcrypt = require('bcrypt');
-                const isMatched = await bcrypt.compare(credentials?.pw, user.pw);
+                const bcrypt = require("bcrypt");
+                const isMatched = await bcrypt.compare(
+                    credentials?.pw,
+                    user.pw
+                );
 
                 if (!isMatched) {
                     console.log("비번틀림");
@@ -77,7 +79,6 @@ export const authOptions: NextAuthOptions = {
             },
         }),
     ],
-
 
     callbacks: {
         /**-----------------------------------
@@ -110,7 +111,7 @@ export const authOptions: NextAuthOptions = {
         },
     },
 
-    secret: 'process.env.JWT_SECRET',
+    secret: "process.env.JWT_SECRET",
 };
 
 export default NextAuth(authOptions);

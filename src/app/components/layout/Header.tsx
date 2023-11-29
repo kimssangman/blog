@@ -1,30 +1,23 @@
-'use client'
+"use client";
 
-import { signOut, useSession } from 'next-auth/react';
-import Link from 'next/link';
-import React, { useEffect, useRef, useState } from 'react';
-import Time from '../util/Time';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { Snackbar, SnackbarOrigin } from '@mui/material';
-
-
-
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import React, { useEffect, useRef, useState } from "react";
+import Time from "../util/Time";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Snackbar, SnackbarOrigin } from "@mui/material";
 
 interface State extends SnackbarOrigin {
     open: boolean;
 }
 
-
-
 export default function Header(props: any) {
-
     const router = useRouter();
 
     const [isOpen, setIsOpen] = useState(false);
     const toggleDropdown = () => setIsOpen(!isOpen);
     const dropdownRef = useRef<HTMLDivElement | null>(null);
-
 
     const [active, setActive] = useState(false);
 
@@ -37,31 +30,28 @@ export default function Header(props: any) {
      ----------------------------*/
     const session: any = useSession();
 
-    console.log('          ')
-    console.log('main/page.ts 유저 토큰 정보');
+    console.log("          ");
+    console.log("main/page.ts 유저 토큰 정보");
     console.log(session);
-    console.log('------------------------------')
-
+    console.log("------------------------------");
 
     useEffect(() => {
         setIsOpen(false);
     }, []);
-
 
     /**----------------------------
      * snack bar
      ----------------------------*/
     const [state, setState] = React.useState<State>({
         open: false,
-        vertical: 'top',
-        horizontal: 'center',
+        vertical: "top",
+        horizontal: "center",
     });
     const { vertical, horizontal, open } = state;
 
     const handleClose = () => {
         setState({ ...state, open: false });
     };
-
 
     /**--------------------------------------------------------------------
      * 상민
@@ -73,7 +63,10 @@ export default function Header(props: any) {
     --------------------------------------------------------------------*/
     useEffect(() => {
         const handleClickOutside = (event: any) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(event.target)
+            ) {
                 setIsOpen(false);
             }
         };
@@ -84,13 +77,10 @@ export default function Header(props: any) {
         };
     }, [dropdownRef]);
 
-
-
     const handleSignOut = () => {
         signOut();
         router.replace("/");
     };
-
 
     const onHandlerWriteCode = () => {
         // 어드민일 경우 글쓰기 페이지로 이동
@@ -99,12 +89,10 @@ export default function Header(props: any) {
         } else {
             setState({ ...state, open: true });
         }
-    }
-
+    };
 
     return (
-        <nav className='flex items-center flex-wrap bg-white sm:p-3 lg:px-[20%] drop-shadow-sm fixed top-0 w-[100%] z-50'>
-
+        <nav className="flex items-center flex-wrap bg-white sm:p-3 lg:px-[20%] drop-shadow-sm fixed top-0 w-[100%] z-50">
             <Snackbar
                 anchorOrigin={{ vertical, horizontal }}
                 open={open}
@@ -114,52 +102,78 @@ export default function Header(props: any) {
                 autoHideDuration={1000}
             />
 
-            <Link href='/main' className='inline-flex items-center p-2 mr-4 '>
-                <Image src="/images/home.png" width={50} height={50} alt="logo" className="pr-[10px]" />
-                <span className='text-xl font-bold uppercase tracking-wide '>
+            <Link href="/main" className="inline-flex items-center p-2 mr-4 ">
+                <Image
+                    src="/images/home.png"
+                    width={50}
+                    height={50}
+                    alt="logo"
+                    className="pr-[10px]"
+                />
+                <span className="text-xl font-bold uppercase tracking-wide ">
                     BLOG
                 </span>
             </Link>
             <button
-                className=' inline-flex p-3 hover:bg-yellow-400 rounded lg:hidden ml-auto hover:text-white outline-none'
+                className=" inline-flex p-3 hover:bg-yellow-400 rounded lg:hidden ml-auto hover:text-white outline-none"
                 onClick={handleClick}
             >
                 <svg
-                    className='w-6 h-6'
-                    fill='none'
-                    stroke='currentColor'
-                    viewBox='0 0 24 24'
-                    xmlns='http://www.w3.org/2000/svg'
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
                 >
                     <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                         strokeWidth={2}
-                        d='M4 6h16M4 12h16M4 18h16'
+                        d="M4 6h16M4 12h16M4 18h16"
                     />
                 </svg>
             </button>
             {/*Note that in this div we will use a ternary operator to decide whether or not to display the content of the div  */}
             <div
-                className={`${active ? '' : 'hidden'
-                    }   w-full lg:inline-flex lg:flex-grow lg:w-auto`}
+                className={`${
+                    active ? "" : "hidden"
+                }   w-full lg:inline-flex lg:flex-grow lg:w-auto`}
             >
-                <div className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start  flex flex-col lg:h-auto'>
-
-                    <button onClick={onHandlerWriteCode} className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center text-white bg-yellow-400 hover:bg-yellow-400 hover:text-white mr-10'>
+                <div className="lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start  flex flex-col lg:h-auto">
+                    <button
+                        onClick={onHandlerWriteCode}
+                        className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center text-white bg-yellow-400 hover:bg-yellow-400 hover:text-white mr-10"
+                    >
                         CODE
                     </button>
                     {/* <Link href='/' className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center hover:bg-yellow-400 hover:text-white mr-20'>
                         Contact us
                     </Link> */}
 
-
-                    <span className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center hover:bg-yellow-400 hover:text-white' onClick={toggleDropdown}>
-                        <div ref={dropdownRef} className="relative inline-block text-left">
+                    <span
+                        className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center hover:bg-yellow-400 hover:text-white"
+                        onClick={toggleDropdown}
+                    >
+                        <div
+                            ref={dropdownRef}
+                            className="relative inline-block text-left"
+                        >
                             {session?.data?.user.name && (
                                 <div className="cursor-pointer">
-                                    <Image src="/images/profile.png" width={30} height={30} alt="user" className="inline-block" />
-                                    <span className="ml-[20px]">{session?.data?.user.name} 님</span>
+                                    <Image
+                                        src={
+                                            session?.data?.user.admin
+                                                ? "/images/profile.png"
+                                                : "/images/person_icon.png"
+                                        }
+                                        width={30}
+                                        height={30}
+                                        alt="user"
+                                        className="inline-block"
+                                    />
+                                    <span className="ml-[20px]">
+                                        {session?.data?.user.name} 님
+                                    </span>
                                 </div>
                             )}
 
@@ -188,8 +202,6 @@ export default function Header(props: any) {
                             )}
                         </div>
                     </span>
-
-
                 </div>
             </div>
         </nav>
