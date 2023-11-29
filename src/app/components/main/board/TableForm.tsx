@@ -105,7 +105,7 @@ export default function TableForm({ searchValue }: any) {
                                     },
                                 }}
                             >
-                                제목
+                                문제
                             </TableCell>
                             <TableCell
                                 align="center"

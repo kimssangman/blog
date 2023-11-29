@@ -41,7 +41,7 @@ export default function Detail(props: any) {
             const response: any = await detailPost(props.pageId);
             setPost(response);
 
-            console.log("[post]", post);
+            console.log("[post]", response);
         } catch (error) {
             // 오류 처리
         }
@@ -66,7 +66,7 @@ export default function Detail(props: any) {
                         <div
                             className="card-content bg-white p-4 rounded-md"
                             dangerouslySetInnerHTML={{
-                                __html: response.title.replace(/\n/g, "<br>"),
+                                __html: response?.title?.replace(/\n/g, "<br>"),
                             }}
                         >
                             {/* {response.title} */}
@@ -80,7 +80,7 @@ export default function Detail(props: any) {
                         <div
                             className="card-content bg-white p-4 rounded-md"
                             dangerouslySetInnerHTML={{
-                                __html: response.idea.replace(/\n/g, "<br>"),
+                                __html: response?.idea?.replace(/\n/g, "<br>"),
                             }}
                         >
                             {/* {response.idea} */}
@@ -94,7 +94,7 @@ export default function Detail(props: any) {
                         <div
                             className="card-content bg-white p-4 rounded-md"
                             dangerouslySetInnerHTML={{
-                                __html: response.input.replace(/\n/g, "<br>"),
+                                __html: response?.input?.replace(/\n/g, "<br>"),
                             }}
                         >
                             {/* {response.input} */}
@@ -108,7 +108,10 @@ export default function Detail(props: any) {
                         <div
                             className="card-content bg-white p-4 rounded-md"
                             dangerouslySetInnerHTML={{
-                                __html: response.output.replace(/\n/g, "<br>"),
+                                __html: response?.output?.replace(
+                                    /\n/g,
+                                    "<br>"
+                                ),
                             }}
                         >
                             {/* {response.output} */}
