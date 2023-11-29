@@ -6,7 +6,6 @@ react 18.2.0
 nextjs 13.4.9
 </br></br>
 
-
 # npm
 ```
 npm i
