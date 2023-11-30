@@ -5,7 +5,7 @@ import { CodeBlock, dracula } from "react-code-blocks";
 
 import { detailPost } from "@/services/board/detail";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 interface Post {
     title: string;
@@ -24,6 +24,7 @@ type Theme = {
 export default function Detail(props: any) {
     const [post, setPost] = useState<Post | null>(null);
     const response = post;
+    const router = useRouter(); // 뒤로가기
 
     const { status } = useSession({
         required: true,
@@ -36,6 +37,9 @@ export default function Detail(props: any) {
         getPostList();
     }, []);
 
+    /**--------------------------------------------
+     * 게시글 가져오기
+    --------------------------------------------*/
     const getPostList = async () => {
         try {
             const response: any = await detailPost(props.pageId);
@@ -45,6 +49,20 @@ export default function Detail(props: any) {
         } catch (error) {
             // 오류 처리
         }
+    };
+
+    /**--------------------------------------------
+     * 뒤로가기
+    --------------------------------------------*/
+    const handleGoBack = () => {
+        router.replace("/main/board");
+    };
+
+    /**--------------------------------------------
+     * 편집
+    --------------------------------------------*/
+    const handleGoEdit = () => {
+        router.replace("/main/board");
     };
 
     /**--------------------------------------------
@@ -58,7 +76,20 @@ export default function Detail(props: any) {
     return (
         <section>
             {response && (
-                <div className="lg:m-auto lg:w-[60%] lg:mt-[120px] mx-[20px] mt-[80px] mb-[20px]">
+                <div className="lg:m-auto lg:w-[60%] lg:mt-[100px] mx-[20px] mt-[80px] mb-[20px]">
+                    <div className="flex justify-between items-center">
+                        <button
+                            onClick={handleGoBack}
+                            className="bg-gray-400 hover:bg-gray-700 text-white font-bold py-2 px-4 mb-[20px] rounded"
+                        >
+                            뒤로가기
+                        </button>
+                        <div className="edit-button">
+                            <button className="bg-rose-400 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-[20px] rounded">
+                                편집
+                            </button>
+                        </div>
+                    </div>
                     <div className="card mb-4 p-4 shadow-md">
                         <h2 className="card-title border-b pb-2 mb-2 text-xl font-bold">
                             문제

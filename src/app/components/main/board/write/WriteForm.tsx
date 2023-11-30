@@ -92,9 +92,8 @@ export default function WriteForm() {
                     <label htmlFor="idea" className="font-semibold">
                         아이디어
                     </label>
-                    <input
+                    <textarea
                         className="bg-gray-200 shadow-inner rounded-l p-2 flex-1"
-                        type="text"
                         id="idea"
                         name="idea"
                         value={form.idea}
