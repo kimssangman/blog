@@ -1,9 +1,9 @@
-import './globals.css'
-import type { Metadata } from 'next'
-import { NextAuthProvider } from './providers'
+import "./globals.css";
+import type { Metadata } from "next";
+import { NextAuthProvider } from "./providers";
 import { Inter, Roboto, Noto_Sans_KR } from "next/font/google"; // Roboto와 한글 NotoSans를 사용합니다.
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 const notoSansKr = Noto_Sans_KR({
     // preload: true, 기본값
@@ -18,16 +18,15 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-    title: '반가워요!',
-    description: '김상민 블로그',
-}
+    title: "반가워요!",
+    description: "김상민 블로그",
+};
 
 export default function RootLayout({
     children,
 }: {
-    children: React.ReactNode
+    children: React.ReactNode;
 }) {
-
     return (
         <html lang="en" className={notoSansKr.className}>
             <body>
@@ -40,5 +39,5 @@ export default function RootLayout({
                 </NextAuthProvider>
             </body>
         </html>
-    )
+    );
 }

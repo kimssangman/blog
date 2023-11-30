@@ -6,6 +6,11 @@ import { CodeBlock, dracula } from "react-code-blocks";
 import { detailPost } from "@/services/board/detail";
 import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
+import { Snackbar, SnackbarOrigin } from "@mui/material";
+
+interface State extends SnackbarOrigin {
+    open: boolean;
+}
 
 interface Post {
     title: string;
@@ -26,6 +31,11 @@ export default function Detail(props: any) {
     const response = post;
     const router = useRouter(); // 뒤로가기
 
+    /**----------------------------
+     * 사용자 session 확인
+     ----------------------------*/
+    const session: any = useSession();
+
     const { status } = useSession({
         required: true,
         onUnauthenticated() {
@@ -45,7 +55,7 @@ export default function Detail(props: any) {
             const response: any = await detailPost(props.pageId);
             setPost(response);
 
-            console.log("[post]", response);
+            // console.log("[getPostList]", response);
         } catch (error) {
             // 오류 처리
         }
@@ -59,10 +69,30 @@ export default function Detail(props: any) {
     };
 
     /**--------------------------------------------
-     * 편집
+     * 게시글 편집 권한 부여
     --------------------------------------------*/
-    const handleGoEdit = () => {
-        router.replace("/main/board");
+    const onHandlerWriteCode = () => {
+        // 어드민일 경우 글쓰기 페이지로 이동
+        if (session.data.user.admin) {
+            router.replace(`/main/board/edit/${props.pageId}`);
+        } else {
+            setState({ ...state, open: true });
+        }
+    };
+
+    /**----------------------------
+     * snack bar
+     ----------------------------*/
+    const [state, setState] = React.useState<State>({
+        open: false,
+        vertical: "top",
+        horizontal: "center",
+    });
+
+    const { vertical, horizontal, open } = state;
+
+    const handleClose = () => {
+        setState({ ...state, open: false });
     };
 
     /**--------------------------------------------
@@ -75,6 +105,14 @@ export default function Detail(props: any) {
 
     return (
         <section>
+            <Snackbar
+                anchorOrigin={{ vertical, horizontal }}
+                open={open}
+                onClose={handleClose}
+                message="편집 권한이 없습니다."
+                key={vertical + horizontal}
+                autoHideDuration={1000}
+            />
             {response && (
                 <div className="lg:m-auto lg:w-[60%] lg:mt-[100px] mx-[20px] mt-[80px] mb-[20px]">
                     <div className="flex justify-between items-center">
@@ -85,7 +123,10 @@ export default function Detail(props: any) {
                             뒤로가기
                         </button>
                         <div className="edit-button">
-                            <button className="bg-rose-400 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-[20px] rounded">
+                            <button
+                                onClick={onHandlerWriteCode}
+                                className="bg-rose-400 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-[20px] rounded"
+                            >
                                 편집
                             </button>
                         </div>

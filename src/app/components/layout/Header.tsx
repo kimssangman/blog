@@ -111,7 +111,7 @@ export default function Header(props: any) {
                     className="pr-[10px]"
                 />
                 <span className="text-xl font-bold uppercase tracking-wide ">
-                    BLOG
+                    홈
                 </span>
             </Link>
             <button
@@ -142,7 +142,7 @@ export default function Header(props: any) {
                 <div className="lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-start  flex flex-col lg:h-auto">
                     <button
                         onClick={onHandlerWriteCode}
-                        className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center text-white bg-yellow-400 hover:bg-yellow-400 hover:text-white mr-10"
+                        className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded font-bold items-center justify-center text-white bg-yellow-400 hover:bg-yellow-300 hover:text-white mr-10"
                     >
                         CODE
                     </button>

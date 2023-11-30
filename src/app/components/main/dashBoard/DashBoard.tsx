@@ -50,7 +50,7 @@ export default function DashBoard() {
             <div className="m-auto w-[60%] mt-[25px]">
                 <div className="lg:flex sm:flex lg:justify-between text-center lg:flex-row sm:flex-col">
                     <div
-                        className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400 cursor-pointer"
+                        className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] cursor-pointer"
                         onClick={handleRoute}
                     >
                         <button className="flex justify-between items-center">
@@ -66,7 +66,7 @@ export default function DashBoard() {
                             </span>
                         </button>
                     </div>
-                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400 cursor-pointer">
+                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] cursor-pointer">
                         <button className="flex justify-between items-center">
                             <Image
                                 src="/images/notice.png"
@@ -80,7 +80,7 @@ export default function DashBoard() {
                             </span>
                         </button>
                     </div>
-                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400 cursor-pointer">
+                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] cursor-pointer">
                         <button className="flex justify-between items-center">
                             <Image
                                 src="/images/code.png"
@@ -94,7 +94,7 @@ export default function DashBoard() {
                             </span>
                         </button>
                     </div>
-                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] hover:bg-yellow-400 cursor-pointer">
+                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] cursor-pointer">
                         <button className="flex justify-between items-center">
                             <Image
                                 src="/images/code.png"
