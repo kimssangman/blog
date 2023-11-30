@@ -34,8 +34,12 @@ export default function TableForm({ searchValue }: any) {
 
     useEffect(() => {
         // 검색값이 변경될 때마다 데이터 필터링
-        const filteredPost = post.filter((row: any) =>
-            row.title.includes(searchValue)
+        const filteredPost = post.filter(
+            (row: any) =>
+                row.title.includes(searchValue) ||
+                row.idea.includes(searchValue) ||
+                row.input.includes(searchValue) ||
+                row.contents.includes(searchValue)
         );
         // 필터링된 데이터 설정
         setFilteredPost(filteredPost);

@@ -27,7 +27,7 @@ export default function Search({ onSearch }: any) {
                     <div className="flex rounded-md overflow-hidden w-[100%]">
                         <input
                             type="text"
-                            placeholder="문제를 입력하세요."
+                            placeholder="찾고 싶은 키워드를 입력하세요."
                             className="w-full rounded-md rounded-r-none px-[20px]"
                             value={searchValue}
                             onChange={handleInputChange}
