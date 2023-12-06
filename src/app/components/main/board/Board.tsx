@@ -1,15 +1,13 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react';
-import TableForm from './TableForm';
-import WriteButton from './WriteButton';
-import Search from './../../util/Search';
+import React, { useState } from "react";
+import TableForm from "./TableForm";
+import WriteButton from "./WriteButton";
+import Search from "./../../util/Search";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
-
 export default function Board() {
-
     /**---------------------------------
      * user token session 확인
      * 
@@ -23,8 +21,7 @@ export default function Board() {
         },
     });
 
-
-    const [searchValue, setSearchValue] = useState('');
+    const [searchValue, setSearchValue] = useState("");
 
     const handleSearch = (value: any) => {
         setSearchValue(value);
@@ -32,11 +29,10 @@ export default function Board() {
 
     return (
         <section>
-            <div className='lg:m-auto lg:w-[60%] lg:mt-[120px] mx-[20px] mt-[100px] mb-[20px]'>
+            <div className="lg:m-auto lg:w-[60%] lg:mt-[120px] mx-[20px] mt-[100px] mb-[20px]">
                 <div className="lg:flex sm:flex justify-between sm:flex-row-reverse flex-col">
                     <WriteButton />
                     <Search onSearch={handleSearch} />
-
                 </div>
                 <TableForm searchValue={searchValue} />
             </div>

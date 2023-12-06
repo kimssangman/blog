@@ -81,6 +81,47 @@ export default function TableForm({ searchValue }: any) {
         return Array.from({ length: totalPages }, (_, index) => index + 1);
     };
 
+    const getPageNumbersWithNavigation = () => {
+        const totalPages = Math.ceil((filteredPost.length || 1) / itemsPerPage);
+        const maxVisiblePages = 5; // 현재 페이지 주변에 보여줄 페이지 수 (현재 페이지 포함)
+
+        // 현재 페이지 양 옆에 보여질 페이지 수
+        // 처음 2 3 (4) 5 6 끝
+        let startPage = Math.max(
+            1,
+            currentPage - Math.floor(maxVisiblePages / 2)
+        );
+        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+        /**-----------------------------
+         * 전체 페이지가 5보다 작을경우
+         * 시작과 끝 페이지 설정
+         -----------------------------*/
+        if (totalPages <= maxVisiblePages) {
+            startPage = 1;
+            endPage = totalPages;
+        } else if (currentPage - startPage < Math.floor(maxVisiblePages / 2)) {
+        /**-----------------------------
+         * 시작 페이지와 현재 페이지 사이의 거리가 주변에 보여줄 페이지보다 작을경우
+         * 처음 1 (2) 3 4 5 끝
+         * 보여지는 맨 끝 값은 1(시작 페이지) + 5(현재 페이지 주변에 보여줄 페이지 수) - 1 = 5
+         -----------------------------*/
+            endPage = startPage + maxVisiblePages - 1;
+        } else if (endPage - currentPage < Math.ceil(maxVisiblePages / 2) - 1) {
+        /**-----------------------------
+         * 끝 페이지와 현재 페이지 사이의 거리가 주변에 보여줄 페이지보다 작을경우
+         * 처음 4 5 6 (7) 8 끝
+         * 보여지는 맨 처음 값은 8(끝 페이지) - 5(현재 페이지 주변에 보여줄 페이지 수) + 1 = 4
+         -----------------------------*/
+            startPage = endPage - maxVisiblePages + 1;
+        }
+
+        return Array.from(
+            { length: endPage - startPage + 1 },
+            (_, index) => startPage + index
+        );
+    };
+
     return (
         <section>
             <TableContainer component={Paper}>
@@ -187,7 +228,8 @@ export default function TableForm({ searchValue }: any) {
                 </Table>
             </TableContainer>
 
-            <div className="flex justify-center mt-4">
+            {/* 처음 끝 없는 버전*/}
+            {/* <div className="flex justify-center mt-4">
                 {getPageNumbers().map((pageNumber) => (
                     <button
                         key={pageNumber}
@@ -202,6 +244,75 @@ export default function TableForm({ searchValue }: any) {
                         {pageNumber}
                     </button>
                 ))}
+            </div> */}
+
+            {/* 처음 끝 있는 버전 */}
+            <div className="flex justify-center mt-4">
+                {[
+                    currentPage === 1 ? null : (
+                        <button
+                            key="first"
+                            onClick={() => handlePageChange(1)}
+                            className="mr-2 px-3 py-2 rounded bg-gray-300 text-gray-700"
+                        >
+                            처음
+                        </button>
+                    ),
+                    // currentPage === 1 ? null : (
+                    //     <button
+                    //         key="prev"
+                    //         onClick={() => handlePageChange(currentPage - 1)}
+                    //         className="mr-2 px-4 py-2 rounded bg-gray-300 text-gray-700"
+                    //     >
+                    //         이전
+                    //     </button>
+                    // ),
+                    getPageNumbersWithNavigation().map((pageNumber, index) => (
+                        <button
+                            key={index}
+                            onClick={() => handlePageChange(pageNumber)}
+                            disabled={pageNumber === currentPage}
+                            className={`mr-2 px-3 py-2 rounded ${
+                                pageNumber === currentPage
+                                    ? "bg-[#41a5ee] text-white"
+                                    : "bg-gray-300 text-gray-700"
+                            }`}
+                        >
+                            {pageNumber}
+                        </button>
+                    )),
+                    // currentPage ===
+                    // Math.ceil(
+                    //     (filteredPost.length || 1) / itemsPerPage
+                    // ) ? null : (
+                    //     <button
+                    //         key="next"
+                    //         onClick={() => handlePageChange(currentPage + 1)}
+                    //         className="mr-2 px-4 py-2 rounded bg-gray-300 text-gray-700"
+                    //     >
+                    //     다음
+                    //     </button>
+                    // ),
+                    currentPage ===
+                    Math.ceil(
+                        (filteredPost.length || 1) / itemsPerPage
+                    ) ? null : (
+                        <button
+                            key="last"
+                            onClick={() =>
+                                handlePageChange(
+                                    Math.ceil(
+                                        (filteredPost.length || 1) /
+                                            itemsPerPage
+                                    )
+                                )
+                            }
+                            className="mr-2 px-3 py-2 rounded bg-gray-300 text-gray-700"
+                        >
+                            끝
+                        </button>
+                    ),
+                ]}
             </div>
         </section>
     );
