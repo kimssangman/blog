@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import FortuneOfToday from "./FortuneOfToday";
+import Tab from "./Tab";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
@@ -22,7 +22,7 @@ export default function Board() {
     return (
         <section>
             <div className="lg:m-auto lg:w-[60%] lg:mt-[120px] mx-[20px] mt-[100px] mb-[20px]">
-                <FortuneOfToday />
+                <Tab />
             </div>
         </section>
     );

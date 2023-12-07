@@ -1,46 +1,18 @@
 import React from "react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { fortuneOfToday } from "@/services/check/fortuneOfToday";
+import FortuneOfTodayForm from "./FortuneOfTodayForm";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
+import Image from "next/image";
 
 export default function WriteButton() {
-    const [fortuneOfTodayValue, setFortuneOfToday] = useState([]); // 운세
     const [value, setValue] = React.useState("1"); // Tab
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
-    };
-
-    useEffect(() => {
-        getFortuneOfToday();
-    }, []);
-
-    const router = useRouter();
-
-    /**----------------------------
-     * 사용자 session 확인
-     ----------------------------*/
-    const session: any = useSession();
-
-    /**---------------------------
-     * 오늘의 운세 가져오기
-     ---------------------------*/
-    const getFortuneOfToday = async () => {
-        try {
-            const response = await fortuneOfToday();
-            setFortuneOfToday(response); // 데이터를 변수에 저장
-
-            console.log(response);
-        } catch (error) {
-            // 오류 처리
-        }
     };
 
     return (
@@ -66,7 +38,11 @@ export default function WriteButton() {
                             className="m-auto sm:w-[30px] lg:w-[100px] "
                         />
                     </div>
-                    <div className="mt-[25px]">{fortuneOfTodayValue}</div>
+
+                    {/* 운세 부분 */}
+                    <div className="mt-[25px]">
+                        <FortuneOfTodayForm />
+                    </div>
                 </TabPanel>
                 <TabPanel value="2" className="bg-white shadow-lg p-4">
                     준비 중입니다.
