@@ -1,7 +1,11 @@
 // 오늘의 운세 가져오기
-export async function fortuneOfToday() {
+export async function fortuneOfToday(character: any) {
     const response = await fetch("/api/check/fortuneOfToday", {
-        cache: "no-store",
+        method: "POST",
+        body: JSON.stringify(character),
+        headers: {
+            "Content-Type": "application/json",
+        },
     });
 
     const data = await response.json();

@@ -2,7 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 const cheerio = require("cheerio");
 
-export async function GET(request: NextRequest) {
+export async function POST(req: Request, res: Response) {
+    const character = await req.json();
+
+    let Request_URL = "";
+    switch (character) {
+        case "쥐":
+            Request_URL =
+                "https://m.search.naver.com/p/csearch/content/apirender.nhn?where=m&pkid=387&_callback=jQuery2240759049086489322_1702010327359&u2=19960615&q=%EC%83%9D%EB%85%84%EC%9B%94%EC%9D%BC+%EC%9A%B4%EC%84%B8&u1=m&u3=solar&u4=10&_=1702010327363";
+            break;
+        case "토끼":
+            Request_URL =
+                "https://m.search.naver.com/p/csearch/content/apirender.nhn?where=m&pkid=387&_callback=jQuery2240759049086489322_1702010327359&u2=19631210&q=%EC%83%9D%EB%85%84%EC%9B%94%EC%9D%BC+%EC%9A%B4%EC%84%B8&u1=m&u3=lunarGeneral&u4=0&_=1702010327361";
+            break;
+    }
+
     try {
         /**--------------------------------------
         * axios로 해당 사이트 가져오기
@@ -11,9 +25,7 @@ export async function GET(request: NextRequest) {
         --------------------------------------*/
         const getHtml = async () => {
             try {
-                return await axios.get(
-                    "https://m.search.naver.com/p/csearch/content/apirender.nhn?where=m&pkid=387&_callback=jQuery22408355225649918152_1701949152588&u2=19631210&q=%EC%83%9D%EB%85%84%EC%9B%94%EC%9D%BC+%EC%9A%B4%EC%84%B8&u1=m&u3=lunarGeneral&u4=11&_=1701949152592"
-                );
+                return await axios.get(`${Request_URL}`);
             } catch (error) {
                 console.error(error);
             }
@@ -108,11 +120,3 @@ export async function GET(request: NextRequest) {
     //     });
     // }
 }
-
-/**------------------------------------------
- * GET 경로 처리기는 객체 와 함께 메서드를 사용할 때 기본적으로 정적으로 만들어지기 때문에
- * 
- * 동적으로 데이터를 받을 때 눈속임으로 POST로 만들어준다..
- * 그럴거면 POST 쓰지 왜....
- ------------------------------------------*/
-export async function POST() {}

@@ -1,4 +1,6 @@
-import React from "react";
+"use strict";
+
+import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import FortuneOfTodayForm from "./FortuneOfTodayForm";
 import Box from "@mui/material/Box";
@@ -10,9 +12,29 @@ import Image from "next/image";
 
 export default function WriteButton() {
     const [value, setValue] = React.useState("1"); // Tab
+    const [date, setDate] = useState<Date>(new Date());
+    const [character, setCharacter] = useState("쥐");
 
+    // 오늘 날짜
+    const formatDateString = (date: Date) => {
+        const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
+        const formattedDate = `${date.getFullYear()}.${(
+            "0" + String(date.getMonth() + 1)
+        ).slice(-2)}.${("0" + String(date.getDate())).slice(-2)} (${
+            daysOfWeek[date.getDay()]
+        })`;
+
+        return formattedDate;
+    };
+
+    // 탭 전환
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
+    };
+
+    // 캐릭터 누르면 운세 변경
+    const handleFortuneOfTodayChange = (character: any) => {
+        setCharacter(character);
     };
 
     return (
@@ -29,19 +51,32 @@ export default function WriteButton() {
                     </TabList>
                 </Box>
                 <TabPanel value="1" className="bg-white shadow-lg p-4">
-                    <div>
+                    <div className="flex mb-[20px]">
+                        <Image
+                            src="/images/mouse.png"
+                            width={70}
+                            height={70}
+                            alt="logo"
+                            className="m-auto sm:w-[30px] lg:w-[100px] "
+                            onClick={() => handleFortuneOfTodayChange("쥐")}
+                        />
                         <Image
                             src="/images/rabbit.png"
                             width={70}
                             height={70}
                             alt="logo"
                             className="m-auto sm:w-[30px] lg:w-[100px] "
+                            onClick={() => handleFortuneOfTodayChange("토끼")}
                         />
+                    </div>
+                    <div className="text-center">
+                        <div>{formatDateString(date)}</div>
+                        <strong>{character} 운세</strong>
                     </div>
 
                     {/* 운세 부분 */}
                     <div className="mt-[25px]">
-                        <FortuneOfTodayForm />
+                        <FortuneOfTodayForm character={character} />
                     </div>
                 </TabPanel>
                 <TabPanel value="2" className="bg-white shadow-lg p-4">
