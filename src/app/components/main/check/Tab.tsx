@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import FortuneOfTodayForm from "./FortuneOfTodayForm";
+import LottoForm from "./LottoForm";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -80,7 +81,7 @@ export default function WriteButton() {
                     </div>
                 </TabPanel>
                 <TabPanel value="2" className="bg-white shadow-lg p-4">
-                    준비 중입니다.
+                    <LottoForm />
                 </TabPanel>
             </TabContext>
         </Box>

@@ -16,8 +16,6 @@ export default function FortuneOfTodayForm({ character }: any) {
         try {
             const response = await fortuneOfToday(character);
             setFortuneOfToday(response); // 데이터를 변수에 저장
-
-            console.log(response);
         } catch (error) {
             // 오류 처리
         }
