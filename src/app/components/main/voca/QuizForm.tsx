@@ -103,8 +103,12 @@ export default function QuizForm() {
                         {!quiz ? (
                             // 데이터가 없을 경우 메시지 표시
                             <Typography
-                                // variant="h6"
-                                className="bg-white text-sm text-center flex-grow"
+                                style={{
+                                    backgroundColor: "white",
+                                    fontSize: "1rem",
+                                    textAlign: "center",
+                                    flexGrow: 1,
+                                }}
                             >
                                 단어를 최소 4개 이상 추가하세요.
                             </Typography>
@@ -112,32 +116,40 @@ export default function QuizForm() {
                             // 데이터가 있을 경우 퀴즈 표시
                             <>
                                 {/* <section className="flex justify-between items-center">
-                                    <Typography
-                                        variant="h6"
-                                        className="bg-white text-sm text-right flex-grow"
-                                    >
-                                        저장된 단어 : {vocaLength}
-                                    </Typography>
-                                </section> */}
-                                <section className="flex justify-between items-center">
-                                    <Typography
-                                        variant="h6"
-                                        className="bg-white p-3 text-center flex-grow"
-                                    >
-                                        아래 단어의 뜻은?
-                                    </Typography>
+            <Typography
+                variant="h6"
+                className="bg-white text-sm text-right flex-grow"
+            >
+                저장된 단어 : {vocaLength}
+            </Typography>
+        </section> */}
+                                <section
+                                    style={{
+                                        backgroundColor: "white",
+                                        padding: "1rem",
+                                        textAlign: "center",
+                                        flexGrow: 1,
+                                    }}
+                                >
+                                    아래 단어의 뜻은?
                                 </section>
-                                <section className="flex justify-between items-center">
-                                    <Typography
-                                        variant="h5"
-                                        className="bg-white p-2 text-center flex-grow"
-                                    >
-                                        {quiz.word}
-                                    </Typography>
+                                <section
+                                    style={{
+                                        backgroundColor: "white",
+                                        padding: "0.5rem",
+                                        textAlign: "center",
+                                        flexGrow: 1,
+                                    }}
+                                >
+                                    {quiz.word}
                                 </section>
                                 <Typography
-                                    variant="h6"
-                                    className="bg-white p-4 text-right text-sm"
+                                    style={{
+                                        backgroundColor: "white",
+                                        padding: "1rem",
+                                        textAlign: "right",
+                                        fontSize: "0.875rem", // 예시에 따라 조절 가능
+                                    }}
                                 >
                                     점수: {score} / 푼 문제: {totalScore}
                                 </Typography>
@@ -152,7 +164,14 @@ export default function QuizForm() {
                                         <Stack spacing={2}>
                                             {options.map((option, index) => (
                                                 <Item
-                                                    className="bg-[#41a5ee] text-white p-2 rounded cursor-pointer"
+                                                    style={{
+                                                        backgroundColor:
+                                                            "#41a5ee",
+                                                        color: "white",
+                                                        padding: "8px",
+                                                        borderRadius: "4px",
+                                                        cursor: "pointer",
+                                                    }}
                                                     key={index}
                                                     onClick={() =>
                                                         handleItemClick(
