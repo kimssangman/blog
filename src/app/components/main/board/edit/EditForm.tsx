@@ -47,8 +47,6 @@ export default function EditForm(props: any) {
         try {
             const response: any = await detailPost(props.pageId);
             setForm(response);
-
-            console.log("[post]", response);
         } catch (error) {
             // 오류 처리
         }

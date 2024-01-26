@@ -1,0 +1,150 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { getQuiz } from "@/services/voca/quiz";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+import { styled } from "@mui/material/styles";
+
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+}));
+
+export default function QuizForm() {
+    const [quiz, setQuiz] = useState<{ word: string; meaning: string } | null>(
+        null
+    );
+
+    const [options, setOptions] = useState<
+        Array<{ word: string; meaning: string }>
+    >([]);
+    const [score, setScore] = useState<number>(0);
+    const [totalScore, settoTalScore] = useState<number>(0);
+    const [vocaLength, setVocaLength] = useState<number>(0);
+
+    useEffect(() => {
+        getQuizList();
+    }, []);
+
+    /**--------------------------------------------
+     * 퀴즈 목록 랜덤으로 가져오기
+    --------------------------------------------*/
+    const getQuizList = async () => {
+        try {
+            const response: any = await getQuiz();
+            // 정답 보기를 설정
+            setQuiz(response.board[0]);
+
+            // 보기를 랜덤하게 선택
+            const shuffledQuiz = [...response.board]; // 배열의 복사본을 만듭니다.
+            shuffleArray(shuffledQuiz); // 복사본을 섞습니다.
+            setOptions(shuffledQuiz);
+
+            // 단어집의 단어의 갯수
+            setVocaLength(response.vocaLength);
+        } catch (error) {
+            // 오류 처리
+        }
+    };
+
+    /**--------------------------------------------
+     * 가져온 퀴즈 목록 다시 섞기
+    --------------------------------------------*/
+    const shuffleArray = (array: any) => {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    };
+
+    /**--------------------------------------------
+     * 정답 여부 확인 및 새로운 퀴즈 가져오기
+    --------------------------------------------*/
+    const handleItemClick = (word: any, meaning: any) => {
+        if (meaning === quiz?.meaning) {
+            // 정답일 경우
+            setScore(score + 1);
+        }
+
+        settoTalScore(totalScore + 1);
+        // 새로운 퀴즈 가져오기
+        getQuizList();
+    };
+
+    return (
+        <>
+            <section
+                style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    display: "flex",
+                }}
+            >
+                <Card className="" style={{ width: "100%", maxWidth: "400px" }}>
+                    <Box className="max-w-md" sx={{ p: 2 }}>
+                        {/* <section className="flex justify-between items-center">
+                            <Typography
+                                variant="h6"
+                                className="bg-white text-sm text-right flex-grow"
+                            >
+                                저장된 단어 : {vocaLength}
+                            </Typography>
+                        </section> */}
+                        <section className="flex justify-between items-center">
+                            <Typography
+                                variant="h6"
+                                className="bg-white p-3 text-center flex-grow"
+                            >
+                                아래 단어의 뜻은?
+                            </Typography>
+                        </section>
+                        <section className="flex justify-between items-center">
+                            <Typography
+                                variant="h5"
+                                className="bg-white p-2 text-center flex-grow"
+                            >
+                                {quiz?.word}
+                            </Typography>
+                        </section>
+                        <Typography
+                            variant="h6"
+                            className="bg-white p-4 text-right text-sm"
+                        >
+                            점수: {score} / 푼 문제: {totalScore}
+                        </Typography>
+
+                        <section>
+                            <Box sx={{ width: "100%", marginTop: "30px" }}>
+                                <Stack spacing={2}>
+                                    {options.map((option, index) => (
+                                        <Item
+                                            className="bg-[#41a5ee] text-white p-2 rounded cursor-pointer"
+                                            key={index}
+                                            onClick={() =>
+                                                handleItemClick(
+                                                    option.word,
+                                                    option.meaning
+                                                )
+                                            }
+                                        >
+                                            {option.meaning}
+                                        </Item>
+                                    ))}
+                                </Stack>
+                            </Box>
+                        </section>
+                    </Box>
+                </Card>
+            </section>
+        </>
+    );
+}

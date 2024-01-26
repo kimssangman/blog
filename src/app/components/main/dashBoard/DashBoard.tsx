@@ -48,6 +48,13 @@ export default function DashBoard() {
         router.push("/main/check");
     };
 
+    /**---------------------------------
+     *  단어장으로 라우팅
+     ---------------------------------*/
+    const handleRoute3 = () => {
+        router.push("/main/voca");
+    };
+
     return (
         <section className="m-auto pt-20 sm:pt-40 lg:pt-24">
             <div className="w-[60%] h-[130px] bg-white m-auto rounded-[20px] drop-shadow-xl flex items-center justify-center sm:text-[2rem] lg:text-[2rem]">
@@ -86,21 +93,24 @@ export default function DashBoard() {
                                 className="m-auto sm:w-[30px] lg:w-[100px] "
                             />
                             <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">
-                                확인
+                                운세
                             </span>
                         </button>
                     </div>
                     <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] cursor-pointer">
-                        <button className="flex justify-between items-center">
+                        <button
+                            className="flex justify-between items-center"
+                            onClick={handleRoute3}
+                        >
                             <Image
-                                src="/images/code.png"
+                                src="/images/english_book.png"
                                 width={100}
                                 height={100}
                                 alt="logo"
                                 className="m-auto sm:w-[30px] lg:w-[100px] "
                             />
                             <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">
-                                비고
+                                영어단어
                             </span>
                         </button>
                     </div>
