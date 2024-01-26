@@ -18,6 +18,8 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
+// ... (기존 코드)
+
 export default function QuizForm() {
     const [quiz, setQuiz] = useState<{ word: string; meaning: string } | null>(
         null
@@ -40,16 +42,23 @@ export default function QuizForm() {
     const getQuizList = async () => {
         try {
             const response: any = await getQuiz();
-            // 정답 보기를 설정
-            setQuiz(response.board[0]);
+            if (response.board.length > 0) {
+                // 정답 보기를 설정
+                setQuiz(response.board[0]);
 
-            // 보기를 랜덤하게 선택
-            const shuffledQuiz = [...response.board]; // 배열의 복사본을 만듭니다.
-            shuffleArray(shuffledQuiz); // 복사본을 섞습니다.
-            setOptions(shuffledQuiz);
+                // 보기를 랜덤하게 선택
+                const shuffledQuiz = [...response.board];
+                shuffleArray(shuffledQuiz);
+                setOptions(shuffledQuiz);
 
-            // 단어집의 단어의 갯수
-            setVocaLength(response.vocaLength);
+                // 단어집의 단어의 갯수
+                setVocaLength(response.vocaLength);
+            } else {
+                // 데이터가 없을 경우 기본값 설정
+                setQuiz(null);
+                setOptions([]);
+                setVocaLength(0);
+            }
         } catch (error) {
             // 오류 처리
         }
@@ -91,57 +100,75 @@ export default function QuizForm() {
             >
                 <Card className="" style={{ width: "100%", maxWidth: "400px" }}>
                     <Box className="max-w-md" sx={{ p: 2 }}>
-                        {/* <section className="flex justify-between items-center">
+                        {!quiz ? (
+                            // 데이터가 없을 경우 메시지 표시
                             <Typography
-                                variant="h6"
-                                className="bg-white text-sm text-right flex-grow"
+                                // variant="h6"
+                                className="bg-white text-sm text-center flex-grow"
                             >
-                                저장된 단어 : {vocaLength}
+                                단어를 최소 4개 이상 추가하세요.
                             </Typography>
-                        </section> */}
-                        <section className="flex justify-between items-center">
-                            <Typography
-                                variant="h6"
-                                className="bg-white p-3 text-center flex-grow"
-                            >
-                                아래 단어의 뜻은?
-                            </Typography>
-                        </section>
-                        <section className="flex justify-between items-center">
-                            <Typography
-                                variant="h5"
-                                className="bg-white p-2 text-center flex-grow"
-                            >
-                                {quiz?.word}
-                            </Typography>
-                        </section>
-                        <Typography
-                            variant="h6"
-                            className="bg-white p-4 text-right text-sm"
-                        >
-                            점수: {score} / 푼 문제: {totalScore}
-                        </Typography>
+                        ) : (
+                            // 데이터가 있을 경우 퀴즈 표시
+                            <>
+                                {/* <section className="flex justify-between items-center">
+                                    <Typography
+                                        variant="h6"
+                                        className="bg-white text-sm text-right flex-grow"
+                                    >
+                                        저장된 단어 : {vocaLength}
+                                    </Typography>
+                                </section> */}
+                                <section className="flex justify-between items-center">
+                                    <Typography
+                                        variant="h6"
+                                        className="bg-white p-3 text-center flex-grow"
+                                    >
+                                        아래 단어의 뜻은?
+                                    </Typography>
+                                </section>
+                                <section className="flex justify-between items-center">
+                                    <Typography
+                                        variant="h5"
+                                        className="bg-white p-2 text-center flex-grow"
+                                    >
+                                        {quiz.word}
+                                    </Typography>
+                                </section>
+                                <Typography
+                                    variant="h6"
+                                    className="bg-white p-4 text-right text-sm"
+                                >
+                                    점수: {score} / 푼 문제: {totalScore}
+                                </Typography>
 
-                        <section>
-                            <Box sx={{ width: "100%", marginTop: "30px" }}>
-                                <Stack spacing={2}>
-                                    {options.map((option, index) => (
-                                        <Item
-                                            className="bg-[#41a5ee] text-white p-2 rounded cursor-pointer"
-                                            key={index}
-                                            onClick={() =>
-                                                handleItemClick(
-                                                    option.word,
-                                                    option.meaning
-                                                )
-                                            }
-                                        >
-                                            {option.meaning}
-                                        </Item>
-                                    ))}
-                                </Stack>
-                            </Box>
-                        </section>
+                                <section>
+                                    <Box
+                                        sx={{
+                                            width: "100%",
+                                            marginTop: "30px",
+                                        }}
+                                    >
+                                        <Stack spacing={2}>
+                                            {options.map((option, index) => (
+                                                <Item
+                                                    className="bg-[#41a5ee] text-white p-2 rounded cursor-pointer"
+                                                    key={index}
+                                                    onClick={() =>
+                                                        handleItemClick(
+                                                            option.word,
+                                                            option.meaning
+                                                        )
+                                                    }
+                                                >
+                                                    {option.meaning}
+                                                </Item>
+                                            ))}
+                                        </Stack>
+                                    </Box>
+                                </section>
+                            </>
+                        )}
                     </Box>
                 </Card>
             </section>
