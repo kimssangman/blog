@@ -10,34 +10,20 @@ export async function GET(request: NextRequest) {
         await dbConnect();
 
         // $sample을 이용해 서 랜덤하게 추출 후 size 제한
-        const [voca, vocaLength] = await Promise.all([
-            Voca.aggregate([
-                {
-                    $project: {
-                        _id: 1,
-                        word: 1,
-                        meaning: 1,
-                    },
+        const voca = await Voca.aggregate([
+            {
+                $project: {
+                    _id: 1,
+                    word: 1,
+                    meaning: 1,
                 },
-                {
-                    $sample: {
-                        size: 4,
-                    },
-                },
-            ]),
-            Voca.countDocuments({}),
+            },
         ]);
 
         if (voca) {
-            return new NextResponse(
-                JSON.stringify({
-                    voca,
-                    vocaLength,
-                }),
-                {
-                    status: 200,
-                }
-            );
+            return new NextResponse(JSON.stringify(voca), {
+                status: 200,
+            });
         }
     } catch (error) {
         return new NextResponse(

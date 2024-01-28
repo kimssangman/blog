@@ -16,8 +16,6 @@ export async function writePost(form: Form) {
 
     const data = await response.json();
 
-    console.log(data);
-
     if (!response.ok) {
         throw new Error(data.message || "서버 요청 오류");
     }

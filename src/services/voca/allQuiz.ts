@@ -1,6 +1,6 @@
-// 퀴즈 랜덤으로 4개 가져오기
+// 모든 퀴즈 가져오기
 export async function getQuiz() {
-    const response = await fetch("/api/voca", { cache: "no-store" });
+    const response = await fetch("/api/voca/allPost/", { cache: "no-store" });
 
     const data = await response.json();
 

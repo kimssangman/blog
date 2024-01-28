@@ -18,7 +18,6 @@ export async function POST(req: Request, res: Response) {
         * 단어 중복체크
         --------------------------------------*/
         const findWord = await Voca.findOne({ word: word });
-        console.log(findWord);
 
         if (findWord) {
             return new NextResponse(

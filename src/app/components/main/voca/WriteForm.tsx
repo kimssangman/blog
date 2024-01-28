@@ -67,10 +67,19 @@ export default function WriteForm(props: any) {
         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
         const { name, value } = e.target;
+        const formattedValue =
+            name === "word" ? capitalizeFirstLetter(value) : value;
         setForm((prev) => ({
             ...prev,
-            [name]: value,
+            [name]: formattedValue,
         }));
+    };
+
+    /**----------------------------
+    * 첫글자 대문자로 만들어서 등록하기
+    ----------------------------*/
+    const capitalizeFirstLetter = (str: string) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
     };
 
     /**----------------------------

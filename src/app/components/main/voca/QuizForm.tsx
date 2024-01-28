@@ -61,12 +61,12 @@ export default function QuizForm() {
     const getQuizList = async () => {
         try {
             const response: any = await getQuiz();
-            if (response.board.length > 0) {
+            if (response.voca.length > 0) {
                 // 정답 보기를 설정
-                setQuiz(response.board[0]);
+                setQuiz(response.voca[0]);
 
                 // 보기를 랜덤하게 선택
-                const shuffledQuiz = [...response.board];
+                const shuffledQuiz = [...response.voca];
                 shuffleArray(shuffledQuiz);
                 setOptions(shuffledQuiz);
 

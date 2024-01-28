@@ -74,7 +74,6 @@ export default function EditForm(props: any) {
         // 게시글 작성
         editPost(form)
             .then((res: any) => {
-                console.log(">>>>>>>", res);
                 // 라우팅
                 router.replace("/main/board");
             })
