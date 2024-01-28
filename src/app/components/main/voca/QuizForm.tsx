@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import { Snackbar, SnackbarOrigin } from "@mui/material";
 import { getQuiz } from "@/services/voca/quiz";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -18,7 +19,9 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-// ... (기존 코드)
+interface State extends SnackbarOrigin {
+    open: boolean;
+}
 
 export default function QuizForm() {
     const [quiz, setQuiz] = useState<{ word: string; meaning: string } | null>(
@@ -31,6 +34,22 @@ export default function QuizForm() {
     const [score, setScore] = useState<number>(0);
     const [totalScore, settoTalScore] = useState<number>(0);
     const [vocaLength, setVocaLength] = useState<number>(0);
+
+    /**----------------------------
+    * 스낵바
+    ----------------------------*/
+    const [snackbarState, setSnackbarState] = React.useState<State>({
+        open: false,
+        vertical: "top",
+        horizontal: "center",
+    });
+    const { vertical, horizontal, open: snackbarOpen } = snackbarState;
+
+    const [snackbarMessage, setSnackbarMessage] = useState<string>("");
+
+    const handleSnackbarClose = () => {
+        setSnackbarState({ ...snackbarState, open: false });
+    };
 
     useEffect(() => {
         getQuizList();
@@ -81,6 +100,11 @@ export default function QuizForm() {
         if (meaning === quiz?.meaning) {
             // 정답일 경우
             setScore(score + 1);
+            setSnackbarMessage("✅ 정답입니다.");
+            setSnackbarState((prev) => ({ ...prev, open: true }));
+        } else {
+            setSnackbarMessage(`❌ ${quiz?.word} : ${quiz?.meaning} `);
+            setSnackbarState((prev) => ({ ...prev, open: true }));
         }
 
         settoTalScore(totalScore + 1);
@@ -90,6 +114,14 @@ export default function QuizForm() {
 
     return (
         <>
+            <Snackbar
+                anchorOrigin={{ vertical, horizontal }}
+                open={snackbarOpen}
+                onClose={handleSnackbarClose}
+                message={snackbarMessage}
+                key={vertical + horizontal}
+                autoHideDuration={1000}
+            />
             <section
                 style={{
                     justifyContent: "center",
@@ -100,19 +132,20 @@ export default function QuizForm() {
             >
                 <Card className="" style={{ width: "100%", maxWidth: "400px" }}>
                     <Box className="max-w-md" sx={{ p: 2 }}>
-                        {!quiz ? (
-                            // 데이터가 없을 경우 메시지 표시
-                            <Typography
-                                style={{
-                                    backgroundColor: "white",
-                                    fontSize: "1rem",
-                                    textAlign: "center",
-                                    flexGrow: 1,
-                                }}
-                            >
-                                단어를 최소 4개 이상 추가하세요.
-                            </Typography>
-                        ) : (
+                        {
+                            // !quiz ? (
+                            //     // 데이터가 없을 경우 메시지 표시
+                            //     <Typography
+                            //         style={{
+                            //             backgroundColor: "white",
+                            //             fontSize: "1rem",
+                            //             textAlign: "center",
+                            //             flexGrow: 1,
+                            //         }}
+                            //     >
+                            //         단어를 최소 4개 이상 추가하세요.
+                            //     </Typography>
+                            // ) : (
                             // 데이터가 있을 경우 퀴즈 표시
                             <>
                                 {/* <section className="flex justify-between items-center">
@@ -141,7 +174,7 @@ export default function QuizForm() {
                                         flexGrow: 1,
                                     }}
                                 >
-                                    {quiz.word}
+                                    {quiz?.word}
                                 </section>
                                 <Typography
                                     style={{
@@ -187,7 +220,8 @@ export default function QuizForm() {
                                     </Box>
                                 </section>
                             </>
-                        )}
+                            // )
+                        }
                     </Box>
                 </Card>
             </section>
