@@ -58,7 +58,10 @@ export default function WriteButton() {
                             width={70}
                             height={70}
                             alt="logo"
-                            className="m-auto sm:w-[30px] lg:w-[100px] "
+                            style={{
+                                filter: "drop-shadow(6px 6px 1px #c3c3c3)",
+                            }}
+                            className="m-auto sm:w-[30px] lg:w-[100px] cursor-pointer transition duration-300 ease-in-out transform hover:scale-110"
                             onClick={() => handleFortuneOfTodayChange("쥐")}
                         />
                         <Image
@@ -66,7 +69,10 @@ export default function WriteButton() {
                             width={70}
                             height={70}
                             alt="logo"
-                            className="m-auto sm:w-[30px] lg:w-[100px] "
+                            style={{
+                                filter: "drop-shadow(6px 6px 1px #c3c3c3)",
+                            }}
+                            className="m-auto sm:w-[30px] lg:w-[100px] cursor-pointer transition duration-300 ease-in-out transform hover:scale-110"
                             onClick={() => handleFortuneOfTodayChange("토끼")}
                         />
                     </div>

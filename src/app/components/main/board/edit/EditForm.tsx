@@ -81,11 +81,21 @@ export default function EditForm(props: any) {
     };
 
     return (
-        <section className="flex justify-center items-center w-screen pt-[95px]">
-            <div>
+        /**------------------------------
+         * 모바일 적용
+         * sm, md, lg, xl, 2xl
+         * 
+         * 갈수록 화면 작아짐
+         * 2xl:w-[30%] xl:w-[40%] lg:w-[40%] md:w-[80%]
+         * 
+         * 컴퓨터에서는 md:mt-[90px]
+         * 모바일에서는 mt-[60px] 
+         ------------------------------*/
+        <section className="flex justify-center items-center w-full md:mt-[90px] mt-[60px] ">
+            <div className="w-full 2xl:w-[30%] xl:w-[40%] lg:w-[40%] md:w-[80%] mx-auto ">
                 <form
                     onSubmit={onSubmit}
-                    className="flex flex-col border p-[50px] bg-white rounded-[40px] drop-shadow-xl lg:w-[500px] lg:h-[600px]"
+                    className="flex flex-col border p-4 md:p-8 bg-white rounded-[20px] md:rounded-[40px] lg:rounded-[60px] drop-shadow-xl min-h-[400px]"
                 >
                     <Image
                         src="/images/code_write.png"
@@ -94,15 +104,17 @@ export default function EditForm(props: any) {
                         alt="logo"
                         className="m-auto"
                     />
-                    {/* <p className='text-center'>게시글</p> */}
                     <span className="w-full border-2"></span>
 
                     {/* title */}
-                    <label htmlFor="title" className="font-semibold">
+                    <label
+                        htmlFor="title"
+                        className="font-semibold mt-3 md:mt-4"
+                    >
                         문제
                     </label>
                     <textarea
-                        className="bg-gray-200 shadow-inner rounded-l p-2 flex-1"
+                        className="bg-gray-200 shadow-inner rounded-l p-2 min-w-full min-h-[70px]"
                         id="title"
                         name="title"
                         required
@@ -112,11 +124,14 @@ export default function EditForm(props: any) {
                     />
 
                     {/* 아이디어 */}
-                    <label htmlFor="idea" className="font-semibold">
+                    <label
+                        htmlFor="idea"
+                        className="font-semibold mt-3 md:mt-4"
+                    >
                         아이디어
                     </label>
                     <textarea
-                        className="bg-gray-200 shadow-inner rounded-l p-2 flex-1"
+                        className="bg-gray-200 shadow-inner rounded-l p-2 min-w-full min-h-[70px]"
                         id="idea"
                         name="idea"
                         value={form.idea}
@@ -124,11 +139,14 @@ export default function EditForm(props: any) {
                     />
 
                     {/* 입력 */}
-                    <label htmlFor="input" className="font-semibold">
+                    <label
+                        htmlFor="input"
+                        className="font-semibold mt-3 md:mt-4"
+                    >
                         입력
                     </label>
                     <textarea
-                        className="bg-gray-200 shadow-inner rounded-l p-2 flex-1"
+                        className="bg-gray-200 shadow-inner rounded-l p-2 min-w-full min-h-[70px]"
                         id="input"
                         name="input"
                         value={form.input}
@@ -136,11 +154,14 @@ export default function EditForm(props: any) {
                     />
 
                     {/* 출력 */}
-                    <label htmlFor="output" className="font-semibold">
+                    <label
+                        htmlFor="output"
+                        className="font-semibold mt-3 md:mt-4"
+                    >
                         출력
                     </label>
                     <textarea
-                        className="bg-gray-200 shadow-inner rounded-l p-2 flex-1"
+                        className="bg-gray-200 shadow-inner rounded-l p-2 min-w-full min-h-[70px]"
                         id="output"
                         name="output"
                         value={form.output}
@@ -148,11 +169,14 @@ export default function EditForm(props: any) {
                     />
 
                     {/* 소스 코드 */}
-                    <label htmlFor="contents" className="font-semibold">
+                    <label
+                        htmlFor="contents"
+                        className="font-semibold mt-3 md:mt-4"
+                    >
                         소스 코드
                     </label>
                     <textarea
-                        className="bg-gray-200 shadow-inner rounded-l p-2 flex-1"
+                        className="bg-gray-200 shadow-inner rounded-l p-2 min-w-full min-h-[70px]"
                         id="contents"
                         name="contents"
                         required
@@ -160,12 +184,12 @@ export default function EditForm(props: any) {
                         onChange={onChange}
                     />
 
-                    <button className="text-white border hover:bg-rose-400 rounded-xl py-1 px-4 mt-8 drop-shadow-xl border-rose-300 bg-rose-400">
+                    <button className="text-white border hover:bg-rose-400 rounded-xl py-1 px-4 mt-4 md:mt-8 drop-shadow-xl border-rose-300 bg-rose-400">
                         수정
                     </button>
                     <Link
                         href="/main/board"
-                        className="border hover:bg-gray-200 rounded-xl py-1 px-4 mt-3 drop-shadow-xl text-center"
+                        className="border hover:bg-gray-200 rounded-xl py-1 px-4 mt-3 md:mt-4 drop-shadow-xl text-center"
                     >
                         돌아가기
                     </Link>

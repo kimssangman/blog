@@ -73,9 +73,9 @@ export default function DashBoard() {
                                 width={100}
                                 height={100}
                                 alt="logo"
-                                className="m-auto sm:w-[30px] lg:w-[100px] "
+                                className="m-auto w-full max-w-[80px] md:w-1/5 lg:w-1/4 xl:w-1/3 2xl:w-1/2"
                             />
-                            <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">
+                            <span className="ml-[20px] sm:text-[1.3rem] lg:text-[1.3rem]">
                                 코드
                             </span>
                         </button>
@@ -90,9 +90,9 @@ export default function DashBoard() {
                                 width={100}
                                 height={100}
                                 alt="logo"
-                                className="m-auto sm:w-[30px] lg:w-[100px] "
+                                className="m-auto w-full max-w-[80px] md:w-1/5 lg:w-1/4 xl:w-1/3 2xl:w-1/2"
                             />
-                            <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">
+                            <span className="ml-[20px] sm:text-[1.3rem] lg:text-[1.3rem]">
                                 운세
                             </span>
                         </button>
@@ -107,9 +107,9 @@ export default function DashBoard() {
                                 width={100}
                                 height={100}
                                 alt="logo"
-                                className="m-auto sm:w-[30px] lg:w-[100px] "
+                                className="m-auto w-full max-w-[80px] md:w-1/5 lg:w-1/4 xl:w-1/3 2xl:w-1/2"
                             />
-                            <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">
+                            <span className="ml-[20px] sm:text-[1.3rem] lg:text-[1.3rem]">
                                 영어단어
                             </span>
                         </button>
@@ -121,9 +121,9 @@ export default function DashBoard() {
                                 width={100}
                                 height={100}
                                 alt="logo"
-                                className="m-auto sm:w-[30px] lg:w-[100px] "
+                                className="m-auto w-full max-w-[80px] md:w-1/5 lg:w-1/4 xl:w-1/3 2xl:w-1/2"
                             />
-                            <span className="mx-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">
+                            <span className="ml-[20px] sm:text-[1.3rem] lg:text-[1.3rem]">
                                 비고
                             </span>
                         </button>

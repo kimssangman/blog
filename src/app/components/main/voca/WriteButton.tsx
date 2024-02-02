@@ -17,10 +17,10 @@ export default function WriteButton() {
      ----------------------------*/
     const session: any = useSession();
 
-    console.log("          ");
-    console.log("main/page.ts 유저 토큰 정보");
-    console.log(session);
-    console.log("------------------------------");
+    // console.log("          ");
+    // console.log("main/page.ts 유저 토큰 정보");
+    // console.log(session);
+    // console.log("------------------------------");
 
     /**----------------------------
     * snack bar

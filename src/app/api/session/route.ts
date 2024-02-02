@@ -5,11 +5,14 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest, response: NextResponse) {
     const session = await getServerSession(authOptions);
 
-    console.log('session/route', session)
+    // console.log('session/route', session)
 
     if (!session) {
         return new NextResponse(
-            JSON.stringify({ status: "fail", message: "You are not logged in" }),
+            JSON.stringify({
+                status: "fail",
+                message: "You are not logged in",
+            }),
             { status: 401 }
         );
     }

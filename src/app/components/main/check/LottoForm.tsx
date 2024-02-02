@@ -63,12 +63,18 @@ export default function LottoForm() {
                 key={vertical + horizontal}
                 autoHideDuration={1000}
             />
+            <div className="flex justify-center items-center text-center">
+                <span className="text-gray-800 font-semibold text-[0.9rem]">
+                    아래 룰렛을 눌러서 로또 번호를 뽑아요~!
+                </span>
+            </div>
+
             <Image
                 src="/images/slot.gif"
                 width={100}
                 height={100}
                 alt="logo"
-                className="m-auto sm:w-[30px] lg:w-[100px] mb-[30px]"
+                className="m-auto sm:w-[30px] lg:w-[100px] mb-[30px] cursor-pointer transition duration-300 ease-in-out transform hover:scale-110"
                 onClick={createLottoNumber}
             />
             <Stack direction="column" spacing={3}>

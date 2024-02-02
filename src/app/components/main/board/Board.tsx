@@ -29,7 +29,7 @@ export default function Board() {
 
     return (
         <section>
-            <div className="lg:m-auto lg:w-[60%] lg:mt-[120px] mx-[20px] mt-[100px] mb-[20px]">
+            <div className="lg:m-auto lg:w-[60%] lg:mt-[100px] mx-[20px] mt-[70px] mb-[20px]">
                 <div className="lg:flex sm:flex justify-between sm:flex-row-reverse flex-col">
                     <WriteButton />
                     <Search onSearch={handleSearch} />

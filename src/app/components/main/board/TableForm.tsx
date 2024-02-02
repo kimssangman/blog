@@ -101,14 +101,14 @@ export default function TableForm({ searchValue }: any) {
             startPage = 1;
             endPage = totalPages;
         } else if (currentPage - startPage < Math.floor(maxVisiblePages / 2)) {
-        /**-----------------------------
+            /**-----------------------------
          * 시작 페이지와 현재 페이지 사이의 거리가 주변에 보여줄 페이지보다 작을경우
          * 처음 1 (2) 3 4 5 끝
          * 보여지는 맨 끝 값은 1(시작 페이지) + 5(현재 페이지 주변에 보여줄 페이지 수) - 1 = 5
          -----------------------------*/
             endPage = startPage + maxVisiblePages - 1;
         } else if (endPage - currentPage < Math.ceil(maxVisiblePages / 2) - 1) {
-        /**-----------------------------
+            /**-----------------------------
          * 끝 페이지와 현재 페이지 사이의 거리가 주변에 보여줄 페이지보다 작을경우
          * 처음 4 5 6 (7) 8 끝
          * 보여지는 맨 처음 값은 8(끝 페이지) - 5(현재 페이지 주변에 보여줄 페이지 수) + 1 = 4
@@ -130,11 +130,16 @@ export default function TableForm({ searchValue }: any) {
                         <TableRow>
                             <TableCell
                                 align="center"
-                                className="w-[5%] border-r"
+                                style={{
+                                    width: "5%",
+                                    borderRight: "1px solid rgb(224, 224, 224)",
+                                    whiteSpace: "nowrap",
+                                }}
                                 sx={{
                                     "@media (max-width: 768px)": {
                                         fontSize: "0.7rem", // 모바일에서 글자 크기를 줄임
                                         width: "15%",
+                                        whiteSpace: "nowrap",
                                     },
                                 }}
                             >
@@ -142,7 +147,10 @@ export default function TableForm({ searchValue }: any) {
                             </TableCell>
                             <TableCell
                                 align="center"
-                                className="w-[65%] border-r"
+                                style={{
+                                    width: "65%",
+                                    borderRight: "1px solid rgb(224, 224, 224)",
+                                }}
                                 sx={{
                                     "@media (max-width: 768px)": {
                                         fontSize: "0.7rem", // 모바일에서 글자 크기를 줄임
@@ -154,11 +162,15 @@ export default function TableForm({ searchValue }: any) {
                             </TableCell>
                             <TableCell
                                 align="center"
-                                className="w-[7%]"
+                                style={{
+                                    width: "7%",
+                                    whiteSpace: "nowrap",
+                                }}
                                 sx={{
                                     "@media (max-width: 768px)": {
                                         fontSize: "0.7rem", // 모바일에서 글자 크기를 줄임
                                         width: "15%",
+                                        whiteSpace: "nowrap",
                                     },
                                 }}
                             >
@@ -186,14 +198,18 @@ export default function TableForm({ searchValue }: any) {
                                     component="th"
                                     scope="row"
                                     align="center"
-                                    className="py-[10px] cursor-pointer"
+                                    style={{
+                                        padding: "10px",
+                                        cursor: "pointer",
+                                    }}
                                 >
                                     {row.index}
                                 </TableCell>
                                 <TableCell
                                     align="left"
-                                    className="py-[5px] pl-[30px] cursor-pointer"
-                                    sx={{
+                                    style={{
+                                        padding: "5px",
+                                        paddingLeft: "30px",
                                         maxWidth: 0,
                                         overflow: "hidden",
                                         textOverflow: "ellipsis",
@@ -205,8 +221,8 @@ export default function TableForm({ searchValue }: any) {
 
                                 <TableCell
                                     align="center"
-                                    className="py-[10px] cursor-pointer"
                                     style={{
+                                        padding: "10px",
                                         maxWidth: "150px",
                                         overflow: "hidden",
                                         textOverflow: "ellipsis",
@@ -253,7 +269,13 @@ export default function TableForm({ searchValue }: any) {
                         <button
                             key="first"
                             onClick={() => handlePageChange(1)}
-                            className="mr-2 px-3 py-2 rounded bg-gray-300 text-gray-700"
+                            style={{
+                                marginRight: "2px",
+                                padding: "3px 2px",
+                                borderRadius: "4px",
+                                background: "#ccc",
+                                color: "#707070",
+                            }}
                         >
                             처음
                         </button>
