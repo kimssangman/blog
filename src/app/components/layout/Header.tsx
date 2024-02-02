@@ -114,6 +114,9 @@ export default function Header(props: any) {
                     홈
                 </span>
             </Link>
+            <div className="ml-auto flex sm:hidden lg:hidden xl:hidden 2xl:hidden">
+                <Time />
+            </div>
             <button
                 className=" inline-flex p-3 hover:bg-yellow-400 rounded lg:hidden ml-auto hover:text-white outline-none"
                 onClick={handleClick}
