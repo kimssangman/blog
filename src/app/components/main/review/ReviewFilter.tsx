@@ -3,17 +3,19 @@
 import React, { useState, useEffect } from "react";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
-export default function ReviewFilter() {
+export default function ReviewFilter(props: any) {
     const [filterOptions, setFilterOptions] = useState({
         region: "전체",
         type: "전체",
         rating: "전체",
     });
 
+    /*--------------------------------
+    * 자식 -> 부모 데이터 전달
+    --------------------------------*/
     useEffect(() => {
-        // 여기서 서버에 filterOptions를 보내는 로직을 추가할 수 있습니다.
-        // 예: fetchData(filterOptions);
-        console.log("Sending to server:", filterOptions);
+        // 콜백 함수를 호출하여 데이터를 전달
+        props.onData(filterOptions);
     }, [filterOptions]);
 
     const handleCheckboxChange = (key: any, value: any) => {
