@@ -1,6 +1,9 @@
 export type Form = {
-    word: string;
-    meaning: string;
+    region: string;
+    type: string;
+    rating: string;
+    images: FileList | null; // 여러 파일을 선택하므로 FileList 또는 null로 타입을 지정합니다.
+    comment: string;
 };
 
 // 리뷰 추가

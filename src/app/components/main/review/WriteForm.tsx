@@ -1,16 +1,19 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Snackbar, SnackbarOrigin } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import { writePost } from "@/services/voca/writePost";
+import { writePost } from "@/services/review/writePost";
 import { Checkbox, FormControlLabel, Box, Modal } from "@mui/material";
+import Image from "next/image";
 
 interface State extends SnackbarOrigin {
     open: boolean;
 }
 
 type Form = {
-    word: string;
-    meaning: string;
+    region: string;
+    type: string;
+    rating: string;
+    images: FileList | null; // 여러 파일을 선택하므로 FileList 또는 null로 타입을 지정합니다.
+    comment: string;
 };
 
 export default function WriteForm(props: any) {
@@ -36,8 +39,11 @@ export default function WriteForm(props: any) {
     * form
     ----------------------------*/
     const [form, setForm] = useState<Form>({
-        word: "",
-        meaning: "",
+        region: "",
+        type: "",
+        rating: "",
+        images: null,
+        comment: "",
     });
 
     /**----------------------------
@@ -47,35 +53,62 @@ export default function WriteForm(props: any) {
     const handleAddWord = (e: FormEvent) => {
         e.preventDefault();
 
-        // 폼 유효성 검사 - 단어와 뜻이 모두 입력되었는지 확인
-        if (!form.word || !form.meaning) {
-            setSnackbarMessage("단어와 뜻을 모두 입력하세요.");
-            setSnackbarState((prev) => ({ ...prev, open: true }));
-            return;
-        }
-
-        // 단어 추가
+        // 리뷰 추가
         writePost(form)
             .then((res: any) => {
                 handleModalClose(); // 스낵바가 닫힐 때 모달도 닫기
             })
             .catch((err) => {
-                setSnackbarMessage("이미 추가한 단어입니다.");
                 setSnackbarState((prev) => ({ ...prev, open: true }));
             });
 
-        setModalOpen(false); // 단어를 추가한 후 모달 닫기
+        setModalOpen(false); // 리뷰를 추가한 후 모달 닫기
     };
 
-    const [filterOptions, setFilterOptions] = useState({
-        region: "전체",
-        type: "전체",
-        rating: "전체",
-    });
-
-    const handleCheckboxChange = (key: any, value: any) => {
-        setFilterOptions((prevOptions) => ({ ...prevOptions, [key]: value }));
+    const handleCheckboxChange = (key: string, value: any) => {
+        if (key === "images") {
+            const files = (value as HTMLInputElement).files;
+            setForm((prevOptions) => ({ ...prevOptions, [key]: files }));
+        } else {
+            setForm((prevOptions) => ({ ...prevOptions, [key]: value }));
+        }
     };
+
+    // 사진 미리보기
+    const [previews, setPreviews] = useState<string[]>([]);
+    const [images, setImages] = useState<File[]>([]); // Change FileList | null to File[]
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newImages = [...images];
+        const newPreviews = [...previews];
+
+        for (let i = 0; i < e.target.files!.length; i++) {
+            const file = e.target.files![i];
+            // 이미지 파일 3개로 제한
+            if (newImages.length < 3) {
+                // 이벤트객체의 파일을 newImages에 담기
+                newImages.push(file);
+                // 파일리더 객체 생성
+                const reader = new FileReader();
+                // 파일 읽어온 후 실행되는 콜백함수
+                reader.onload = (e) => {
+                    // 읽어온 값을 갱신하기
+                    newPreviews.push(e.target!.result as string);
+                    setPreviews(newPreviews);
+                };
+                // 파일 객체를 읽어 base64 형태의 문자열로 변환
+                reader.readAsDataURL(file);
+            }
+        }
+        setImages(newImages);
+
+        // 이미지 데이터를 form에 추가
+        setForm((prevOptions: any) => ({ ...prevOptions, images: newImages }));
+    };
+
+    useEffect(() => {
+        console.log("리뷰 작성 >> ", form);
+    }, [form]);
 
     return (
         <>
@@ -126,6 +159,7 @@ export default function WriteForm(props: any) {
                                 ].map((option) => (
                                     <FormControlLabel
                                         key={option}
+                                        checked={form.region === option}
                                         control={
                                             <Checkbox
                                                 onChange={() =>
@@ -167,6 +201,7 @@ export default function WriteForm(props: any) {
                                 ].map((option) => (
                                     <FormControlLabel
                                         key={option}
+                                        checked={form.type === option}
                                         control={
                                             <Checkbox
                                                 onChange={() =>
@@ -200,6 +235,7 @@ export default function WriteForm(props: any) {
                                 ].map((option) => (
                                     <FormControlLabel
                                         key={option}
+                                        checked={form.rating === option}
                                         control={
                                             <Checkbox
                                                 onChange={() =>
@@ -220,10 +256,35 @@ export default function WriteForm(props: any) {
                         {/* 사진 */}
                         <div className="filter-section border-b border-blue-500 pb-4 mb-4">
                             <div className="filter-header">
-                                <span className="text-lg font-bold">사진</span>
+                                <span className="text-lg font-bold">
+                                    사진 추가(선택)
+                                </span>
                             </div>
                             <div className="filter-options">
-                                <input type="file" className="p-2" />
+                                <input
+                                    type="file"
+                                    id="inputFile"
+                                    accept="image/*"
+                                    multiple
+                                    className="p-2"
+                                    onChange={handleImageChange}
+                                />
+                            </div>
+                            {/* 사진 미리보기 */}
+                            <div>
+                                {previews?.map((preview, index) => (
+                                    <div
+                                        className="flex justify-center"
+                                        key={index}
+                                    >
+                                        <Image
+                                            src={preview}
+                                            width={200}
+                                            height={200}
+                                            alt={`${preview}-${index}`}
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
@@ -239,6 +300,12 @@ export default function WriteForm(props: any) {
                                     name=""
                                     id=""
                                     className="border rounded p-2 w-full"
+                                    onChange={(e) =>
+                                        handleCheckboxChange(
+                                            "comment",
+                                            e.target.value
+                                        )
+                                    }
                                 ></textarea>
                             </div>
                         </div>
