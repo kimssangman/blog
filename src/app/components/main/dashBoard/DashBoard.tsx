@@ -35,24 +35,10 @@ export default function DashBoard() {
     }
 
     /**---------------------------------
-     * code 게시판으로 라우팅
+     * 라우팅
      ---------------------------------*/
-    const handleRoute = () => {
-        router.push("/main/board");
-    };
-
-    /**---------------------------------
-     *  게시판으로 라우팅
-     ---------------------------------*/
-    const handleRoute2 = () => {
-        router.push("/main/check");
-    };
-
-    /**---------------------------------
-     *  단어장으로 라우팅
-     ---------------------------------*/
-    const handleRoute3 = () => {
-        router.push("/main/voca");
+    const handleRoute = (route: any) => {
+        router.push(`/main/${route}`);
     };
 
     return (
@@ -65,7 +51,7 @@ export default function DashBoard() {
                 <div className="lg:flex sm:flex lg:justify-between text-center lg:flex-row sm:flex-col">
                     <div
                         className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] cursor-pointer"
-                        onClick={handleRoute}
+                        onClick={() => handleRoute("board")}
                     >
                         <button className="flex justify-between items-center">
                             <Image
@@ -83,7 +69,7 @@ export default function DashBoard() {
                     <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] cursor-pointer">
                         <button
                             className="flex justify-between items-center"
-                            onClick={handleRoute2}
+                            onClick={() => handleRoute("check")}
                         >
                             <Image
                                 src="/images/check.png"
@@ -100,7 +86,24 @@ export default function DashBoard() {
                     <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] cursor-pointer">
                         <button
                             className="flex justify-between items-center"
-                            onClick={handleRoute3}
+                            onClick={() => handleRoute("review")}
+                        >
+                            <Image
+                                src="/images/review.png"
+                                width={100}
+                                height={100}
+                                alt="logo"
+                                className="m-auto w-full max-w-[80px] xl:w-1/3 2xl:w-1/2"
+                            />
+                            <span className="ml-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">
+                                맛집
+                            </span>
+                        </button>
+                    </div>
+                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] cursor-pointer">
+                        <button
+                            className="flex justify-between items-center"
+                            onClick={() => handleRoute("voca")}
                         >
                             <Image
                                 src="/images/english_book.png"
@@ -111,20 +114,6 @@ export default function DashBoard() {
                             />
                             <span className="ml-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">
                                 단어
-                            </span>
-                        </button>
-                    </div>
-                    <div className="lg:w-[23%] sm:w-[100%] h-[130px] bg-white rounded-[20px] drop-shadow-xl flex justify-center my-[15px] cursor-pointer">
-                        <button className="flex justify-between items-center">
-                            <Image
-                                src="/images/code.png"
-                                width={100}
-                                height={100}
-                                alt="logo"
-                                className="m-auto w-full max-w-[80px] xl:w-1/3 2xl:w-1/2"
-                            />
-                            <span className="ml-[20px] sm:text-[1.5rem] lg:text-[1.5rem]">
-                                비고
                             </span>
                         </button>
                     </div>
