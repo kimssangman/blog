@@ -17,11 +17,6 @@ export default function WriteButton() {
      ----------------------------*/
     const session: any = useSession();
 
-    // console.log("          ");
-    // console.log("main/page.ts 유저 토큰 정보");
-    // console.log(session);
-    // console.log("------------------------------");
-
     /**----------------------------
     * snack bar
     ----------------------------*/
@@ -55,7 +50,7 @@ export default function WriteButton() {
                 anchorOrigin={{ vertical, horizontal }}
                 open={open}
                 onClose={handleClose}
-                message="단어 추가 권한이 없습니다."
+                message="리뷰 추가 권한이 없습니다."
                 key={vertical + horizontal}
                 autoHideDuration={1000}
             />
@@ -63,9 +58,9 @@ export default function WriteButton() {
                 onClick={handleModalOpen}
                 className="bg-transparent hover:bg-[#41a5ee] text-[#41a5ee] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded float-right mb-2"
             >
-                단어 추가
+                리뷰 추가
             </button>
-            {/* {modalOpen && <WriteForm handleModalClose={handleModalClose} />} */}
+            {modalOpen && <WriteForm handleModalClose={handleModalClose} />}
         </>
     );
 }

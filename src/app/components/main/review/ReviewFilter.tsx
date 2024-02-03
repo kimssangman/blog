@@ -29,7 +29,7 @@ export default function ReviewFilter(props: any) {
                 <div className="filter-header">
                     <span className="text-lg font-bold">지역</span>
                 </div>
-                <div className="filter-options space-y-2">
+                <div className="filter-options">
                     {[
                         "전체",
                         "서울",
@@ -63,7 +63,7 @@ export default function ReviewFilter(props: any) {
                 <div className="filter-header">
                     <span className="text-lg font-bold">유형</span>
                 </div>
-                <div className="filter-options space-y-2">
+                <div className="filter-options">
                     {[
                         "전체",
                         "한식",
@@ -103,7 +103,7 @@ export default function ReviewFilter(props: any) {
                 <div className="filter-header">
                     <span className="text-lg font-bold">별점</span>
                 </div>
-                <div className="filter-options space-y-2">
+                <div className="filter-options">
                     {[
                         "전체",
                         "⭐",

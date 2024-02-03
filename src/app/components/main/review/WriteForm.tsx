@@ -1,31 +1,8 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { Snackbar, SnackbarOrigin } from "@mui/material";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { writePost } from "@/services/voca/writePost";
-
-const style = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 300,
-    bgcolor: "white",
-    boxShadow: 24,
-    p: 5,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-};
-
-const inputStyle = {
-    width: "100%",
-    padding: "10px",
-    margin: "5px 0",
-    borderRadius: "5px",
-    border: "1px solid #ccc",
-};
+import { Checkbox, FormControlLabel, Box, Modal } from "@mui/material";
 
 interface State extends SnackbarOrigin {
     open: boolean;
@@ -63,25 +40,6 @@ export default function WriteForm(props: any) {
         meaning: "",
     });
 
-    const onChange = (
-        e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        const { name, value } = e.target;
-        const formattedValue =
-            name === "word" ? capitalizeFirstLetter(value) : value;
-        setForm((prev) => ({
-            ...prev,
-            [name]: formattedValue,
-        }));
-    };
-
-    /**----------------------------
-    * 첫글자 대문자로 만들어서 등록하기
-    ----------------------------*/
-    const capitalizeFirstLetter = (str: string) => {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    };
-
     /**----------------------------
     * addWord
     ----------------------------*/
@@ -109,6 +67,16 @@ export default function WriteForm(props: any) {
         setModalOpen(false); // 단어를 추가한 후 모달 닫기
     };
 
+    const [filterOptions, setFilterOptions] = useState({
+        region: "전체",
+        type: "전체",
+        rating: "전체",
+    });
+
+    const handleCheckboxChange = (key: any, value: any) => {
+        setFilterOptions((prevOptions) => ({ ...prevOptions, [key]: value }));
+    };
+
     return (
         <>
             <Snackbar
@@ -125,70 +93,165 @@ export default function WriteForm(props: any) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style} className=" border rounded">
-                    <Typography
-                        variant="h6"
-                        component="h2"
-                        align="center"
-                        mb={4}
-                        sx={{
-                            fontWeight: "bold",
-                            fontSize: "1.03rem",
-                            color: "#1a202c",
-                            textShadow: "1px 1px 2px #d2d2d2",
-                        }}
-                    >
-                        📚 단어를 추가해 보세요! 🖊️
-                    </Typography>
+                <Box
+                    sx={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        width: 400,
+                        height: "80vh",
+                        bgcolor: "background.paper",
+                        boxShadow: 24,
+                        p: 4,
+                        overflowY: "auto", // Add this line to make the content scrollable
+                    }}
+                    className="border rounded"
+                >
+                    <section className="p-4 bg-white rounded-lg border border-blue-500">
+                        {/* 지역 */}
+                        <div className="filter-section border-b border-blue-500 pb-4 mb-4">
+                            <div className="filter-header">
+                                <span className="text-lg font-bold">지역</span>
+                            </div>
+                            <div className="filter-options">
+                                {[
+                                    "서울",
+                                    "경기",
+                                    "충청",
+                                    "강원",
+                                    "경상",
+                                    "전라",
+                                    "제주",
+                                ].map((option) => (
+                                    <FormControlLabel
+                                        key={option}
+                                        control={
+                                            <Checkbox
+                                                onChange={() =>
+                                                    handleCheckboxChange(
+                                                        "region",
+                                                        option
+                                                    )
+                                                }
+                                                color="primary"
+                                            />
+                                        }
+                                        label={option}
+                                        className="text-sm"
+                                    />
+                                ))}
+                            </div>
+                        </div>
 
-                    <div style={{ marginBottom: "10px" }}>
-                        <label
-                            htmlFor="word"
-                            style={{
-                                fontSize: "1.2rem",
-                                fontWeight: "bold",
-                                color: "#333",
-                            }}
+                        {/* 유형 */}
+                        <div className="filter-section border-b border-blue-500 pb-4 mb-4">
+                            <div className="filter-header">
+                                <span className="text-lg font-bold">유형</span>
+                            </div>
+                            <div className="filter-options">
+                                {[
+                                    "한식",
+                                    "중식",
+                                    "일식",
+                                    "양식",
+                                    "분식",
+                                    "치킨",
+                                    "피자",
+                                    "고기",
+                                    "회",
+                                    "곱창/막창/대창",
+                                    "족발/보쌈",
+                                    "카페/디저트",
+                                    "술집/호프",
+                                ].map((option) => (
+                                    <FormControlLabel
+                                        key={option}
+                                        control={
+                                            <Checkbox
+                                                onChange={() =>
+                                                    handleCheckboxChange(
+                                                        "type",
+                                                        option
+                                                    )
+                                                }
+                                                color="primary"
+                                            />
+                                        }
+                                        label={option}
+                                        className="text-sm"
+                                    />
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* 별점 */}
+                        <div className="filter-section border-b border-blue-500 pb-4 mb-4">
+                            <div className="filter-header">
+                                <span className="text-lg font-bold">별점</span>
+                            </div>
+                            <div className="filter-options">
+                                {[
+                                    "⭐",
+                                    "⭐⭐",
+                                    "⭐⭐⭐",
+                                    "⭐⭐⭐⭐",
+                                    "⭐⭐⭐⭐⭐",
+                                ].map((option) => (
+                                    <FormControlLabel
+                                        key={option}
+                                        control={
+                                            <Checkbox
+                                                onChange={() =>
+                                                    handleCheckboxChange(
+                                                        "rating",
+                                                        option
+                                                    )
+                                                }
+                                                color="primary"
+                                            />
+                                        }
+                                        label={option}
+                                        className="text-sm"
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                        {/* 사진 */}
+                        <div className="filter-section border-b border-blue-500 pb-4 mb-4">
+                            <div className="filter-header">
+                                <span className="text-lg font-bold">사진</span>
+                            </div>
+                            <div className="filter-options">
+                                <input type="file" className="p-2" />
+                            </div>
+                        </div>
+
+                        {/* 코멘트 */}
+                        <div className="filter-section">
+                            <div className="filter-header">
+                                <span className="text-lg font-bold">
+                                    코멘트
+                                </span>
+                            </div>
+                            <div className="filter-options">
+                                <textarea
+                                    name=""
+                                    id=""
+                                    className="border rounded p-2 w-full"
+                                ></textarea>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div className="flex mt-[10px]">
+                        <button
+                            className="bg-[#41a5ee] text-white font-semibold py-2 px-4 border border-blue-500 rounded mx-auto mb-2"
+                            onClick={handleAddWord}
                         >
-                            단어
-                        </label>
-                        <input
-                            style={{ ...inputStyle, fontSize: "1rem" }}
-                            id="word"
-                            name="word"
-                            required
-                            value={form.word}
-                            onChange={onChange}
-                        />
+                            작성하기
+                        </button>
                     </div>
-
-                    <div style={{ marginBottom: "20px" }}>
-                        <label
-                            htmlFor="meaning"
-                            style={{
-                                fontSize: "1.2rem",
-                                fontWeight: "bold",
-                                color: "#333",
-                            }}
-                        >
-                            뜻
-                        </label>
-                        <input
-                            style={{ ...inputStyle, fontSize: "1rem" }}
-                            id="meaning"
-                            name="meaning"
-                            required
-                            value={form.meaning}
-                            onChange={onChange}
-                        />
-                    </div>
-
-                    <button
-                        className="bg-[#41a5ee] text-white font-semibold py-2 px-4 border border-blue-500 rounded mx-auto mb-2"
-                        onClick={handleAddWord}
-                    >
-                        완료
-                    </button>
                 </Box>
             </Modal>
         </>
