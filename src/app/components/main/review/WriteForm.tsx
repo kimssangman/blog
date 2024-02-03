@@ -85,7 +85,7 @@ export default function WriteForm(props: any) {
         for (let i = 0; i < e.target.files!.length; i++) {
             const file = e.target.files![i];
             // 이미지 파일 3개로 제한
-            if (newImages.length < 3) {
+            if (newImages.length < 5) {
                 // 이벤트객체의 파일을 newImages에 담기
                 newImages.push(file);
                 // 파일리더 객체 생성
