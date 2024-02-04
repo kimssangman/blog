@@ -68,6 +68,13 @@ export default function ReviewDetail(props: any) {
                         </Button>
                     </div>
                     <section className="p-4 bg-white rounded-lg border border-blue-500">
+                        {/* 지역 */}
+                        <div className="filter-section border-b border-blue-500 pb-4 mb-4">
+                            <div className="filter-header">
+                                <span className="text-lg font-bold">지역</span>
+                            </div>
+                            <span>{detail?.region}</span>
+                        </div>
                         {/* 가게명 */}
                         <div className="filter-section border-b border-blue-500 pb-4 mb-4">
                             <div className="filter-header">
