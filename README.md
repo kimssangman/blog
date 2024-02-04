@@ -45,6 +45,25 @@ https://velog.io/@gene028/NextJS-%EC%A7%80%EB%8F%84-%EA%B0%9C%EB%B0%9C-2-SWR%EB%
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 </br></br>
 
+## 파일 업로드 시 테스트 환경에서는 잘 되는데 빌드 시 413 (Request Entity Too Large) 뜰 때
+nginx 문제로 nginx 설정에서 용량제한을 늘려야한다.
+
+경로 sudo vi /etc/nginx/nginx.conf
+```
+http 부분에 아래 client_max_body_size 64M 추가
+
+
+http {
+    client_max_body_size 64M;
+}
+```
+
+저장 후 nginx 재시작
+```
+sudo nginx -s reload
+```
+</br></br>
+
 ## ec2 인스턴스 npm i 시 먹통일 때
 스왑 파일 생성하여 메모리 늘리기
 ```
