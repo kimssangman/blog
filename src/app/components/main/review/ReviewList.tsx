@@ -14,6 +14,7 @@ import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Image from "next/image";
+import { postList } from "@/services/review/postList";
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -23,6 +24,18 @@ type Form = {
     region: string;
     type: string;
     rating: string;
+};
+
+type Post = {
+    region: string;
+    type: string;
+    rating: string;
+    name: string;
+    location: string;
+    images: { src: string }[];
+    comment: string;
+    createdAt: string;
+    _id: string;
 };
 
 const ExpandMore = styled((props: ExpandMoreProps) => {
@@ -38,25 +51,56 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 export default function ReviewList(props: any) {
     const [filter, setFilter] = useState<Form>({
-        region: "",
-        type: "",
-        rating: "",
+        region: "전체",
+        type: "전체",
+        rating: "전체",
     });
 
+    const [post, setPost] = useState<Post[]>([]);
+
     /*--------------------------------
-    * 부모 -> 다른 자식
-    * 자식이 보낸 데이터를 부모가 받은 뒤 
-    * 부모가 다른 자식에게 보낸 데이터를 다른 자식이 받았음
-    * 
-    *  ReviewFilter에서 지역, 유형, 별점 데이터 받음
-    --------------------------------*/
+  * 부모 -> 다른 자식
+  * 자식이 보낸 데이터를 부모가 받은 뒤 
+  * 부모가 다른 자식에게 보낸 데이터를 다른 자식이 받았음
+  * 
+  *  ReviewFilter에서 지역, 유형, 별점 데이터 받음
+  --------------------------------*/
     useEffect(() => {
         setFilter(props);
+
+        // 리스트 업데이트
+        ReviewList();
     }, [props.filter]);
 
     useEffect(() => {
-        console.log("부모 -> 자식 / 업데이트된 filter:", filter);
+        // console.log("부모 -> 자식 / 업데이트된 filter:", filter);
     }, [filter]);
+
+    useEffect(() => {
+        // console.log(">>>>>>>>>>>>", post);
+    }, [post]);
+
+    /*----------------------------------------------------------------
+    * 리뷰 리스트 불러오기
+    *
+    * 이미지 부분은 base64로 변환하여 저장된 image file 데이터를
+    * 원래 이미지 상태로 변환하는 작업을 거쳐야한다.
+    ----------------------------------------------------------------*/
+    const ReviewList = async () => {
+        try {
+            const response = await postList(props.filter);
+            setPost(
+                response.map((post: any) => ({
+                    ...post,
+                    images: post.images.map((image: any) => ({
+                        src: `data:image/jpeg;base64,${image.base64Data}`, // assuming the image type is jpeg
+                    })),
+                }))
+            );
+        } catch (error) {
+            // 오류 처리
+        }
+    };
 
     return (
         <div
@@ -68,379 +112,71 @@ export default function ReviewList(props: any) {
                 alignItems: "flex-start",
             }}
         >
-            <div
-                style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                }}
-            >
-                <Card sx={{ maxWidth: 300, margin: "10px" }}>
-                    <CardHeader
-                        avatar={
+            {post.map((post) => (
+                <div
+                    key={post._id}
+                    style={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                    }}
+                >
+                    <Card sx={{ maxWidth: 300, margin: "10px" }}>
+                        <CardHeader
+                            avatar={
+                                <Image
+                                    src={"/images/profile.png"}
+                                    width={30}
+                                    height={30}
+                                    alt="user"
+                                    className="inline-block"
+                                />
+                            }
+                            action={
+                                <IconButton aria-label="settings">
+                                    <MoreVertIcon />
+                                </IconButton>
+                            }
+                            title={post.name}
+                            subheader={new Date(
+                                post.createdAt
+                            ).toLocaleString()}
+                        />
+                        <CardMedia
+                            sx={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
+                            {/* 첫 번째 이미지만 보여주기 */}
                             <Image
-                                src={"/images/profile.png"}
-                                width={30}
+                                src={post.images[0].src} // Display the first image
+                                width={250}
                                 height={30}
-                                alt="user"
+                                alt={`image-0`}
                                 className="inline-block"
                             />
-                        }
-                        action={
-                            <IconButton aria-label="settings">
-                                <MoreVertIcon />
-                            </IconButton>
-                        }
-                        title="Shrimp and Chorizo Paella"
-                        subheader="September 14, 2016"
-                    />
-                    <CardMedia
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Image
-                            src={"/images/noImage.png"}
-                            width={250}
-                            height={30}
-                            alt="user"
-                            className="inline-block"
-                        />
-                    </CardMedia>
-                    <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                            This impressive paella is a perfect party dish and a
-                            fun meal to cook together with your guests. Add 1
-                            cup of frozen peas along with the mussels, if you
-                            like.
-                        </Typography>
-                    </CardContent>
-                    <CardActions disableSpacing>⭐⭐⭐⭐⭐</CardActions>
-                </Card>
-            </div>
-            <div style={{ display: "flex", flexWrap: "wrap" }}>
-                <Card sx={{ maxWidth: 300, margin: "10px" }}>
-                    <CardHeader
-                        avatar={
-                            <Image
-                                src={"/images/profile.png"}
-                                width={30}
-                                height={30}
-                                alt="user"
-                                className="inline-block"
-                            />
-                        }
-                        action={
-                            <IconButton aria-label="settings">
-                                <MoreVertIcon />
-                            </IconButton>
-                        }
-                        title="Shrimp and Chorizo Paella"
-                        subheader="September 14, 2016"
-                    />
-                    <CardMedia
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Image
-                            src={"/images/noImage.png"}
-                            width={250}
-                            height={30}
-                            alt="user"
-                            className="inline-block"
-                        />
-                    </CardMedia>
-                    <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                            This impressive paella is a perfect party dish and a
-                            fun meal to cook together with your guests. Add 1
-                            cup of frozen peas along with the mussels, if you
-                            like.
-                        </Typography>
-                    </CardContent>
-                    <CardActions disableSpacing>⭐⭐⭐⭐⭐</CardActions>
-                </Card>
-            </div>
-            <div style={{ display: "flex", flexWrap: "wrap" }}>
-                <Card sx={{ maxWidth: 300, margin: "10px" }}>
-                    <CardHeader
-                        avatar={
-                            <Image
-                                src={"/images/profile.png"}
-                                width={30}
-                                height={30}
-                                alt="user"
-                                className="inline-block"
-                            />
-                        }
-                        action={
-                            <IconButton aria-label="settings">
-                                <MoreVertIcon />
-                            </IconButton>
-                        }
-                        title="Shrimp and Chorizo Paella"
-                        subheader="September 14, 2016"
-                    />
-                    <CardMedia
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Image
-                            src={"/images/noImage.png"}
-                            width={250}
-                            height={30}
-                            alt="user"
-                            className="inline-block"
-                        />
-                    </CardMedia>
-                    <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                            This impressive paella is a perfect party dish and a
-                            fun meal to cook together with your guests. Add 1
-                            cup of frozen peas along with the mussels, if you
-                            like.
-                        </Typography>
-                    </CardContent>
-                    <CardActions disableSpacing>⭐⭐⭐⭐⭐</CardActions>
-                </Card>
-            </div>
-            <div style={{ display: "flex", flexWrap: "wrap" }}>
-                <Card sx={{ maxWidth: 300, margin: "10px" }}>
-                    <CardHeader
-                        avatar={
-                            <Image
-                                src={"/images/profile.png"}
-                                width={30}
-                                height={30}
-                                alt="user"
-                                className="inline-block"
-                            />
-                        }
-                        action={
-                            <IconButton aria-label="settings">
-                                <MoreVertIcon />
-                            </IconButton>
-                        }
-                        title="Shrimp and Chorizo Paella"
-                        subheader="September 14, 2016"
-                    />
-                    <CardMedia
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Image
-                            src={"/images/noImage.png"}
-                            width={250}
-                            height={30}
-                            alt="user"
-                            className="inline-block"
-                        />
-                    </CardMedia>
-                    <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                            This impressive paella is a perfect party dish and a
-                            fun meal to cook together with your guests. Add 1
-                            cup of frozen peas along with the mussels, if you
-                            like.
-                        </Typography>
-                    </CardContent>
-                    <CardActions disableSpacing>⭐⭐⭐⭐⭐</CardActions>
-                </Card>
-            </div>
-            <div>
-                <Card sx={{ maxWidth: 300, margin: "10px" }}>
-                    <CardHeader
-                        avatar={
-                            <Image
-                                src={"/images/profile.png"}
-                                width={30}
-                                height={30}
-                                alt="user"
-                                className="inline-block"
-                            />
-                        }
-                        action={
-                            <IconButton aria-label="settings">
-                                <MoreVertIcon />
-                            </IconButton>
-                        }
-                        title="Shrimp and Chorizo Paella"
-                        subheader="September 14, 2016"
-                    />
-                    <CardMedia
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Image
-                            src={"/images/noImage.png"}
-                            width={250}
-                            height={30}
-                            alt="user"
-                            className="inline-block"
-                        />
-                    </CardMedia>
-                    <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                            This impressive paella is a perfect party dish and a
-                            fun meal to cook together with your guests. Add 1
-                            cup of frozen peas along with the mussels, if you
-                            like.
-                        </Typography>
-                    </CardContent>
-                    <CardActions disableSpacing>⭐⭐⭐⭐⭐</CardActions>
-                </Card>
-            </div>
-            <div>
-                <Card sx={{ maxWidth: 300, margin: "10px" }}>
-                    <CardHeader
-                        avatar={
-                            <Image
-                                src={"/images/profile.png"}
-                                width={30}
-                                height={30}
-                                alt="user"
-                                className="inline-block"
-                            />
-                        }
-                        action={
-                            <IconButton aria-label="settings">
-                                <MoreVertIcon />
-                            </IconButton>
-                        }
-                        title="Shrimp and Chorizo Paella"
-                        subheader="September 14, 2016"
-                    />
-                    <CardMedia
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Image
-                            src={"/images/noImage.png"}
-                            width={250}
-                            height={30}
-                            alt="user"
-                            className="inline-block"
-                        />
-                    </CardMedia>
-                    <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                            This impressive paella is a perfect party dish and a
-                            fun meal to cook together with your guests. Add 1
-                            cup of frozen peas along with the mussels, if you
-                            like.
-                        </Typography>
-                    </CardContent>
-                    <CardActions disableSpacing>⭐⭐⭐⭐⭐</CardActions>
-                </Card>
-            </div>
-            <div>
-                <Card sx={{ maxWidth: 300, margin: "10px" }}>
-                    <CardHeader
-                        avatar={
-                            <Image
-                                src={"/images/profile.png"}
-                                width={30}
-                                height={30}
-                                alt="user"
-                                className="inline-block"
-                            />
-                        }
-                        action={
-                            <IconButton aria-label="settings">
-                                <MoreVertIcon />
-                            </IconButton>
-                        }
-                        title="Shrimp and Chorizo Paella"
-                        subheader="September 14, 2016"
-                    />
-                    <CardMedia
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Image
-                            src={"/images/noImage.png"}
-                            width={250}
-                            height={30}
-                            alt="user"
-                            className="inline-block"
-                        />
-                    </CardMedia>
-                    <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                            This impressive paella is a perfect party dish and a
-                            fun meal to cook together with your guests. Add 1
-                            cup of frozen peas along with the mussels, if you
-                            like.
-                        </Typography>
-                    </CardContent>
-                    <CardActions disableSpacing>⭐⭐⭐⭐⭐</CardActions>
-                </Card>
-            </div>
-            <div>
-                <Card sx={{ maxWidth: 300, margin: "10px" }}>
-                    <CardHeader
-                        avatar={
-                            <Image
-                                src={"/images/profile.png"}
-                                width={30}
-                                height={30}
-                                alt="user"
-                                className="inline-block"
-                            />
-                        }
-                        action={
-                            <IconButton aria-label="settings">
-                                <MoreVertIcon />
-                            </IconButton>
-                        }
-                        title="Shrimp and Chorizo Paella"
-                        subheader="September 14, 2016"
-                    />
-                    <CardMedia
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Image
-                            src={"/images/noImage.png"}
-                            width={250}
-                            height={30}
-                            alt="user"
-                            className="inline-block"
-                        />
-                    </CardMedia>
-                    <CardContent>
-                        <Typography variant="body2" color="text.secondary">
-                            This impressive paella is a perfect party dish and a
-                            fun meal to cook together with your guests. Add 1
-                            cup of frozen peas along with the mussels, if you
-                            like.
-                        </Typography>
-                    </CardContent>
-                    <CardActions disableSpacing>⭐⭐⭐⭐⭐</CardActions>
-                </Card>
-            </div>
+                            {/* 이미지 여러개 보여주기*/}
+                            {/* {post.images.map((image, index) => (
+                                <Image
+                                    key={`${post._id}-${index}`}
+                                    src={image.src} // replace with actual image source
+                                    width={250}
+                                    height={30}
+                                    alt={`image-${index}`}
+                                    className="inline-block"
+                                />
+                            ))} */}
+                        </CardMedia>
+                        <CardContent>
+                            <Typography variant="body2" color="text.secondary">
+                                {post.comment}
+                            </Typography>
+                        </CardContent>
+                        <CardActions disableSpacing>{post.rating}</CardActions>
+                    </Card>
+                </div>
+            ))}
         </div>
     );
 }

@@ -13,9 +13,9 @@ type Form = {
 
 export default function Board() {
     const [filter, setFilter] = useState<Form>({
-        region: "",
-        type: "",
-        rating: "",
+        region: "전체",
+        type: "전체",
+        rating: "전체",
     });
 
     /*--------------------------------

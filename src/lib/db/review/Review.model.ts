@@ -24,7 +24,7 @@ export const ReviewSchema = new Schema(
             required: false,
         },
         images: {
-            type: Object,
+            type: Array,
             required: false,
         },
         comment: {

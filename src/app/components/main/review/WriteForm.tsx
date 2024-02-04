@@ -12,6 +12,8 @@ type Form = {
     region: string;
     type: string;
     rating: string;
+    name: string;
+    location: string;
     images: FileList | null; // 여러 파일을 선택하므로 FileList 또는 null로 타입을 지정합니다.
     comment: string;
 };
@@ -39,9 +41,11 @@ export default function WriteForm(props: any) {
     * form
     ----------------------------*/
     const [form, setForm] = useState<Form>({
-        region: "",
-        type: "",
-        rating: "",
+        region: "전체",
+        type: "전체",
+        rating: "전체",
+        name: "",
+        location: "",
         images: null,
         comment: "",
     });
@@ -84,7 +88,8 @@ export default function WriteForm(props: any) {
 
         for (let i = 0; i < e.target.files!.length; i++) {
             const file = e.target.files![i];
-            // 이미지 파일 3개로 제한
+
+            // 이미지 파일 5개로 제한
             if (newImages.length < 5) {
                 // 이벤트객체의 파일을 newImages에 담기
                 newImages.push(file);
@@ -107,7 +112,7 @@ export default function WriteForm(props: any) {
     };
 
     useEffect(() => {
-        console.log("리뷰 작성 >> ", form);
+        // console.log("리뷰 작성 >> ", form);
     }, [form]);
 
     return (
@@ -146,6 +151,9 @@ export default function WriteForm(props: any) {
                         <div className="filter-section border-b border-blue-500 pb-4 mb-4">
                             <div className="filter-header">
                                 <span className="text-lg font-bold">지역</span>
+                                <span className="text-[#ff0000] text-lg">
+                                    *
+                                </span>
                             </div>
                             <div className="filter-options">
                                 {[
@@ -182,6 +190,9 @@ export default function WriteForm(props: any) {
                         <div className="filter-section border-b border-blue-500 pb-4 mb-4">
                             <div className="filter-header">
                                 <span className="text-lg font-bold">유형</span>
+                                <span className="text-[#ff0000] text-lg">
+                                    *
+                                </span>
                             </div>
                             <div className="filter-options">
                                 {[
@@ -189,13 +200,13 @@ export default function WriteForm(props: any) {
                                     "중식",
                                     "일식",
                                     "양식",
-                                    "분식",
                                     "치킨",
                                     "피자",
                                     "고기",
                                     "회",
                                     "곱창/막창/대창",
                                     "족발/보쌈",
+                                    "분식",
                                     "카페/디저트",
                                     "술집/호프",
                                 ].map((option) => (
@@ -224,6 +235,9 @@ export default function WriteForm(props: any) {
                         <div className="filter-section border-b border-blue-500 pb-4 mb-4">
                             <div className="filter-header">
                                 <span className="text-lg font-bold">별점</span>
+                                <span className="text-[#ff0000] text-lg">
+                                    *
+                                </span>
                             </div>
                             <div className="filter-options">
                                 {[
@@ -253,12 +267,60 @@ export default function WriteForm(props: any) {
                                 ))}
                             </div>
                         </div>
+                        {/* 가게명 */}
+                        <div className="filter-section">
+                            <div className="filter-header">
+                                <span className="text-lg font-bold">
+                                    가게명
+                                </span>
+                                <span className="text-[#ff0000] text-lg">
+                                    *
+                                </span>
+                            </div>
+                            <div className="filter-options">
+                                <textarea
+                                    name=""
+                                    id=""
+                                    className="border rounded p-2 w-full"
+                                    onChange={(e) =>
+                                        handleCheckboxChange(
+                                            "name",
+                                            e.target.value
+                                        )
+                                    }
+                                ></textarea>
+                            </div>
+                        </div>
+                        {/* 위치 */}
+                        <div className="filter-section">
+                            <div className="filter-header">
+                                <span className="text-lg font-bold">위치</span>
+                                <span className="text-[#ff0000] text-lg">
+                                    *
+                                </span>
+                            </div>
+
+                            <div className="filter-options">
+                                <textarea
+                                    name=""
+                                    id=""
+                                    className="border rounded p-2 w-full"
+                                    onChange={(e) =>
+                                        handleCheckboxChange(
+                                            "location",
+                                            e.target.value
+                                        )
+                                    }
+                                ></textarea>
+                            </div>
+                        </div>
                         {/* 사진 */}
                         <div className="filter-section border-b border-blue-500 pb-4 mb-4">
                             <div className="filter-header">
                                 <span className="text-lg font-bold">
-                                    사진 추가(선택)
+                                    사진 추가
                                 </span>
+                                <span className="text-sm">(선택)</span>
                             </div>
                             <div className="filter-options">
                                 <input
@@ -294,6 +356,7 @@ export default function WriteForm(props: any) {
                                 <span className="text-lg font-bold">
                                     코멘트
                                 </span>
+                                <span className="text-sm">(선택)</span>
                             </div>
                             <div className="filter-options">
                                 <textarea
