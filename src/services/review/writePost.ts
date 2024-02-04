@@ -18,7 +18,7 @@ export type Form = {
     ----------------------------------------------------------------*/
 // 리뷰 추가
 export async function writePost(form: Form) {
-    console.log(form);
+    // console.log(form);
     const formData = new FormData();
     formData.append("region", form.region);
     formData.append("type", form.type);
@@ -31,7 +31,7 @@ export async function writePost(form: Form) {
     if (form.images) {
         for (let i = 0; i < form.images.length; i++) {
             const file = form.images[i];
-            console.log(file);
+            // console.log(file);
             formData.append("images", file); // 이미지 파일을 'images'라는 이름으로 전달
         }
     }

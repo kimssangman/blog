@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Snackbar, SnackbarOrigin } from "@mui/material";
 import { writePost } from "@/services/review/writePost";
-import { Checkbox, FormControlLabel, Box, Modal } from "@mui/material";
+import { Checkbox, FormControlLabel, Box, Modal, Button } from "@mui/material";
 import Image from "next/image";
 
 interface State extends SnackbarOrigin {
@@ -50,12 +50,37 @@ export default function WriteForm(props: any) {
         comment: "",
     });
 
+    /**---------------------------------------
+     * 필수 입력 값이 유효한지 체크하는 함수
+     ---------------------------------------*/
+    const validateForm = () => {
+        if (
+            form.region === "" ||
+            form.type === "" ||
+            form.rating === "" ||
+            form.name === "" ||
+            form.location === ""
+        ) {
+            // 필수 입력 값 중 하나라도 빈 문자열이라면 유효하지 않음
+            return false;
+        }
+        return true; // 모든 필수 입력 값이 유효함
+    };
+
     /**----------------------------
-    * addWord
+    * addPost
     ----------------------------*/
     const [modalOpen, setModalOpen] = useState(true); // 모달의 열린 상태를 제어하는 state
-    const handleAddWord = (e: FormEvent) => {
+    const handleAddPost = (e: FormEvent) => {
         e.preventDefault();
+
+        // 필수 입력 값이 유효한지 체크
+        if (!validateForm()) {
+            // 필수 입력 값이 유효하지 않으면 스낵바를 열어 사용자에게 알림
+            setSnackbarMessage("모든 필수 항목을 입력하세요.");
+            setSnackbarState((prev) => ({ ...prev, open: true }));
+            return; // 리뷰 추가를 중단
+        }
 
         // 리뷰 추가
         writePost(form)
@@ -69,6 +94,9 @@ export default function WriteForm(props: any) {
         setModalOpen(false); // 리뷰를 추가한 후 모달 닫기
     };
 
+    /**----------------------------
+    * checkbox가 선택되거나, 이미지 업로드, 텍스트 추가가 됐을 때 set
+    ----------------------------*/
     const handleCheckboxChange = (key: string, value: any) => {
         if (key === "images") {
             const files = (value as HTMLInputElement).files;
@@ -146,6 +174,14 @@ export default function WriteForm(props: any) {
                     }}
                     className="border rounded"
                 >
+                    <div className="flex justify-end mb-[10px]">
+                        <Button
+                            className="bg-[#41a5ee] text-white font-semibold py-2 px-4 border border-blue-500 rounded"
+                            onClick={handleModalClose}
+                        >
+                            X
+                        </Button>
+                    </div>
                     <section className="p-4 bg-white rounded-lg border border-blue-500">
                         {/* 지역 */}
                         <div className="filter-section border-b border-blue-500 pb-4 mb-4">
@@ -377,7 +413,7 @@ export default function WriteForm(props: any) {
                     <div className="flex mt-[10px]">
                         <button
                             className="bg-[#41a5ee] text-white font-semibold py-2 px-4 border border-blue-500 rounded mx-auto mb-2"
-                            onClick={handleAddWord}
+                            onClick={handleAddPost}
                         >
                             작성하기
                         </button>

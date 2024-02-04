@@ -59,17 +59,17 @@ export default function ReviewList(props: any) {
     const [post, setPost] = useState<Post[]>([]);
 
     /*--------------------------------
-  * 부모 -> 다른 자식
-  * 자식이 보낸 데이터를 부모가 받은 뒤 
-  * 부모가 다른 자식에게 보낸 데이터를 다른 자식이 받았음
-  * 
-  *  ReviewFilter에서 지역, 유형, 별점 데이터 받음
-  --------------------------------*/
+    * 부모 -> 다른 자식
+    * 자식이 보낸 데이터를 부모가 받은 뒤 
+    * 부모가 다른 자식에게 보낸 데이터를 다른 자식이 받았음
+    * 
+    *  ReviewFilter에서 지역, 유형, 별점 데이터 받음
+    --------------------------------*/
     useEffect(() => {
         setFilter(props);
 
         // 리스트 업데이트
-        ReviewList();
+        reviewList();
     }, [props.filter]);
 
     useEffect(() => {
@@ -77,7 +77,7 @@ export default function ReviewList(props: any) {
     }, [filter]);
 
     useEffect(() => {
-        // console.log(">>>>>>>>>>>>", post);
+        // console.log("리뷰 데이터", post);
     }, [post]);
 
     /*----------------------------------------------------------------
@@ -86,9 +86,11 @@ export default function ReviewList(props: any) {
     * 이미지 부분은 base64로 변환하여 저장된 image file 데이터를
     * 원래 이미지 상태로 변환하는 작업을 거쳐야한다.
     ----------------------------------------------------------------*/
-    const ReviewList = async () => {
+    const reviewList = async () => {
         try {
             const response = await postList(props.filter);
+
+            console.log(response);
             setPost(
                 response.map((post: any) => ({
                     ...post,
@@ -101,6 +103,17 @@ export default function ReviewList(props: any) {
             // 오류 처리
         }
     };
+
+    /*----------------------------------------------------------------
+    * 리뷰 상세보기
+    *
+    * 해당 리뷰의 데이터를 modal로 넘겨준다.
+    ----------------------------------------------------------------*/
+    const detailReview = (post: any) => {
+        props.onData(post);
+    };
+
+    // 콜백 함수를 호출하여 데이터를 전달
 
     return (
         <div
@@ -141,23 +154,39 @@ export default function ReviewList(props: any) {
                                 post.createdAt
                             ).toLocaleString()}
                         />
-                        <CardMedia
-                            sx={{
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}
+                        <div
+                            className="cursor-pointer"
+                            onClick={() => detailReview(post)}
                         >
-                            {/* 첫 번째 이미지만 보여주기 */}
-                            <Image
-                                src={post.images[0].src} // Display the first image
-                                width={250}
-                                height={30}
-                                alt={`image-0`}
-                                className="inline-block"
-                            />
-                            {/* 이미지 여러개 보여주기*/}
-                            {/* {post.images.map((image, index) => (
+                            <CardMedia
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <div className="p-2 border">
+                                    {/* 첫 번째 이미지만 보여주기 */}
+                                    {/* 이미지가 있는 경우에만 보여주기 */}
+                                    {post.images && post.images.length > 0 ? (
+                                        <Image
+                                            src={post.images[0].src} // Display the first image
+                                            width={250}
+                                            height={30}
+                                            alt={`image-0`}
+                                            className="inline-block"
+                                        />
+                                    ) : (
+                                        <Image
+                                            src="/images/noImage.png"
+                                            width={250}
+                                            height={30}
+                                            alt="image"
+                                            className="inline-block"
+                                        />
+                                    )}
+                                    {/* 이미지 여러개 보여주기*/}
+                                    {/* {post.images.map((image, index) => (
                                 <Image
                                     key={`${post._id}-${index}`}
                                     src={image.src} // replace with actual image source
@@ -167,13 +196,20 @@ export default function ReviewList(props: any) {
                                     className="inline-block"
                                 />
                             ))} */}
-                        </CardMedia>
-                        <CardContent>
-                            <Typography variant="body2" color="text.secondary">
-                                {post.comment}
-                            </Typography>
-                        </CardContent>
-                        <CardActions disableSpacing>{post.rating}</CardActions>
+                                </div>
+                            </CardMedia>
+                            <CardContent>
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                >
+                                    {post.comment}
+                                </Typography>
+                            </CardContent>
+                            <CardActions disableSpacing>
+                                {post.rating}
+                            </CardActions>
+                        </div>
                     </Card>
                 </div>
             ))}

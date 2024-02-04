@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import WriteButton from "./WriteButton";
 import ReviewFilter from "./ReviewFilter";
 import ReviewList from "./ReviewList";
+import ReviewDetail from "./ReviewDetail";
 
 type Form = {
     region: string;
@@ -18,6 +19,8 @@ export default function Board() {
         rating: "전체",
     });
 
+    const [detail, setDetail] = useState();
+
     /*--------------------------------
     * 자식 -> 부모 
     * ReviewFilter에서 지역, 유형, 별점 데이터 받음
@@ -25,6 +28,30 @@ export default function Board() {
     const HandleDataFromChild = (childData: any) => {
         // console.log("자식에게 받은 props  >>> ", childData);
         setFilter(childData);
+    };
+
+    /*--------------------------------
+    * 자식 -> 부모 
+    * ReviewList 모든 값이 담긴 리뷰 데이터 받음
+    --------------------------------*/
+    const detailReview = (childData: any) => {
+        console.log(childData);
+        // console.log("자식에게 받은 props  >>> ", childData);
+        setDetail(childData);
+        handleModalOpen();
+    };
+
+    /**----------------------------
+    * Modal Open
+    ----------------------------*/
+    const [modalOpen, setModalOpen] = React.useState(false);
+
+    const handleModalOpen = () => {
+        setModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setModalOpen(false);
     };
 
     return (
@@ -42,10 +69,16 @@ export default function Board() {
                         {/* * 부모 -> 다른 자식 */}
                         {/* * 부모가 보관한 ReviewFilter에서 지역, 유형, 별점 데이터를 다른 자식에게 넘김 */}
                         {/* --------------------------------*/}
-                        <ReviewList filter={filter} />
+                        <ReviewList filter={filter} onData={detailReview} />
                     </div>
                 </div>
             </div>
+            {modalOpen && (
+                <ReviewDetail
+                    handleModalClose={handleModalClose}
+                    detail={detail}
+                />
+            )}
         </section>
     );
 }

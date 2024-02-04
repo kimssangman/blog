@@ -6,7 +6,7 @@ export type Form = {
 
 // 리뷰 목록 가져오기
 export async function postList(form: Form) {
-    console.log(form);
+    // console.log(form);
     // API Route에 리뷰 추가를 위한 요청을 보냄(fetch)
     const response = await fetch("/api/review", {
         method: "POST",
