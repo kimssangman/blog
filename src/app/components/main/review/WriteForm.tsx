@@ -171,6 +171,7 @@ export default function WriteForm(props: any) {
                         boxShadow: 24,
                         p: 4,
                         overflowY: "auto", // Add this line to make the content scrollable
+                        overflowX: "hidden", // Add this line to hide horizontal scroll
                     }}
                     className="border rounded"
                 >

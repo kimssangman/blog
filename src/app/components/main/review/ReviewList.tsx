@@ -15,6 +15,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Image from "next/image";
 import { postList } from "@/services/review/postList";
+import Loading from "../../util/Loading";
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -113,7 +114,16 @@ export default function ReviewList(props: any) {
         props.onData(post);
     };
 
-    // 콜백 함수를 호출하여 데이터를 전달
+    /**---------------------------------
+     * user session status 확인하여 로딩
+     ---------------------------------*/
+    if (post.length === 0) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Loading />
+            </div>
+        );
+    }
 
     return (
         <div
