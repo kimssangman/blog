@@ -58,7 +58,7 @@ http {
 }
 ```
 
-저장 후 
+저장 후 nginx 재시작
 ```
 sudo nginx -s reload
 ```
