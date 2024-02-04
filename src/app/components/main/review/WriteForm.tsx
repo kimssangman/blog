@@ -86,6 +86,9 @@ export default function WriteForm(props: any) {
         writePost(form)
             .then((res: any) => {
                 handleModalClose(); // 스낵바가 닫힐 때 모달도 닫기
+
+                // 콜백 함수를 호출하여 데이터를 전달
+                props.onData({ update: "update" });
             })
             .catch((err) => {
                 setSnackbarState((prev) => ({ ...prev, open: true }));

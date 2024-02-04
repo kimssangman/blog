@@ -41,6 +41,18 @@ export default function Board() {
         handleModalOpen();
     };
 
+    /*--------------------------------
+    * 자식 -> 부모 
+    * 
+    * 리뷰 추가가 완료 됐을 때 업데이트
+    * ReviewUpdate 하기 위함
+    --------------------------------*/
+    const [update, setUpdate] = useState();
+    const updateReview = (childData: any) => {
+        // console.log("자식에게 받은 props  >>> ", childData);
+        setUpdate(childData);
+    };
+
     /**----------------------------
     * Modal Open
     ----------------------------*/
@@ -58,7 +70,7 @@ export default function Board() {
         <section className="lg:m-auto lg:w-[60%] lg:mt-[120px] mx-[20px] mt-[100px] mb-[20px]">
             <div className="flex flex-col">
                 <div>
-                    <WriteButton />
+                    <WriteButton onData={updateReview} />
                 </div>
                 <div className="flex flex-col">
                     <div>
@@ -69,7 +81,11 @@ export default function Board() {
                         {/* * 부모 -> 다른 자식 */}
                         {/* * 부모가 보관한 ReviewFilter에서 지역, 유형, 별점 데이터를 다른 자식에게 넘김 */}
                         {/* --------------------------------*/}
-                        <ReviewList filter={filter} onData={detailReview} />
+                        <ReviewList
+                            filter={filter}
+                            update={update}
+                            onData={detailReview}
+                        />
                     </div>
                 </div>
             </div>

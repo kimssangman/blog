@@ -58,6 +58,7 @@ export default function ReviewList(props: any) {
     });
 
     const [post, setPost] = useState<Post[]>([]);
+    const [loading, setLoading] = useState<boolean>(false); // 초기값을 false로 변경
 
     /*--------------------------------
     * 부모 -> 다른 자식
@@ -79,7 +80,14 @@ export default function ReviewList(props: any) {
 
     useEffect(() => {
         // console.log("리뷰 데이터", post);
+        setLoading(false); // 데이터를 받아왔을 때 로딩 상태 해제
     }, [post]);
+
+    // 리뷰 추가가 완료 됐을 때 업데이트
+    useEffect(() => {
+        // 리스트 업데이트
+        reviewList();
+    }, [props]);
 
     /*----------------------------------------------------------------
     * 리뷰 리스트 불러오기
@@ -89,17 +97,19 @@ export default function ReviewList(props: any) {
     ----------------------------------------------------------------*/
     const reviewList = async () => {
         try {
+            setLoading(true); // 데이터를 요청할 때 로딩 상태 설정
             const response = await postList(props.filter);
 
             console.log(response);
-            setPost(
-                response.map((post: any) => ({
-                    ...post,
-                    images: post.images.map((image: any) => ({
-                        src: `data:image/jpeg;base64,${image.base64Data}`, // assuming the image type is jpeg
-                    })),
-                }))
-            );
+            const transformedData = response.map((post: any) => ({
+                ...post,
+                images: post.images.map((image: any) => ({
+                    src: `data:image/jpeg;base64,${image.base64Data}`, // assuming the image type is jpeg
+                })),
+            }));
+
+            setPost(transformedData);
+            setLoading(false); // 데이터를 받아왔을 때 로딩 상태 해제
         } catch (error) {
             // 오류 처리
         }
@@ -115,12 +125,20 @@ export default function ReviewList(props: any) {
     };
 
     /**---------------------------------
-     * user session status 확인하여 로딩
+     * 데이터 받아올 때까지 loading 표시
      ---------------------------------*/
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center">
+                <Loading />
+            </div>
+        );
+    }
+
     if (post.length === 0) {
         return (
-            <div className="flex justify-center items-center h-screen">
-                <Loading />
+            <div className="flex justify-center items-center">
+                결과가 없습니다.
             </div>
         );
     }
@@ -180,11 +198,13 @@ export default function ReviewList(props: any) {
                                     {/* 이미지가 있는 경우에만 보여주기 */}
                                     {post.images && post.images.length > 0 ? (
                                         <Image
+                                            loading="lazy"
                                             src={post.images[0].src} // Display the first image
                                             width={250}
                                             height={30}
                                             alt={`image-0`}
                                             className="inline-block"
+                                            sizes="250px"
                                         />
                                     ) : (
                                         <Image
@@ -193,6 +213,7 @@ export default function ReviewList(props: any) {
                                             height={30}
                                             alt="image"
                                             className="inline-block"
+                                            sizes="250px"
                                         />
                                     )}
                                     {/* 이미지 여러개 보여주기*/}

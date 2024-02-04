@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { Snackbar, SnackbarOrigin } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -9,7 +9,7 @@ interface State extends SnackbarOrigin {
     open: boolean;
 }
 
-export default function WriteButton() {
+export default function WriteButton(props: any) {
     const router = useRouter();
 
     /**----------------------------
@@ -44,6 +44,21 @@ export default function WriteButton() {
         setModalOpen(false);
     };
 
+    /*--------------------------------
+    * 자식 -> 부모 
+    * 리뷰 추가가 완료 됐을 때 업데이트
+    --------------------------------*/
+    const [update, setupdate] = React.useState();
+    const reveiwUpdate = (childData: any) => {
+        console.log(childData);
+        setupdate(childData);
+        // console.log("자식에게 받은 props  >>> ", childData);
+    };
+
+    useEffect(() => {
+        props.onData({ update: "update" });
+    }, [update]);
+
     return (
         <>
             <Snackbar
@@ -60,7 +75,12 @@ export default function WriteButton() {
             >
                 리뷰 추가
             </button>
-            {modalOpen && <WriteForm handleModalClose={handleModalClose} />}
+            {modalOpen && (
+                <WriteForm
+                    handleModalClose={handleModalClose}
+                    onData={reveiwUpdate}
+                />
+            )}
         </>
     );
 }

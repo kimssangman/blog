@@ -3,6 +3,7 @@ import dbConnect from "@/lib/db/dbConnect";
 import Review from "@/lib/db/review/Review.model";
 import * as yup from "yup";
 import { NextResponse } from "next/server";
+import sharp from "sharp";
 
 /**-------------------------------------------
  * 이미지 업로드 시 base64로 변환
@@ -14,10 +15,22 @@ import { NextResponse } from "next/server";
  * multer를 사용하여 서버에 저장 후 불러오는 방식을 택하려 했으나
  * 서버 용량 문제 및 과부하 문제, 이미지 용량이 큰 경우 최적화 문제가
  * 고민되어 이미지 -> base64 변환하는 방법을 택했다. 
+ * 
+ * 
+ * (추가)
+ * base64로 인코딩 시 용량이 늘어나서 이미지 로드 시 너무 느림
+ * sharp 사용
  -------------------------------------------*/
 // 이미지 파일을 base64로 변환하는 함수
-async function convertImageToBase64(fileBuffer: ArrayBuffer): Promise<string> {
-    return Buffer.from(fileBuffer).toString("base64");
+async function resizeAndConvertImage(fileBuffer: ArrayBuffer): Promise<string> {
+    // sharp를 사용하여 이미지 크기 조정
+    const resizedBuffer = await sharp(fileBuffer)
+        .rotate() // 회전 보정
+        .resize({ width: 300, height: 300 }) // 필요에 따라 크기 조정
+        .toBuffer();
+
+    // 크기 조정된 이미지 버퍼를 base64로 변환
+    return Buffer.from(resizedBuffer).toString("base64");
 }
 
 export async function POST(req: Request, res: Response) {
@@ -34,10 +47,9 @@ export async function POST(req: Request, res: Response) {
                 size: file.size,
                 type: file.type,
                 lastModified: file.lastModified,
-                base64Data: await convertImageToBase64(
+                base64Data: await resizeAndConvertImage(
                     await file.arrayBuffer()
-                ), // 이미지 파일을 base64로 변환
-                // 필요에 따라 추가적인 필드 추가 가능
+                ),
             }))
         ),
         comment: body.get("comment"),
