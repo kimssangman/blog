@@ -26,6 +26,11 @@ export async function POST(req: Request, res: Response) {
                             : body.rating,
                 },
             },
+            {
+                $sort: {
+                    _id: -1,
+                },
+            },
         ]);
 
         // console.log(review);
