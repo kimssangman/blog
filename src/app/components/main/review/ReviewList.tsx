@@ -200,7 +200,16 @@ export default function ReviewList(props: any) {
                                         <MoreVertIcon />
                                     </IconButton>
                                 }
-                                title={post.name}
+                                title={
+                                    <Typography
+                                        style={{
+                                            fontSize: "17px",
+                                            fontWeight: "bold",
+                                        }}
+                                    >
+                                        {post.name} {/* 이름 정보 */}
+                                    </Typography>
+                                }
                                 subheader={
                                     <div
                                         style={{
