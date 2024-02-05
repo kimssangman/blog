@@ -67,6 +67,11 @@ export default function WriteForm(props: any) {
         return true; // 모든 필수 입력 값이 유효함
     };
 
+    /**---------------------------------------
+     * 리뷰 추가되는 동안 추가 버튼 기능 막기
+     ---------------------------------------*/
+    const [isAddingReview, setIsAddingReview] = useState(false);
+
     /**----------------------------
     * addPost
     ----------------------------*/
@@ -82,15 +87,22 @@ export default function WriteForm(props: any) {
             return; // 리뷰 추가를 중단
         }
 
+        // 리뷰 추가 시작 시 버튼 비활성화
+        setIsAddingReview(true);
+
         // 리뷰 추가
         writePost(form)
             .then((res: any) => {
+                // 리뷰 추가가 완료되면 리뷰 추가 버튼 기능 다시 활성화
+                setIsAddingReview(false);
                 handleModalClose(); // 스낵바가 닫힐 때 모달도 닫기
 
                 // 콜백 함수를 호출하여 데이터를 전달
                 props.onData({ update: "update" });
             })
             .catch((err) => {
+                // 리뷰 추가 실패 시에도 버튼 기능 다시 활성화
+                setIsAddingReview(false);
                 setSnackbarState((prev) => ({ ...prev, open: true }));
             });
 
@@ -179,12 +191,20 @@ export default function WriteForm(props: any) {
                     className="border rounded"
                 >
                     <div className="flex justify-end mb-[10px]">
-                        <Button
-                            className="bg-[#41a5ee] text-white font-semibold py-2 px-4 border border-blue-500 rounded"
+                        <button
+                            style={{
+                                backgroundColor: "#41a5ee",
+                                color: "white",
+                                fontWeight: "bold",
+                                padding: "0.5rem 1rem",
+                                border: "1px solid #41a5ee",
+                                borderRadius: "0.25rem",
+                                cursor: "pointer",
+                            }}
                             onClick={handleModalClose}
                         >
                             X
-                        </Button>
+                        </button>
                     </div>
                     <section className="p-4 bg-white rounded-lg border border-blue-500">
                         {/* 지역 */}
@@ -415,11 +435,17 @@ export default function WriteForm(props: any) {
                     </section>
 
                     <div className="flex mt-[10px]">
+                        {/* 버튼 활성화/비활성화 여부를 isAddingReview 상태를 기준으로 결정 */}
                         <button
-                            className="bg-[#41a5ee] text-white font-semibold py-2 px-4 border border-blue-500 rounded mx-auto mb-2"
-                            onClick={handleAddPost}
+                            className={`bg-${
+                                isAddingReview
+                                    ? "gray-400 border border-gray-500"
+                                    : "[#41a5ee]"
+                            } text-white font-semibold py-2 px-4 border border-blue-500 rounded mx-auto mb-2`}
+                            onClick={isAddingReview ? undefined : handleAddPost}
+                            disabled={isAddingReview}
                         >
-                            작성하기
+                            {isAddingReview ? "리뷰 추가 중..." : "작성하기"}
                         </button>
                     </div>
                 </Box>

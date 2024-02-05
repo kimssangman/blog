@@ -60,12 +60,20 @@ export default function ReviewDetail(props: any) {
                     className="border rounded"
                 >
                     <div className="flex justify-end mb-[10px]">
-                        <Button
-                            className="bg-[#41a5ee] text-white font-semibold py-2 px-4 border border-blue-500 rounded"
+                        <button
+                            style={{
+                                backgroundColor: "#41a5ee",
+                                color: "white",
+                                fontWeight: "bold",
+                                padding: "0.5rem 1rem",
+                                border: "1px solid #41a5ee",
+                                borderRadius: "0.25rem",
+                                cursor: "pointer",
+                            }}
                             onClick={handleModalClose}
                         >
                             X
-                        </Button>
+                        </button>
                     </div>
                     <section className="p-4 bg-white rounded-lg border border-blue-500">
                         {/* 지역 */}
