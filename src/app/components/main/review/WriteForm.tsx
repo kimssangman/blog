@@ -121,7 +121,9 @@ export default function WriteForm(props: any) {
         }
     };
 
-    // 사진 미리보기
+    /**---------------------------------------
+     * 사진 미리보기
+     ---------------------------------------*/
     const [previews, setPreviews] = useState<string[]>([]);
     const [images, setImages] = useState<File[]>([]); // Change FileList | null to File[]
 
@@ -154,9 +156,17 @@ export default function WriteForm(props: any) {
         setForm((prevOptions: any) => ({ ...prevOptions, images: newImages }));
     };
 
-    useEffect(() => {
-        // console.log("리뷰 작성 >> ", form);
-    }, [form]);
+    /**---------------------------------------
+     * 사진 삭제하기
+     ---------------------------------------*/
+    const handleDeletePreview = (index: number) => {
+        const newImages = [...images];
+        const newPreviews = [...previews];
+        newImages.splice(index, 1);
+        newPreviews.splice(index, 1);
+        setImages(newImages);
+        setPreviews(newPreviews);
+    };
 
     return (
         <>
@@ -380,7 +390,16 @@ export default function WriteForm(props: any) {
                                 <span className="text-lg font-bold">
                                     사진 추가
                                 </span>
+
                                 <span className="text-sm">(선택)</span>
+                            </div>
+                            <div>
+                                {previews.length === 0 ? (
+                                    <span className="text-[12px] text-gray-500">
+                                        * 사진은 최대 5장까지 첨부할 수
+                                        있습니다.
+                                    </span>
+                                ) : null}
                             </div>
                             <div className="filter-options">
                                 <input
@@ -396,7 +415,7 @@ export default function WriteForm(props: any) {
                             <div>
                                 {previews?.map((preview, index) => (
                                     <div
-                                        className="flex justify-center"
+                                        className="flex justify-center relative"
                                         key={index}
                                     >
                                         <Image
@@ -405,6 +424,15 @@ export default function WriteForm(props: any) {
                                             height={200}
                                             alt={`${preview}-${index}`}
                                         />
+
+                                        <button
+                                            onClick={() =>
+                                                handleDeletePreview(index)
+                                            }
+                                            className="absolute top-[0px] right-[0px] bg-red-500 text-white p-1 rounded"
+                                        >
+                                            X
+                                        </button>
                                     </div>
                                 ))}
                             </div>
