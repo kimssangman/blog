@@ -45,16 +45,20 @@ type Post = {
     _id: string;
 };
 
-const ExpandMore = styled((props: ExpandMoreProps) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-    transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-        duration: theme.transitions.duration.shortest,
-    }),
-}));
+const CardContainer = styled("div")({
+    display: "flex",
+    flexDirection: "column",
+    maxWidth: 300,
+    margin: "10px",
+});
+
+const ImageContainer = styled("div")({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 250, // 이미지 크기
+    overflow: "hidden",
+});
 
 export default function ReviewList(props: any) {
     /**----------------------------
@@ -267,14 +271,14 @@ export default function ReviewList(props: any) {
                 }}
             >
                 {post.map((postItem) => (
-                    <div
-                        key={postItem._id}
-                        style={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                        }}
-                    >
-                        <Card sx={{ maxWidth: 300, margin: "10px" }}>
+                    <div key={postItem._id}>
+                        <Card
+                            sx={{
+                                maxWidth: 300,
+                                margin: "10px",
+                                minWidth: 300,
+                            }}
+                        >
                             <CardHeader
                                 avatar={
                                     <Image
@@ -436,6 +440,7 @@ export default function ReviewList(props: any) {
                                     <Typography
                                         variant="body2"
                                         color="text.secondary"
+                                        noWrap
                                     >
                                         {postItem.comment}
                                     </Typography>

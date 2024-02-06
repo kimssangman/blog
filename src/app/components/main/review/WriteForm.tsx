@@ -18,6 +18,22 @@ type Form = {
     comment: string;
 };
 
+/**----------------------------
+ 사진 추가 input 스타일링을 위한 CSS
+ ----------------------------*/
+const inputStyle = {
+    display: "none", // 기존 input 숨김
+};
+
+const imageUploadStyle = {
+    backgroundColor: "#41a5ee",
+    color: "white",
+    padding: "0.5rem 1rem",
+    border: "1px solid #41a5ee",
+    borderRadius: "0.25rem",
+    cursor: "pointer",
+};
+
 export default function WriteForm(props: any) {
     const { handleModalClose } = props;
 
@@ -110,7 +126,7 @@ export default function WriteForm(props: any) {
     };
 
     /**----------------------------
-    * checkbox가 선택되거나, 이미지 업로드, 텍스트 추가가 됐을 때 set
+    * checkbox가 선택되거나사진 업로드, 텍스트 추가가 됐을 때 set
     ----------------------------*/
     const handleCheckboxChange = (key: string, value: any) => {
         if (key === "images") {
@@ -127,45 +143,62 @@ export default function WriteForm(props: any) {
     const [previews, setPreviews] = useState<string[]>([]);
     const [images, setImages] = useState<File[]>([]); // Change FileList | null to File[]
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = async (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
         const newImages = [...images];
         const newPreviews = [...previews];
+
+        const loadImage = async (file: File) => {
+            return new Promise<string>((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target!.result as string);
+                reader.readAsDataURL(file);
+            });
+        };
 
         for (let i = 0; i < e.target.files!.length; i++) {
             const file = e.target.files![i];
 
             // 이미지 파일 5개로 제한
             if (newImages.length < 5) {
-                // 이벤트객체의 파일을 newImages에 담기
+                // 파일을 미리보기로 변환
+                const preview = await loadImage(file);
+
+                // 이벤트 객체의 파일을 newImages에 담기
                 newImages.push(file);
-                // 파일리더 객체 생성
-                const reader = new FileReader();
-                // 파일 읽어온 후 실행되는 콜백함수
-                reader.onload = (e) => {
-                    // 읽어온 값을 갱신하기
-                    newPreviews.push(e.target!.result as string);
-                    setPreviews(newPreviews);
-                };
-                // 파일 객체를 읽어 base64 형태의 문자열로 변환
-                reader.readAsDataURL(file);
+                newPreviews.push(preview);
             }
         }
+
         setImages(newImages);
+        setPreviews(newPreviews);
 
         // 이미지 데이터를 form에 추가
-        setForm((prevOptions: any) => ({ ...prevOptions, images: newImages }));
+        await setForm((prevOptions: any) => ({
+            ...prevOptions,
+            images: newImages,
+        }));
     };
 
     /**---------------------------------------
      * 사진 삭제하기
      ---------------------------------------*/
-    const handleDeletePreview = (index: number) => {
+    const handleDeletePreview = async (index: number) => {
         const newImages = [...images];
         const newPreviews = [...previews];
+
         newImages.splice(index, 1);
         newPreviews.splice(index, 1);
-        setImages(newImages);
-        setPreviews(newPreviews);
+
+        await setImages(newImages);
+        await setPreviews(newPreviews);
+
+        // 이미지 데이터를 form에 추가 (순서 기준으로 업데이트)
+        await setForm((prevOptions: any) => ({
+            ...prevOptions,
+            images: newImages,
+        }));
     };
 
     return (
@@ -384,13 +417,12 @@ export default function WriteForm(props: any) {
                                 ></textarea>
                             </div>
                         </div>
-                        {/* 사진 */}
+                        {/* 사진 추가 */}
                         <div className="filter-section border-b border-blue-500 pb-4 mb-4">
                             <div className="filter-header">
                                 <span className="text-lg font-bold">
                                     사진 추가
                                 </span>
-
                                 <span className="text-sm">(선택)</span>
                             </div>
                             <div>
@@ -399,29 +431,41 @@ export default function WriteForm(props: any) {
                                         * 사진은 최대 5장까지 첨부할 수
                                         있습니다.
                                     </span>
-                                ) : null}
+                                ) : (
+                                    <span className="text-[12px] text-gray-500">
+                                        * 현재 첨부된 이미지: {previews.length}
+                                        장
+                                    </span>
+                                )}
                             </div>
-                            <div className="filter-options">
+                            <div className="filter-options flex items-center space-x-2 mt-2">
+                                {/* 이미지 업로드 버튼 스타일링 */}
+                                <label
+                                    htmlFor="inputFile"
+                                    className="bg-blue-500 text-white px-3 py-1 rounded-md cursor-pointer hover:bg-blue-600 transition duration-300"
+                                >
+                                    사진 선택
+                                </label>
                                 <input
                                     type="file"
                                     id="inputFile"
                                     accept="image/*"
                                     multiple
-                                    className="p-2"
+                                    style={inputStyle}
                                     onChange={handleImageChange}
                                 />
                             </div>
                             {/* 사진 미리보기 */}
-                            <div>
+                            <div className="mt-3 grid gap-3 grid-cols-3">
                                 {previews?.map((preview, index) => (
                                     <div
-                                        className="flex justify-center relative"
                                         key={index}
+                                        className="relative w-full h-20"
                                     >
                                         <Image
                                             src={preview}
-                                            width={200}
-                                            height={200}
+                                            layout="fill"
+                                            objectFit="cover"
                                             alt={`${preview}-${index}`}
                                         />
 
@@ -429,7 +473,7 @@ export default function WriteForm(props: any) {
                                             onClick={() =>
                                                 handleDeletePreview(index)
                                             }
-                                            className="absolute top-[0px] right-[0px] bg-red-500 text-white p-1 rounded"
+                                            className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"
                                         >
                                             X
                                         </button>
