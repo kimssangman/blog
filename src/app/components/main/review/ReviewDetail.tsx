@@ -55,7 +55,7 @@ export default function ReviewDetail(props: any) {
                         height: "80vh",
                         bgcolor: "background.paper",
                         boxShadow: 24,
-                        p: 4,
+                        p: 2,
                         overflowY: "auto",
                         overflowX: "hidden",
                         maxHeight: "90%", // Maximum height
@@ -115,17 +115,22 @@ export default function ReviewDetail(props: any) {
                             <div className="filter-header">
                                 <span className="text-lg font-bold">사진</span>
                             </div>
-                            <div className=" flex flex-col items-center">
+                            <div className="flex flex-col items-center">
                                 {/* 이미지 여러개 보여주기*/}
                                 {detail?.images.map((image, index) => (
                                     <Image
                                         key={`${detail._id}-${index}`}
                                         src={image.src} // replace with actual image source
-                                        width={250}
-                                        height={30}
+                                        width={0} // 이미지의 너비를 100%로 설정
+                                        height={0}
+                                        sizes="100vw"
                                         alt={`image-${index}`}
                                         className="inline-block p-3"
-                                        style={{ border: "0.5px solid #ddd" }} // 변경된 부분
+                                        style={{
+                                            width: "100%",
+                                            height: "auto",
+                                            border: "0.5px solid #ddd",
+                                        }} // 변경된 부분
                                     />
                                 ))}
                             </div>

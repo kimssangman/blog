@@ -228,7 +228,7 @@ export default function WriteForm(props: any) {
                         height: "80vh",
                         bgcolor: "background.paper",
                         boxShadow: 24,
-                        p: 4,
+                        p: 2,
                         overflowY: "auto",
                         overflowX: "hidden",
                         maxHeight: "90%", // Maximum height
