@@ -5,6 +5,7 @@ import WriteButton from "./WriteButton";
 import ReviewFilter from "./ReviewFilter";
 import ReviewList from "./ReviewList";
 import ReviewDetail from "./ReviewDetail";
+import EditForm from "../review/EditForm";
 
 type Form = {
     region: string;
@@ -20,6 +21,7 @@ export default function Board() {
     });
 
     const [detail, setDetail] = useState();
+    const [edit, setEdit] = useState();
 
     /*--------------------------------
     * 자식 -> 부모 
@@ -32,13 +34,13 @@ export default function Board() {
 
     /*--------------------------------
     * 자식 -> 부모 
-    * ReviewList 모든 값이 담긴 리뷰 데이터 받음
+    * 해당 게시글 상세보기를 위해
+    * ReviewList 해당 리뷰의 모든 값이 담긴 데이터 받음
     --------------------------------*/
     const detailReview = (childData: any) => {
-        console.log(childData);
         // console.log("자식에게 받은 props  >>> ", childData);
         setDetail(childData);
-        handleModalOpen();
+        handleDetailModalOpen();
     };
 
     /*--------------------------------
@@ -53,17 +55,42 @@ export default function Board() {
         setUpdate(childData);
     };
 
-    /**----------------------------
-    * Modal Open
-    ----------------------------*/
-    const [modalOpen, setModalOpen] = React.useState(false);
-
-    const handleModalOpen = () => {
-        setModalOpen(true);
+    /*--------------------------------
+    * 자식 -> 부모 
+    *
+    * 해당 게시글 편집을 위해
+    * ReviewList 해당 리뷰의 모든 값이 담긴 데이터 받음
+    --------------------------------*/
+    const editReview = (childData: any) => {
+        // console.log("자식에게 받은 props  >>> ", childData);
+        setEdit(childData);
+        handleEditlModalOpen();
     };
 
-    const handleModalClose = () => {
-        setModalOpen(false);
+    /**----------------------------
+    * Detail Modal Open
+    ----------------------------*/
+    const [detailModalOpen, setDetailModalOpen] = React.useState(false);
+
+    const handleDetailModalOpen = () => {
+        setDetailModalOpen(true);
+    };
+
+    const handleDetailModalClose = () => {
+        setDetailModalOpen(false);
+    };
+
+    /**----------------------------
+    * Edit Modal Open
+    ----------------------------*/
+    const [editModalOpen, setEditModalOpen] = React.useState(false);
+
+    const handleEditlModalOpen = () => {
+        setEditModalOpen(true);
+    };
+
+    const handleEditlModalClose = () => {
+        setEditModalOpen(false);
     };
 
     return (
@@ -84,15 +111,29 @@ export default function Board() {
                         <ReviewList
                             filter={filter}
                             update={update}
-                            onData={detailReview}
+                            onData={(post: any, type: any) => {
+                                if (type === "detail") {
+                                    detailReview(post);
+                                } else if (type === "edit") {
+                                    editReview(post);
+                                }
+                            }}
                         />
                     </div>
                 </div>
             </div>
-            {modalOpen && (
+            {detailModalOpen && (
                 <ReviewDetail
-                    handleModalClose={handleModalClose}
+                    handleModalClose={handleDetailModalClose}
                     detail={detail}
+                />
+            )}
+
+            {editModalOpen && (
+                <EditForm
+                    handleModalClose={handleEditlModalClose}
+                    edit={edit} // Pass the edit state to EditForm
+                    onData={updateReview}
                 />
             )}
         </section>

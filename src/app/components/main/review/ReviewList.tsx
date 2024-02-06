@@ -137,7 +137,6 @@ export default function ReviewList(props: any) {
             setLoading(true); // 데이터를 요청할 때 로딩 상태 설정
             const response = await postList(props.filter);
 
-            console.log(response);
             const transformedData = response.map((post: any) => ({
                 ...post,
                 images: post.images.map((image: any) => ({
@@ -157,8 +156,17 @@ export default function ReviewList(props: any) {
     *
     * 해당 리뷰의 데이터를 modal로 넘겨준다.
     ----------------------------------------------------------------*/
-    const detailReview = (post: any) => {
-        props.onData(post);
+    const detailReview_onData = (post: any) => {
+        props.onData(post, "detail"); // 'detail'를 추가하여 상세보기로 전달
+    };
+
+    /*----------------------------------------------------------------
+    * 리뷰 편집하기
+    *
+    * 해당 리뷰의 데이터를 modal로 넘겨준다.
+    ----------------------------------------------------------------*/
+    const editReview_onData = (post: any) => {
+        props.onData(post, "edit"); // 'edit'을 추가하여 편집하기로 전달
     };
 
     /**---------------------------------
@@ -195,8 +203,16 @@ export default function ReviewList(props: any) {
      * 메뉴 버튼 중 편집 기능 -> 구현 안 됐음
      ---------------------------------*/
     const editReview = (post: any) => {
-        setSnackbarMessage("❌ 권한이 없습니다.");
-        setSnackbarState((prev) => ({ ...prev, open: true }));
+        if (session?.data?.user?.admin) {
+            // 편집 모달 띄우기
+            editReview_onData(post);
+        }
+
+        if (session.data == null || !session.data.user.admin) {
+            setSnackbarMessage("❌ 권한이 없습니다.");
+            setSnackbarState((prev) => ({ ...prev, open: true }));
+            return;
+        }
         return;
     };
 
@@ -204,7 +220,6 @@ export default function ReviewList(props: any) {
      * 메뉴 버튼 중 삭제 기능
      ---------------------------------*/
     const deleteReview = (post: any) => {
-        console.log(session);
         // 어드민일 경우에만 삭제 가능
         if (session?.data?.user?.admin) {
             deletePost(post._id)
@@ -390,7 +405,7 @@ export default function ReviewList(props: any) {
                             )}
                             <div
                                 className="cursor-pointer"
-                                onClick={() => detailReview(postItem)}
+                                onClick={() => detailReview_onData(postItem)}
                             >
                                 <CardMedia
                                     sx={{

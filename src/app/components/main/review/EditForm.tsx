@@ -1,14 +1,17 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Snackbar, SnackbarOrigin } from "@mui/material";
 import { writePost } from "@/services/review/writePost";
-import { Checkbox, FormControlLabel, Box, Modal, Button } from "@mui/material";
+import { Checkbox, FormControlLabel, Box, Modal } from "@mui/material";
 import Image from "next/image";
+import { getPost } from "@/services/review/getPost";
+import { editPost } from "@/services/review/editPost";
 
 interface State extends SnackbarOrigin {
     open: boolean;
 }
 
 type Form = {
+    _id: string;
     region: string;
     type: string;
     rating: string;
@@ -25,7 +28,7 @@ const inputStyle = {
     display: "none", // 기존 input 숨김
 };
 
-export default function WriteForm(props: any) {
+export default function EditForm(props: any) {
     const { handleModalClose } = props;
 
     /**----------------------------
@@ -48,6 +51,7 @@ export default function WriteForm(props: any) {
     * form
     ----------------------------*/
     const [form, setForm] = useState<Form>({
+        _id: "",
         region: "전체",
         type: "전체",
         rating: "전체",
@@ -56,6 +60,33 @@ export default function WriteForm(props: any) {
         images: null,
         comment: "",
     });
+
+    /**----------------------------
+    * 편집을 위해 받아온 값 바로 표시
+    ----------------------------*/
+    useEffect(() => {
+        getPost(props.edit._id)
+            .then((res: any) => {
+                setForm({
+                    _id: res.data._id || "",
+                    region: res.data.region || "전체",
+                    type: res.data.type || "전체",
+                    rating: res.data.rating || "전체",
+                    name: res.data.name || "",
+                    location: res.data.location || "",
+                    images: null,
+                    comment: res.data.comment || "",
+                });
+
+                // if (form.images) {
+                //     const imagePreviews = form.images.map(
+                //         (imageDataObject: any) => imageDataObject.src
+                //     );
+                //     setPreviews(imagePreviews);
+                // }
+            })
+            .catch((err) => {});
+    }, [props.edit]);
 
     /**---------------------------------------
      * 필수 입력 값이 유효한지 체크하는 함수
@@ -75,7 +106,7 @@ export default function WriteForm(props: any) {
     };
 
     /**---------------------------------------
-     * 리뷰 추가되는 동안 추가 버튼 기능 막기
+     * 리뷰 수정되는 동안 수정 버튼 기능 막기
      ---------------------------------------*/
     const [isAddingReview, setIsAddingReview] = useState(false);
 
@@ -91,36 +122,36 @@ export default function WriteForm(props: any) {
             // 필수 입력 값이 유효하지 않으면 스낵바를 열어 사용자에게 알림
             setSnackbarMessage("모든 필수 항목을 입력하세요.");
             setSnackbarState((prev) => ({ ...prev, open: true }));
-            return; // 리뷰 추가를 중단
+            return; // 리뷰 수정을 중단
         }
 
-        // 리뷰 추가 시작 시 버튼 비활성화
+        // 리뷰 수정 시작 시 버튼 비활성화
         setIsAddingReview(true);
 
-        // 리뷰 추가
-        writePost(form)
+        // 리뷰 수정
+        editPost(form)
             .then((res: any) => {
-                // 리뷰 추가가 완료되면 리뷰 추가 버튼 기능 다시 활성화
+                // 리뷰 수정가 완료되면 리뷰 수정 버튼 기능 다시 활성화
                 setIsAddingReview(false);
-                setSnackbarMessage("✅ 리뷰가 추가되었습니다.");
+                setSnackbarMessage("✅ 리뷰가 수정되었습니다.");
                 setSnackbarState((prev) => ({ ...prev, open: true }));
                 handleModalClose(); // 스낵바가 닫힐 때 모달도 닫기
 
                 // 콜백 함수를 호출하여 데이터를 전달
                 props.onData({ update: "update" });
             })
-            .catch((err) => {
-                // 리뷰 추가 실패 시에도 버튼 기능 다시 활성화
+            .catch((err: any) => {
+                // 리뷰 수정 실패 시에도 버튼 기능 다시 활성화
                 setIsAddingReview(false);
-                setSnackbarMessage("😣 리뷰 추가 오류.");
+                setSnackbarMessage("😣 리뷰 수정 오류.");
                 setSnackbarState((prev) => ({ ...prev, open: true }));
             });
 
-        setModalOpen(false); // 리뷰를 추가한 후 모달 닫기
+        setModalOpen(false); // 리뷰를 수정한 후 모달 닫기
     };
 
     /**----------------------------
-    * checkbox가 선택되거나사진 업로드, 텍스트 추가가 됐을 때 set
+    * checkbox가 선택되거나사진 업로드, 텍스트 수정이 됐을 때 set
     ----------------------------*/
     const handleCheckboxChange = (key: string, value: any) => {
         if (key === "images") {
@@ -380,6 +411,7 @@ export default function WriteForm(props: any) {
                                 <textarea
                                     name=""
                                     id=""
+                                    defaultValue={form.name}
                                     className="border rounded p-2 w-full"
                                     onChange={(e) =>
                                         handleCheckboxChange(
@@ -403,6 +435,7 @@ export default function WriteForm(props: any) {
                                 <textarea
                                     name=""
                                     id=""
+                                    defaultValue={form.location}
                                     className="border rounded p-2 w-full"
                                     onChange={(e) =>
                                         handleCheckboxChange(
@@ -490,6 +523,7 @@ export default function WriteForm(props: any) {
                                 <textarea
                                     name=""
                                     id=""
+                                    defaultValue={form.comment}
                                     className="border rounded p-2 w-full"
                                     onChange={(e) =>
                                         handleCheckboxChange(
@@ -513,7 +547,7 @@ export default function WriteForm(props: any) {
                             onClick={isAddingReview ? undefined : handleAddPost}
                             disabled={isAddingReview}
                         >
-                            {isAddingReview ? "리뷰 추가 중..." : "작성하기"}
+                            {isAddingReview ? "리뷰 수정 중..." : "수정하기"}
                         </button>
                     </div>
                 </Box>
