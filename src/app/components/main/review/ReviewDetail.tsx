@@ -50,12 +50,15 @@ export default function ReviewDetail(props: any) {
                         top: "50%",
                         left: "50%",
                         transform: "translate(-50%, -50%)",
-                        width: 400,
+                        width: "95%", // 조절 가능한 값
+                        maxWidth: "600px", // 조절 가능한 값
                         height: "80vh",
                         bgcolor: "background.paper",
                         boxShadow: 24,
                         p: 4,
-                        overflowY: "auto", // Add this line to make the content scrollable
+                        overflowY: "auto",
+                        overflowX: "hidden",
+                        maxHeight: "90%", // Maximum height
                     }}
                     className="border rounded"
                 >

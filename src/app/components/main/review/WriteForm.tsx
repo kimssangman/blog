@@ -223,13 +223,15 @@ export default function WriteForm(props: any) {
                         top: "50%",
                         left: "50%",
                         transform: "translate(-50%, -50%)",
-                        width: 400,
+                        width: "95%", // 조절 가능한 값
+                        maxWidth: "600px", // 조절 가능한 값
                         height: "80vh",
                         bgcolor: "background.paper",
                         boxShadow: 24,
                         p: 4,
-                        overflowY: "auto", // Add this line to make the content scrollable
-                        overflowX: "hidden", // Add this line to hide horizontal scroll
+                        overflowY: "auto",
+                        overflowX: "hidden",
+                        maxHeight: "90%", // Maximum height
                     }}
                     className="border rounded"
                 >
@@ -371,7 +373,7 @@ export default function WriteForm(props: any) {
                             </div>
                         </div>
                         {/* 가게명 */}
-                        <div className="filter-section">
+                        <div className="filter-section border-b border-blue-500 pb-4 mb-4">
                             <div className="filter-header">
                                 <span className="text-lg font-bold">
                                     가게명
@@ -395,7 +397,7 @@ export default function WriteForm(props: any) {
                             </div>
                         </div>
                         {/* 위치 */}
-                        <div className="filter-section">
+                        <div className="filter-section border-b border-blue-500 pb-4 mb-4">
                             <div className="filter-header">
                                 <span className="text-lg font-bold">위치</span>
                                 <span className="text-[#ff0000] text-lg">
