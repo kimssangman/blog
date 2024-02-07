@@ -86,6 +86,13 @@ export default function ReviewDetail(props: any) {
                             </div>
                             <span>{detail?.region}</span>
                         </div>
+                        {/* 지역 */}
+                        <div className="filter-section border-b border-blue-500 pb-4 mb-4">
+                            <div className="filter-header">
+                                <span className="text-lg font-bold">유형</span>
+                            </div>
+                            <span>{detail?.type}</span>
+                        </div>
                         {/* 가게명 */}
                         <div className="filter-section border-b border-blue-500 pb-4 mb-4">
                             <div className="filter-header">
@@ -100,7 +107,10 @@ export default function ReviewDetail(props: any) {
                             <div className="filter-header">
                                 <span className="text-lg font-bold">위치</span>
                             </div>
-                            <span>{detail?.location}</span>
+                            <textarea
+                                value={detail?.location}
+                                className="w-full h-24 px-3 py-2 text-base placeholder-gray-500 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+                            />
                         </div>
                         {/* 별점 */}
                         <div className="filter-section border-b border-blue-500 pb-4 mb-4">
@@ -137,13 +147,17 @@ export default function ReviewDetail(props: any) {
                         </div>
 
                         {/* 코멘트 */}
+                        {/* 코멘트 */}
                         <div className="filter-section">
                             <div className="filter-header">
                                 <span className="text-lg font-bold">
                                     코멘트
                                 </span>
                             </div>
-                            <span>{detail?.comment}</span>
+                            <textarea
+                                value={detail?.comment}
+                                className="w-full h-24 px-3 py-2 text-base placeholder-gray-500 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+                            />
                         </div>
                     </section>
 
