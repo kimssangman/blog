@@ -47,7 +47,7 @@ export default function WriteButton() {
                         aria-label="lab API tabs example"
                         variant="fullWidth"
                     >
-                        <Tab label="오늘의 금전운" value="1" />
+                        <Tab label="오늘의 운세" value="1" />
                         <Tab label="로또" value="2" />
                     </TabList>
                 </Box>
@@ -77,12 +77,16 @@ export default function WriteButton() {
                         />
                     </div>
                     <div className="text-center">
-                        <div>{formatDateString(date)}</div>
-                        <strong>{character} 운세</strong>
+                        {/* <div>{formatDateString(date)}</div> */}
+                        <div className="mt-[30px]">
+                            <span className="text-[20px]">
+                                오늘의 운세 ({character})
+                            </span>
+                        </div>
                     </div>
 
                     {/* 운세 부분 */}
-                    <div className="mt-[25px]">
+                    <div className="mt-[15px]">
                         <FortuneOfTodayForm character={character} />
                     </div>
                 </TabPanel>

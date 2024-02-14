@@ -54,9 +54,33 @@ export async function POST(req: Request, res: Response) {
             const htmlString = extractedData.flick[0];
             const $ = cheerio.load(htmlString);
 
-            const text = $(
+            // 총운 요약
+            const totalLuckSummary = $(
+                `.date_result_list > li._foldContainer:nth-child(1) > .hidden_box > .summary > strong`
+            ).text();
+
+            // 총운
+            const totalLuck = $(
+                `.date_result_list > li._foldContainer:nth-child(1) > .hidden_box > .text`
+            ).text();
+
+            // 금전운
+            const moneyLuck = $(
                 `.date_result_list > li._foldContainer:nth-child(3) > .hidden_box > .text`
             ).text();
+
+            // 객체로 만들어서 보내기
+            const text = {
+                luck: {
+                    total_luck_summary: totalLuckSummary,
+                    total_luck: totalLuck,
+                    money_luck: moneyLuck,
+                },
+            };
+
+            // const text = $(
+            //     `.date_result_list > li._foldContainer:nth-child(3) > .hidden_box > .text`
+            // ).text();
 
             // console.log(`Text from 1st item:`, text);
 
