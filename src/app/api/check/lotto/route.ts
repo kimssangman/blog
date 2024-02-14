@@ -6,6 +6,9 @@ const cheerio = require("cheerio");
  * 동행복권 사이트에서 axios를 사용한 경우 나온 값을 찍어보면 글자가 깨져서 나온다.
  * 이런 현상은 head에 charset이 UTF-8이 아닌 EUC-KR로 설정되어 있을 경우 발생하는데 해결법은 아래와 같다.
  * 
+ * https://velog.io/@minshxxx/%EC%98%A4%EB%A5%98%ED%95%B4%EA%B2%B0-axios-%ED%95%9C%EA%B8%80-%EA%B9%A8%EC%A7%90
+ * 
+ * 
  * 1. 
  * npm i iconv-lite
  * 
