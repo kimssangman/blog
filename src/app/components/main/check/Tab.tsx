@@ -10,6 +10,7 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import Image from "next/image";
+import LotteryInfo from "./LottoInfo";
 
 export default function WriteButton() {
     const [value, setValue] = React.useState("1"); // Tab
@@ -91,7 +92,12 @@ export default function WriteButton() {
                     </div>
                 </TabPanel>
                 <TabPanel value="2" className="bg-white shadow-lg p-4">
-                    <LottoForm />
+                    <div className="">
+                        <LotteryInfo />
+                    </div>
+                    <div className="mt-[25px]">
+                        <LottoForm />
+                    </div>
                 </TabPanel>
             </TabContext>
         </Box>

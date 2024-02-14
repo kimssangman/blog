@@ -1,6 +1,6 @@
 // 로또 번호 가져오기
 export async function lotto() {
-    const response = await fetch("/api/board", { cache: "no-store" });
+    const response = await fetch("/api/check/lotto", { cache: "no-store" });
 
     const data = await response.json();
 
