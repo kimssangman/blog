@@ -104,10 +104,72 @@ export async function GET(request: NextRequest) {
                 },
             };
 
+            // 스피또 2000_1
+            const speetto_2000_1 = {
+                common: {
+                    round: $(
+                        "section > div > div > div > div:nth-child(1) > div > strong > span"
+                    ).text(), //회차
+                    date: $(
+                        "section > div > div > div > div:nth-child(1) > div > div:nth-child(6) > a > ul > li:nth-child(1)"
+                    ).text(), // 날짜
+                    inventoryRate: $(
+                        "section > div > div > div > div:nth-child(1) > div > div:nth-child(6) > a > ul > li:nth-child(2) > span > em"
+                    ).text(), // 입고율 퍼센트
+                },
+                first: {
+                    remaining: $(
+                        "section > div > div > div > div:nth-child(1) > div > .quantity > a > ul:nth-child(3) > li:nth-child(1) > span > em"
+                    ).text(), // 잔여수량
+                },
+                second: {
+                    remaining: $(
+                        "section > div > div > div > div:nth-child(1) > div > .quantity > a > ul:nth-child(3) > li:nth-child(2) > span > em"
+                    ).text(), // 잔여수량
+                },
+                third: {
+                    remaining: $(
+                        "section > div > div > div > div:nth-child(1) > div > .quantity > a > ul:nth-child(3) > li:nth-child(3) > span > em"
+                    ).text(), // 잔여수량
+                },
+            };
+
+            // 스피또 2000_2
+            const speetto_2000_2 = {
+                common: {
+                    round: $(
+                        "section > div > div > div > div:nth-child(2) > div > strong > span"
+                    ).text(), //회차
+                    date: $(
+                        "section > div > div > div > div:nth-child(2) > div > div:nth-child(6) > a > ul > li:nth-child(1)"
+                    ).text(), // 날짜
+                    inventoryRate: $(
+                        "section > div > div > div > div:nth-child(2) > div > div:nth-child(6) > a > ul > li:nth-child(2) > span > em"
+                    ).text(), // 입고율 퍼센트
+                },
+                first: {
+                    remaining: $(
+                        "section > div > div > div > div:nth-child(2) > div > .quantity > a > ul:nth-child(3) > li:nth-child(1) > span > em"
+                    ).text(), // 잔여수량
+                },
+                second: {
+                    remaining: $(
+                        "section > div > div > div > div:nth-child(2) > div > .quantity > a > ul:nth-child(3) > li:nth-child(2) > span > em"
+                    ).text(), // 잔여수량
+                },
+                third: {
+                    remaining: $(
+                        "section > div > div > div > div:nth-child(2) > div > .quantity > a > ul:nth-child(3) > li:nth-child(3) > span > em"
+                    ).text(), // 잔여수량
+                },
+            };
+
             // 객체로 만들어서 보내기
             const data = {
                 speetto_1000_1: speetto_1000_1,
                 speetto_1000_2: speetto_1000_2,
+                speetto_2000_1: speetto_2000_1,
+                speetto_2000_2: speetto_2000_2,
             };
 
             return data;

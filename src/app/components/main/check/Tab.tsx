@@ -48,8 +48,24 @@ export default function WriteButton() {
                         aria-label="lab API tabs example"
                         variant="fullWidth"
                     >
-                        <Tab label="오늘의 운세" value="1" />
-                        <Tab label="로또" value="2" />
+                        <Tab
+                            label="오늘의 운세"
+                            value="1"
+                            style={{
+                                backgroundColor:
+                                    value === "1" ? "white" : "transparent",
+                                color: value === "1" ? "#3B82F6" : "#6B7280",
+                            }}
+                        />
+                        <Tab
+                            label="로또"
+                            value="2"
+                            style={{
+                                backgroundColor:
+                                    value === "2" ? "white" : "transparent",
+                                color: value === "2" ? "#3B82F6" : "#6B7280",
+                            }}
+                        />
                     </TabList>
                 </Box>
                 <TabPanel value="1" className="bg-white shadow-lg p-4">

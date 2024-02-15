@@ -16,6 +16,18 @@ interface LottoInfo {
         second: { remaining: string };
         third: { remaining: string };
     };
+    speetto_2000_1: {
+        common: { round: string; date: string; inventoryRate: string };
+        first: { remaining: string };
+        second: { remaining: string };
+        third: { remaining: string };
+    };
+    speetto_2000_2: {
+        common: { round: string; date: string; inventoryRate: string };
+        first: { remaining: string };
+        second: { remaining: string };
+        third: { remaining: string };
+    };
 }
 
 export default function LotteryInfo() {
@@ -62,6 +74,7 @@ export default function LotteryInfo() {
     };
 
     const slides = [
+        // 스피또 1000_1
         {
             title: `스피또1000 ${lottoInfo?.speetto_1000_1?.common?.round}회`,
             remaining: [
@@ -78,6 +91,7 @@ export default function LotteryInfo() {
                 `${lottoInfo?.speetto_1000_1?.common?.inventoryRate} %`,
             ],
         },
+        // 스피또 1000_2
         {
             title: `스피또1000 ${lottoInfo?.speetto_1000_2?.common?.round}회`,
             remaining: [
@@ -94,12 +108,46 @@ export default function LotteryInfo() {
                 `${lottoInfo?.speetto_1000_2?.common?.inventoryRate} %`,
             ],
         },
+        // 스피또 2000_1
+        {
+            title: `스피또2000 ${lottoInfo?.speetto_2000_1?.common?.round}회`,
+            remaining: [
+                ["1등", "2등", "3등"],
+                ["5억원", "2천만원", "1만원"],
+                [
+                    `${lottoInfo?.speetto_2000_1?.first?.remaining} 매`,
+                    `${lottoInfo?.speetto_2000_1?.second?.remaining} 매`,
+                    `${lottoInfo?.speetto_2000_1?.third?.remaining} 매`,
+                ],
+            ],
+            inventoryRate: [
+                `${lottoInfo?.speetto_2000_1?.common?.date}`,
+                `${lottoInfo?.speetto_2000_1?.common?.inventoryRate} %`,
+            ],
+        },
+        // 스피또 2000_2
+        {
+            title: `스피또2000 ${lottoInfo?.speetto_2000_2?.common?.round}회`,
+            remaining: [
+                ["1등", "2등", "3등"],
+                ["5억원", "2천만원", "1만원"],
+                [
+                    `${lottoInfo?.speetto_2000_2?.first?.remaining} 매`,
+                    `${lottoInfo?.speetto_2000_2?.second?.remaining} 매`,
+                    `${lottoInfo?.speetto_2000_2?.third?.remaining} 매`,
+                ],
+            ],
+            inventoryRate: [
+                `${lottoInfo?.speetto_2000_2?.common?.date}`,
+                `${lottoInfo?.speetto_2000_2?.common?.inventoryRate} %`,
+            ],
+        },
     ];
 
     return (
-        <section className="flex justify-center items-center border-b border-gray-300 rounded-lg">
+        <section className="flex justify-center items-center border-b border-gray-300">
             <div className="text-center py-[20px]">
-                <h2 className="text-3xl font-bold mb-4">
+                <h2 className="text-3xl font-bold mb-4 text-[#007bc3]">
                     {slides[currentSlide].title}
                 </h2>
                 <div className="m-4">
