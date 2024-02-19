@@ -113,7 +113,7 @@ export default function LotteryInfo() {
             title: `스피또2000 ${lottoInfo?.speetto_2000_1?.common?.round}회`,
             remaining: [
                 ["1등", "2등", "3등"],
-                ["5억원", "2천만원", "1만원"],
+                ["5억원", "2천만원", "1천만원"],
                 [
                     `${lottoInfo?.speetto_2000_1?.first?.remaining} 매`,
                     `${lottoInfo?.speetto_2000_1?.second?.remaining} 매`,
@@ -130,7 +130,7 @@ export default function LotteryInfo() {
             title: `스피또2000 ${lottoInfo?.speetto_2000_2?.common?.round}회`,
             remaining: [
                 ["1등", "2등", "3등"],
-                ["5억원", "2천만원", "1만원"],
+                ["5억원", "2천만원", "1천만원"],
                 [
                     `${lottoInfo?.speetto_2000_2?.first?.remaining} 매`,
                     `${lottoInfo?.speetto_2000_2?.second?.remaining} 매`,
