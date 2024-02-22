@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
             const speetto_1000_1 = {
                 common: {
                     round: $(
-                        "section > div > div > div > div:nth-child(3) > div > strong > span"
+                        "section > div > div > div > div:nth-child(3) > div > strong"
                     ).text(), //회차
                     date: $(
                         "section > div > div > div > div:nth-child(3) > div > div:nth-child(6) > a > ul > li:nth-child(1)"
@@ -78,8 +78,8 @@ export async function GET(request: NextRequest) {
             const speetto_1000_2 = {
                 common: {
                     round: $(
-                        "section > div > div > div > div:nth-child(4) > div > strong > span"
-                    ).text(), //회차
+                        "section > div > div > div > div:nth-child(4) > div > strong"
+                    ).text(), // 회차
                     date: $(
                         "section > div > div > div > div:nth-child(4) > div > div:nth-child(6) > a > ul > li:nth-child(1)"
                     ).text(), // 날짜
@@ -108,7 +108,7 @@ export async function GET(request: NextRequest) {
             const speetto_2000_1 = {
                 common: {
                     round: $(
-                        "section > div > div > div > div:nth-child(1) > div > strong > span"
+                        "section > div > div > div > div:nth-child(1) > div > strong"
                     ).text(), //회차
                     date: $(
                         "section > div > div > div > div:nth-child(1) > div > div:nth-child(6) > a > ul > li:nth-child(1)"
@@ -138,7 +138,7 @@ export async function GET(request: NextRequest) {
             const speetto_2000_2 = {
                 common: {
                     round: $(
-                        "section > div > div > div > div:nth-child(2) > div > strong > span"
+                        "section > div > div > div > div:nth-child(2) > div > strong"
                     ).text(), //회차
                     date: $(
                         "section > div > div > div > div:nth-child(2) > div > div:nth-child(6) > a > ul > li:nth-child(1)"

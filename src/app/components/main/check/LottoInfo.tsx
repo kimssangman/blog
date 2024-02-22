@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { lotto } from "@/services/check/lotto";
+import Loading from "../../util/Loading";
 
 interface LottoInfo {
     speetto_1000_1: {
@@ -42,19 +43,32 @@ export default function LotteryInfo() {
      * 로또 정보 가져오기
      ----------------------------*/
     const [lottoInfo, setLottoInfo] = useState<LottoInfo | null>(null);
+    const [loading, setLoading] = useState<boolean>(false); // 초기값을 false로 변경
 
-    const getLottery = async () => {
-        try {
-            const response = await lotto();
-            setLottoInfo(response);
-        } catch (error) {
-            // 오류 처리
-        }
-    };
+    /**---------------------------------
+     * 데이터 받아올 때까지 loading 표시
+    ---------------------------------*/
+    useEffect(() => {
+        setLoading(false); // 데이터를 받아왔을 때 로딩 상태 해제
+    }, [lottoInfo]);
 
     useEffect(() => {
         getLottery();
     }, []);
+
+    const getLottery = async () => {
+        try {
+            setLoading(true); // 데이터를 요청할 때 로딩 상태 설정
+            console.log(loading);
+
+            const response = await lotto();
+            setLottoInfo(response);
+
+            setLoading(false); // 데이터를 받아왔을 때 로딩 상태 해제
+        } catch (error) {
+            // 오류 처리
+        }
+    };
 
     /**----------------------------
      * slider
@@ -76,7 +90,7 @@ export default function LotteryInfo() {
     const slides = [
         // 스피또 1000_1
         {
-            title: `스피또1000 ${lottoInfo?.speetto_1000_1?.common?.round}회`,
+            title: `${lottoInfo?.speetto_1000_1?.common?.round}`,
             remaining: [
                 ["1등", "2등", "3등"],
                 ["5억원", "2천만원", "1만원"],
@@ -93,7 +107,7 @@ export default function LotteryInfo() {
         },
         // 스피또 1000_2
         {
-            title: `스피또1000 ${lottoInfo?.speetto_1000_2?.common?.round}회`,
+            title: `${lottoInfo?.speetto_1000_2?.common?.round}`,
             remaining: [
                 ["1등", "2등", "3등"],
                 ["5억원", "2천만원", "1만원"],
@@ -110,7 +124,7 @@ export default function LotteryInfo() {
         },
         // 스피또 2000_1
         {
-            title: `스피또2000 ${lottoInfo?.speetto_2000_1?.common?.round}회`,
+            title: `${lottoInfo?.speetto_2000_1?.common?.round}`,
             remaining: [
                 ["1등", "2등", "3등"],
                 ["5억원", "2천만원", "1천만원"],
@@ -127,7 +141,7 @@ export default function LotteryInfo() {
         },
         // 스피또 2000_2
         {
-            title: `스피또2000 ${lottoInfo?.speetto_2000_2?.common?.round}회`,
+            title: `${lottoInfo?.speetto_2000_2?.common?.round}`,
             remaining: [
                 ["1등", "2등", "3등"],
                 ["5억원", "2천만원", "1천만원"],
@@ -143,6 +157,17 @@ export default function LotteryInfo() {
             ],
         },
     ];
+
+    /**---------------------------------
+     * 데이터 받아올 때까지 loading 표시
+     ---------------------------------*/
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center mt-[20px]">
+                <Loading />
+            </div>
+        );
+    }
 
     return (
         <section className="flex justify-center items-center border-b border-gray-300">
