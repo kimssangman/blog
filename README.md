@@ -9,6 +9,65 @@ react 18.2.0
 </br>
 nextjs 13.4.9
 
+
+## 폴더 구조 설계
+
+```
+blog/
+  ├── public/
+  │   ├── next.svg
+  │   ├── vercel.svg
+  │   └── images/
+  │       └── image.jpg...
+  ├── src/
+  │   ├── @type/
+  │   │   └── mongodb.ts
+  │   ├── app/
+  │   │   └── api/
+  │   │       ├── auth/
+  │   │       │   └── [...nextauth]/
+  │   │       │       └── route.ts
+  │   │       ├── board/
+  │   │       │   └── [id]/
+  │   │       │       └── route.ts
+  │   │       ├── editPost/
+  │   │       │   └── route.ts       
+  │   │       ├── writePost/
+  │   │       │   └── route.ts
+  │   │       └── ... 
+  │   ├── components/
+  │   │   ├── layout/
+  │   │   │   ├── Footer.tsx
+  │   │   │   ├── Header.tsx
+  │   │   │   └── ... 
+  │   │   ├── login/
+  │   │   │   ├── SignInForm.tsx
+  │   │   │   └── SignUpForm.tsx
+  │   │   ├── ... 
+  │   │   ├── layout.tsx
+  │   │   ├── page.tsx
+  │   │   ├── providers.tsx
+  │   ├── lib/
+  │   │   ├── db/
+  │   │   │   ├── board/
+  │   │   │   │   └── Board.model.ts
+  │   │   │   ├── ... 
+  │   │   │   └── dbConnect.ts
+  │   │   └── session-auth.ts
+  │   ├── recoil/
+  │   │   └── atoms/
+  │   │   │   └── states.ts
+  │   └── services/
+  │       ├── board/
+  │       │   ├── detail.ts
+  │       │   └── ... 
+  │       └── ... 
+  ├── .gitignore
+  ├── package.json
+  └── README.md
+```
+
+
 # npm
 ```
 npm i
