@@ -1,14 +1,14 @@
 # Link
+
 https://kimsangmin.com/
 
-
 # version
+
 node 20.4.1
 </br>
 react 18.2.0
 </br>
 nextjs 13.4.9
-
 
 ## 폴더 구조 설계
 
@@ -19,64 +19,80 @@ blog/
   │   ├── vercel.svg
   │   └── images/
   │       └── image.jpg...
+  │
   ├── src/
   │   ├── @type/
   │   │   └── mongodb.ts
+  │   │
   │   ├── app/
   │   │   └── api/
   │   │       ├── auth/
   │   │       │   └── [...nextauth]/
   │   │       │       └── route.ts
+  │   │       │
   │   │       ├── board/
   │   │       │   └── [id]/
   │   │       │       └── route.ts
+  │   │       │
   │   │       ├── editPost/
-  │   │       │   └── route.ts       
+  │   │       │   └── route.ts
+  │   │       │
   │   │       ├── writePost/
   │   │       │   └── route.ts
-  │   │       └── ... 
+  │   │       └── ...
+  │   │
   │   ├── components/
   │   │   ├── layout/
   │   │   │   ├── Footer.tsx
   │   │   │   ├── Header.tsx
-  │   │   │   └── ... 
+  │   │   │   └── ...
+  │   │   │
   │   │   ├── login/
   │   │   │   ├── SignInForm.tsx
   │   │   │   └── SignUpForm.tsx
-  │   │   ├── ... 
+  │   │   ├── ...
+  │   │   │
   │   │   ├── layout.tsx
   │   │   ├── page.tsx
-  │   │   ├── providers.tsx
+  │   │   └── providers.tsx
+  │   │
   │   ├── lib/
   │   │   ├── db/
   │   │   │   ├── board/
   │   │   │   │   └── Board.model.ts
-  │   │   │   ├── ... 
+  │   │   │   ├── ...
+  │   │   │   │
   │   │   │   └── dbConnect.ts
+  │   │   │
   │   │   └── session-auth.ts
+  │   │
   │   ├── recoil/
   │   │   └── atoms/
-  │   │   │   └── states.ts
+  │   │       └── states.ts
+  │   │
   │   └── services/
   │       ├── board/
   │       │   ├── detail.ts
-  │       │   └── ... 
-  │       └── ... 
+  │       │   └── ...
+  │       └── ...
+  │
   ├── .gitignore
   ├── package.json
   └── README.md
 ```
 
-
 # npm
+
 ```
 npm i
 ```
 
-# pm2 
+# pm2
+
 ```
 sudo npm i pm2 -g
 ```
+
 ```
 pm2 start npm --name "kimsangminServer" -- run "start"
 
@@ -86,14 +102,17 @@ pm2 delete 0
 ```
 
 # buld
+
 npm run build
 </br></br>
 
-# start 
+# start
+
 npm run dev
 </br></br>
 
 # build start
+
 npm run start
 </br></br>
 
@@ -105,9 +124,11 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 </br></br>
 
 ## 파일 업로드 시 테스트 환경에서는 잘 되는데 빌드 시 413 (Request Entity Too Large) 뜰 때
+
 nginx 문제로 nginx 설정에서 용량제한을 늘려야한다.
 
 경로 sudo vi /etc/nginx/nginx.conf
+
 ```
 http 부분에 아래 client_max_body_size 64M 추가
 
@@ -118,13 +139,17 @@ http {
 ```
 
 저장 후 nginx 재시작
+
 ```
 sudo nginx -s reload
 ```
+
 </br></br>
 
 ## ec2 인스턴스 npm i 시 먹통일 때
+
 스왑 파일 생성하여 메모리 늘리기
+
 ```
 fallocate -l 4G /swapfile
 chmod 600 /swapfile
@@ -133,8 +158,8 @@ swapon /swapfile
 swapon  --show
 free -h
 ```
-</br></br>
 
+</br></br>
 
 ## Getting Started
 
